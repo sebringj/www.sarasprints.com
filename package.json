@@ -1,0 +1,19 @@
+{
+  "name": "www.sarasprints.com",
+  "version": "0.0.0",
+  "description": "website for Sara's Prints",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.3.6",
+    "consolidate": "~0.9.1",
+    "swig": "~1.0.0-pre3",
+    "nodemailer": "~0.5.2",
+    "config": "~0.4.29"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emerald Code Inc.",
+  "license": "BSD"
+}
