@@ -17,6 +17,6 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
+app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 
 controllers.set(app);

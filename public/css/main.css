@@ -1,0 +1,55 @@
+* {
+	
+}
+body {
+	margin:0;
+	padding:0;
+	background-color:#f6f7f8;
+}
+.full-width {
+	position:relative;
+}
+.site-width {
+	max-width:980px;
+	margin:0 auto;
+}
+.top {
+	position:relative;
+}
+.top .zigzag{
+	background-image:url(/img/zigzag-bg.png);
+	height:10px;
+	background-repeat:repeat-x;
+}
+.top .logo {
+	display:inline-block;
+	width:176px;
+	height:122px;
+	background-image:url(/img/saras-prints.png);
+}
+.top ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.top li {
+	display:inline-block;
+	padding:0;
+	margin:0;
+}
+.top .block1 {
+	background-color:#0098ce;
+}
+.top .block1 .nav {
+	
+}
+.top .block1 .nav a {
+	color:#fff;
+	text-decoration:none;
+	font-weight:200;
+}
+.top .block1 .social a {
+	font-size:0;
+}
+
+

@@ -3,7 +3,7 @@
     <head>
 		<title>{{title}}</title>
 		<meta name="description" content="{{description}}">
-        <!--<link rel="shortcut icon" href="[put ico URL here]" type="image/x-icon">-->
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -14,19 +14,40 @@
 		{% endblock %}
     </head>
     <body>
-        {% block content %}
+		<div class="top full-width">
+			<div class="block1">
+				<ul class="nav">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">My Account</a></li>
+					<li><a href="#">Register</a></li>
+				</ul>
+				<ul class="social">
+					<li><a href="#">facebook</a></li>
+					<li><a href="#">pintrest</a></li>
+				</ul>
+			</div>
+			<div class="zigzag"></div>
+			<div class="block2 site-width">
+				<ul class="nav">
+					<li><a href="#" class="logo">Sara's Prints</a></li>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Girls</a></li>
+					<li><a href="#">Boys</a></li>
+					<li><a href="#">UpPasta8-Fuzzy-Fleece</a></li>
+					<li><a></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="full-width">
+			<div class="site-width">
+	        {% block content %}
 
-		{% endblock %}
-	    <div class="footer">
-	        <div class="max-width">
-	            <div class="links">
-
-	            </div>
-	            <div class="copyright">
-	                <span>&copy;{{year}} Sara's Prints.</span> All Rights Reserved
-	            </div>
-	        </div>
-	    </div>
+			{% endblock %}
+			<div class="copyright">
+                <span>&copy;{{year}} Sara's Prints.</span> All Rights Reserved
+            </div>
+			</div>
+		</div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		<script src="/js/plugins/swig.pack.min.js"></script>
