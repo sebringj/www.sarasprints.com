@@ -16,11 +16,6 @@ body {
 .top {
 	position:relative;
 }
-.top .zigzag {
-	background-image:url(/img/zigzag-bg.png);
-	height:10px;
-	background-repeat:repeat-x;
-}
 .top ul {
 	list-style:none;
 	padding:0;
@@ -33,7 +28,7 @@ body {
 }
 .top .block1 {
 	background-color:#0098ce;
-	height:40px;
+	height:43px;
 }
 .top .block1 .nav {
 	display:block;
