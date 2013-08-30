@@ -16,16 +16,10 @@ body {
 .top {
 	position:relative;
 }
-.top .zigzag{
+.top .zigzag {
 	background-image:url(/img/zigzag-bg.png);
 	height:10px;
 	background-repeat:repeat-x;
-}
-.top .logo {
-	display:inline-block;
-	width:176px;
-	height:122px;
-	background-image:url(/img/saras-prints.png);
 }
 .top ul {
 	list-style:none;
@@ -39,17 +33,65 @@ body {
 }
 .top .block1 {
 	background-color:#0098ce;
+	height:40px;
 }
 .top .block1 .nav {
-	
+	display:block;
+	float:left;
+	margin-top:12px;
+}
+.top .block1 .nav li {
+	margin-right:30px;
 }
 .top .block1 .nav a {
 	color:#fff;
 	text-decoration:none;
 	font-weight:200;
 }
+.top .block1 .nav a.item {
+	display:inline-block;
+}
+.top .block1 .nav a:hover {
+	text-decoration:underline;
+}
+.top .block1 .social {
+	display:block;
+	float:right;
+}
 .top .block1 .social a {
 	font-size:0;
+}
+
+.top .block2 {
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	height:60px;
+	margin-top:35px;	
+}
+.top .block2 .nav {
+	vertical-align:middle;
+}
+.top .block2 .nav a {
+	display:inline-block;
+	vertical-align:top;
+}
+.top .block2 .nav a span {
+	display:inline-block;
+}
+.top .logo-container {
+	display:inline-block;
+	position:relative;
+	width:176px;
+}
+.top .logo {
+	display:block;
+	position:absolute;
+	width:176px;
+	height:122px;
+	background-image:url(/img/saras-prints.png);
+	font-size:0;
+	top:-45px;
+	left:0;
 }
 
 
