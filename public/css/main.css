@@ -13,6 +13,7 @@ body {
 .site-width {
 	max-width:980px;
 	margin:0 auto;
+	background-color:red;
 }
 .top {
 	position:relative;
@@ -102,6 +103,10 @@ body {
 	top:-60px;
 	left:0;
 	padding-top:0;
+}
+.top .block2 .cart-widget {
+	display:block;
+	float:right;
 }
 
 
