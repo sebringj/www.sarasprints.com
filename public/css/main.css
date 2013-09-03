@@ -69,7 +69,7 @@ body {
 	margin-bottom:50px;
 }
 .top .block2 .nav {
-
+	float:left;
 }
 .top .block2 .nav a.item {
 	display:inline-block;
@@ -107,6 +107,8 @@ body {
 .top .block2 .cart-widget {
 	display:block;
 	float:right;
+	padding-top:18px;
+	color:#0098ce;
 }
 
 
