@@ -13,7 +13,6 @@ body {
 .site-width {
 	max-width:980px;
 	margin:0 auto;
-	background-color:red;
 }
 .top {
 	position:relative;
@@ -99,11 +98,12 @@ body {
 }
 .top .block2 .nav a.item span {
 	display:inline-block;
+	font-weight:400;
 	padding:18px 30px 0 30px;
 }
 .top .block2 .nav a.item.fuzzy-fleece {
 	height:60px;
-	width:120px;
+	width:125px;
 	background-image:url(/img/fuzzy-fleece.png);
 	font-size:0;
 	padding:0;
