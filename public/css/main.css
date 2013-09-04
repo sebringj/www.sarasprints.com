@@ -75,9 +75,11 @@ body {
 .top .block1 .nav a:hover {
 	text-decoration:underline;
 }
-.top .block1 .social {
+.top .block1 .social { 
+	position:relative;
 	display:block;
-	float:right;	
+	float:right;
+	bottom:8px;
 }
 .top .block1 .social li {
 	margin-right:5px;
@@ -158,9 +160,9 @@ body {
 .top .block2 .cart-widget {
 	display:block;
 	float:right;
-	padding-top:18px;
-	color:#0098ce;
-	background-color:red;
+	padding:20px 20px 20px 20px;
+	color:#fff;
+	background-color:#ef3f43;
 }
 .bottom {
 	position:relative;
