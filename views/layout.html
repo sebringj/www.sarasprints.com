@@ -20,13 +20,13 @@
 			<div class="block1">
 				<div class="site-width">
 					<ul class="nav">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Register</a></li>
+						<li><a href="#" class="item home-icon">Home</a></li>
+						<li><a href="#" class="item myaccount-icon">My Account</a></li>
+						<li><a href="#" class="item register-icon">Register</a></li>
 					</ul>
 					<ul class="social">
-						<li><a href="#">facebook</a></li>
-						<li><a href="#">pintrest</a></li>
+						<li><a href="#" class="item fb-icon">Facebook</a></li>
+						<li><a href="#" class="item pintrest-icon">Pintrest</a></li>
 					</ul>
 				</div>
 			</div>
@@ -52,17 +52,43 @@
 	        {% block content %}
 
 			{% endblock %}
-			<div class="copyright">
-                <span>&copy;{{year}} Sara's Prints.</span> All Rights Reserved
-            </div>
 			</div>
 		</div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-		<script src="/js/plugins/swig.pack.min.js"></script>
-		<script src="/js/app.js"></script>
+		<div class="bottom full-width">
+			<div class="footer">
+				<div class="site-width">
+					<ul>
+						<li><span class="header">Customer Service</span></li>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">MY ACCOUNT</a></li>
+						<li><a href="#">SIZING CHART</a></li>
+						<li><a href="#">REGISTER</a></li>
+						<li><a href="#">SITE MAP</a></li>
+					</ul>
+					<ul>
+						<li><span class="header">About Us</span></li>
+						<li><a href="#">SARA'S PRINTS STORY</a></li>
+						<li><a href="#">MEET THE TEAM</a></li>
+					</ul>
+					<ul>
+						<li><span class="header">Contact Us</span></li>
+						<li><span>1 (888) 477-4687</span></li>
+						<li><a href="#">EMAIL</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="site-width">
+			<div class="copyright">
+	        	<span>&copy;{{year}} Sara's Prints.</span> All Rights Reserved
+	    	</div>
+		</div>
         {% block foot %}
 
 		{% endblock %}
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="/js/plugins/swig.pack.min.js"></script>
+		<script src="/js/app.js"></script>
     </body>
 </html>

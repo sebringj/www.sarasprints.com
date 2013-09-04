@@ -48,16 +48,58 @@ body {
 .top .block1 .nav a.item {
 	display:inline-block;
 	font-weight:200;
+	padding-top:1px;
+	text-transform:uppercase;
+}
+.top .block1 .nav a.item.home-icon {
+	height:20px;
+	width:43px;
+	background-image:url(/img/home-icon.png);
+	padding-left:23px;	
+	background-repeat:no-repeat;
+}
+.top .block1 .nav a.item.myaccount-icon {
+	height:20px;
+	width:93px;
+	background-image:url(/img/myaccount-icon.png);
+	padding-left:23px;
+	background-repeat:no-repeat;
+}
+.top .block1 .nav a.item.register-icon {
+	height:20px;
+	width:90px;
+	background-image:url(/img/register-icon.png);
+	padding-left:23px;
+	background-repeat:no-repeat;
 }
 .top .block1 .nav a:hover {
 	text-decoration:underline;
 }
 .top .block1 .social {
 	display:block;
-	float:right;
+	float:right;	
+}
+.top .block1 .social li {
+	margin-right:5px;
 }
 .top .block1 .social a {
 	font-size:0;
+}
+.top .block1 .social a.item {
+	display:inline-block;
+}
+.top .block1 .social a.item.fb-icon {
+	height:25px;
+	width:25px;
+	background-image:url(/img/fb-icon.png);
+	background-repeat:no-repeat;
+
+}	
+.top .block1 .social a.item.pintrest-icon {
+	height:25px;
+	width:25px;
+	background-image:url(/img/pintrest-icon.png);
+	background-repeat:no-repeat;
 }
 .top .block2 {
 	border-top:1px solid #ccc;
@@ -118,5 +160,39 @@ body {
 	float:right;
 	padding-top:18px;
 	color:#0098ce;
+	background-color:red;
+}
+.bottom {
+	position:relative;
+}
+.bottom ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.bottom li {
+	padding:0;
+	margin:0;
+}
+.bottom .footer {
+	background-color:#0098ce;
+	text-align:center;
+}
+.bottom .footer ul {
+	display:inline-block;
+	text-align:left;
+	vertical-align:top;
+	padding:30px 90px 30px 90px;
+}
+.bottom .footer ul * {
+	color:#fff;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-weight:200;
+}
+.bottom .footer .header {
+	display:block;
+	font-weight:700;
+	margin-bottom:15px;
 }
 
