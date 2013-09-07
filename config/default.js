@@ -1,7 +1,7 @@
 module.exports = {
 	kitgui : {
 		accountKey : '',
-		baseUrl : ''
+		baseUrl : '//s3.amazonaws.com/kitgui/clients/'
 	},
 	hubsoft : {
 		accountKey : '',
