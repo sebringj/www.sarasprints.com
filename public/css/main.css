@@ -42,3 +42,24 @@ body {
 	left:734px;
 	top:39px;
 }
+.top .cart {
+	width:55px;
+	height:60px;
+	position:absolute;
+	left:896px;
+	top:56px;
+}
+.top .facebook {
+	width:64px;
+	height:63px;
+	position:absolute;
+	left:1002px;
+	bottom:5px;
+}
+.top .pintrest {
+	width:64px;
+	height:63px;
+	position:absolute;
+	left:1076px;
+	bottom:5px;
+}
