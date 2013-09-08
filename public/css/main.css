@@ -5,7 +5,7 @@
 body {
 	margin:0;
 	padding:0;
-	background-color:#fff;
+	background-color:#f3f3f3;
 }
 .full-width {
 	position:relative;
@@ -17,7 +17,7 @@ body {
 .top {
 	height:207px;
 	background-image:url(/img/top-bg-stripe.png);
-	margin-top:10px;
+	margin-top:20px;
 	margin-bottom:20px;
 }
 .top .banner {
@@ -104,18 +104,44 @@ body {
 	list-style:none;
 	text-decoration:none;
 }
+.top ul.items {
+	position:absolute;
+	display:inline-block;
+	right:55px;
+	top:60px;
+}
+.top ul.items li {
+	display:inline-block;
+	text-decoration:none;
+	color:#fff;
+	padding:0 6px 0 0;
+}
+.top ul.items li a{
+	display:inline-block;
+	text-decoration:none;
+	color:#fff;
+}
 .middle .middle-banner {
 	display:block;
-	border-style:solid;
-	border-width:1px;
+	background-color:#fff;
 	height:500px;
 	width:980px
+}
+.bottom .subscribe {
+	display:block;
+	width:980px;
+	height:192px;
+	background-color:#fff;
+	margin-top:10px;
 }
 .bottom .footer {
 	display:inline-block;
 	width:980px;
 	background-color:#3cbef6;
 	text-align:center;
+	margin-top:10px;
+	margin-bottom:20px;
+	background-image:url(/img/footer-bg.png);
 }
 .bottom .header {
 	display:block;
