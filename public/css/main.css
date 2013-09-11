@@ -22,6 +22,13 @@ body {
 	background-repeat:no-repeat;
 	position:relative;
 }
+.top .logo {
+	width:204px;
+	height:140px;
+	position:absolute;
+	left:31px;
+	top:17px;
+}
 .top .up-past-8 {
 	width:125px;
 	height:85px;
@@ -48,14 +55,14 @@ body {
 	position:absolute;
 	list-style:none;
 	left:223px;
-	top:55px;
+	top:53px;
 }
 .top ul.topnav li {
 	list-style:none;
 	display:inline-block;
-	padding-right:58px;
+	padding-right:53px;
 	margin:0;
-	font-size:22px;
+	font-size:23px;
 	text-align:center;
 }
 .top ul.topnav li a {
@@ -67,15 +74,15 @@ body {
 	display:inline-block;
 	position:absolute;
 	list-style:none;
-	left:224px;
+	left:226px;
 	bottom:15px;
 }
 .top ul.productsnav li {
 	list-style:none;
 	display:inline-block;
-	padding-right:48px;
+	padding-right:49px;
 	margin:0;
-	font-size:19px;
+	font-size:18px;
 	text-align:center;
 }
 .top ul.productsnav li a {
