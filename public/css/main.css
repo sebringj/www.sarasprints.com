@@ -50,6 +50,13 @@ body {
 	left:905px;
 	bottom:10px;
 }
+.top .cart {
+	width:43px;
+	height:35px;
+	position:absolute;
+	right:178px;
+	top:65px;
+}
 .top ul.topnav {
 	display:inline-block;
 	position:absolute;
@@ -109,41 +116,121 @@ body {
 }
 .middle .top-banner {
 	display:block;
+	margin:0 auto;
 	background-color:#fff;
 	background-image:url(/img/bannersample.png);
-	height:519px;
-	width:981px
+	width:799px;
+	height:423px;
+	margin-bottom:20px;
 }
-.bottom .subscribe {
+.middle .products {
 	display:block;
 	position:relative;
-	width:980px;
+	width:799px;
+	height:400px;
+	background-color:#fff;
+	margin:0 auto;
+	margin-bottom:20px;
+}
+.middle .title {
+	position:absolute;
+	left:24px;
+	top:20px;
+}
+.middle .title span {
+	font-weight:200;
+	font-size:20px;
+	color:#848382;
+}
+.middle .productsbar {
+	position:absolute;
+	background-image:url(/img/products-bar.png);
+	height:31px;
+	width:751px;
+	bottom:10px;
+	left:24px;
+}
+.bottom .newsletter {
+	display:block;
+	position:relative;
+	width:799px;
 	height:192px;
 	background-color:#fff;
-	margin-top:10px;
+	margin:0 auto;
+	margin-bottom:20px;
 }
 .bottom .slogan {
 	position:absolute;
 	top:10px;
-	left:10px;
+	left:24px;
 }
 .bottom .slogan span {
+	font-weight:100;
+	font-size:19px;
+	color:#848382;
+}
+.bottom .awlogo {
+	position:absolute;
+	height:58px;
+	width:199px;
+	background-image:url(/img/american-w.png);
+	left:50px;
+	bottom:60px;
+}
+.bottom .pinklogo {
+	position:absolute;
+	height:109px;
+	width:118px;
+	background-image:url(/img/candy-bean.png);
+	left:290px;
+	bottom:30px;
+}
+.bottom .subscribebar {
+	position:absolute;
+	height:42px;
+	width:141px;
+	background-image:url(/img/subscribe-bar.png);
+	right:20px;
+	bottom:50px;
+}
+.bottom a {
+	text-decoration:none;
+	vertical-align:center;
+	color:#fff;
+}
+.bottom .email {
+	position:absolute;
+	border-width:1px;
+	border-style:solid;
+	border-color:#d6d5d6;
+	height:41px;
+	width:140px;
+	right:175px;
+	bottom:49px;
+}
+.bottom .signup {
+	position:absolute;
+	right:90px;
+	top:70px;
+}
+.bottom .signup span {
+	font-size:17px;
 	font-weight:200;
-	color:#;
+	color:#797877;
 }
 .bottom .footer {
-	display:inline-block;
-	width:980px;
+	display:block;
+	width:799px;
+	margin:0 auto;
 	background-color:#3cbef6;
 	text-align:center;
-	margin-top:10px;
-	margin-bottom:20px;
 	background-image:url(/img/footer-bg.png);
+	margin-bottom:20px;
 }
 .bottom .header {
 	display:block;
 	color:#fff;
-	margin-bottom:22px;
+	margin-bottom:20px;
 	font-size:20px;
 	font-weight:400;
 }
@@ -157,7 +244,7 @@ body {
 	margin:20px 0;
 }
 .bottom .footer ul li {
-	padding:0 80px 0 80px;
+	padding:0 40px 0 40px;
 }
 .bottom .footer ul li a {
 	text-decoration:none;
@@ -166,4 +253,13 @@ body {
 }
 .bottom .footer ul li span {
 	color:#fff;
+}
+.last .copyright {
+	display:block;
+	position:relative;
+	margin:0 auto;
+	background-color:#fff;
+	width:799px;
+	height:50px;
+	margin-bottom:20px;
 }
