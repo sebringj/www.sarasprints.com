@@ -13,6 +13,7 @@ body {
 .site-width {
 	max-width:980px;
 	margin:0 auto;
+	background-color:#f3f3f3;
 }
 .top .banner {
 	margin:0 auto;
@@ -21,6 +22,7 @@ body {
 	background-image:url(/img/top-banner.png);
 	background-repeat:no-repeat;
 	position:relative;
+	margin-bottom:10px;
 }
 .top .logo {
 	width:204px;
@@ -100,14 +102,15 @@ body {
 .top ul.items {
 	position:absolute;
 	display:inline-block;
-	right:35px;
-	top:60px;
+	right:33px;
+	top:58px;
 }
 .top ul.items li {
 	display:inline-block;
 	text-decoration:none;
 	color:#fff;
 	padding:0 6px 0 0;
+	font-size:17px;
 }
 .top ul.items li a{
 	display:inline-block;
@@ -130,16 +133,15 @@ body {
 	height:400px;
 	background-color:#fff;
 	margin:0 auto;
-	margin-bottom:20px;
 }
 .middle .title {
 	position:absolute;
 	left:24px;
-	top:20px;
+	top:18px;
 }
 .middle .title span {
 	font-weight:200;
-	font-size:20px;
+	font-size:19px;
 	color:#848382;
 }
 .middle .productsbar {
@@ -150,26 +152,27 @@ body {
 	bottom:10px;
 	left:24px;
 }
-.bottom .newsletter {
+.middle .newsletterContainer {
 	display:block;
 	position:relative;
 	width:799px;
 	height:192px;
 	background-color:#fff;
 	margin:0 auto;
+	margin-top:20px;
 	margin-bottom:20px;
 }
-.bottom .slogan {
+.middle .slogan {
 	position:absolute;
 	top:10px;
 	left:24px;
 }
-.bottom .slogan span {
+.middle .slogan span {
 	font-weight:100;
 	font-size:19px;
 	color:#848382;
 }
-.bottom .awlogo {
+.middle .awlogo {
 	position:absolute;
 	height:58px;
 	width:199px;
@@ -177,7 +180,7 @@ body {
 	left:50px;
 	bottom:60px;
 }
-.bottom .pinklogo {
+.middle .pinklogo {
 	position:absolute;
 	height:109px;
 	width:118px;
@@ -185,7 +188,27 @@ body {
 	left:290px;
 	bottom:30px;
 }
-.bottom .subscribebar {
+.middle .subscribebar {
+	display:block;
+}
+.middle a {
+	text-decoration:none;
+	vertical-align:center;
+	color:#fff;
+}
+.middle .subscribebar .subscribeemail {
+	position:absolute;
+	border-width:1px;
+	border-style:solid;
+	border-color:#d6d5d6;
+	height:39px;
+	width:140px;
+	right:170px;
+	top:100px;
+	padding-left:10px;
+	font-size:17px;
+}
+.middle .subscribetext {
 	position:absolute;
 	height:42px;
 	width:141px;
@@ -193,27 +216,16 @@ body {
 	right:20px;
 	bottom:50px;
 }
-.bottom a {
-	text-decoration:none;
-	vertical-align:center;
+.middle .subscribetext {
 	color:#fff;
+	font-size:18px;
 }
-.bottom .email {
+.middle .signup {
 	position:absolute;
-	border-width:1px;
-	border-style:solid;
-	border-color:#d6d5d6;
-	height:41px;
-	width:140px;
-	right:175px;
-	bottom:49px;
-}
-.bottom .signup {
-	position:absolute;
-	right:90px;
+	right:95px;
 	top:70px;
 }
-.bottom .signup span {
+.middle .signup span {
 	font-size:17px;
 	font-weight:200;
 	color:#797877;
@@ -225,7 +237,6 @@ body {
 	background-color:#3cbef6;
 	text-align:center;
 	background-image:url(/img/footer-bg.png);
-	margin-bottom:20px;
 }
 .bottom .header {
 	display:block;
@@ -258,8 +269,9 @@ body {
 	display:block;
 	position:relative;
 	margin:0 auto;
-	background-color:#fff;
+	background-color:#f3f3f3;
 	width:799px;
 	height:50px;
 	margin-bottom:20px;
+	margin-top:20px;
 }
