@@ -235,9 +235,8 @@ body {
 	display:block;
 	width:799px;
 	margin:0 auto;
-	background-color:#3cbef6;
-	text-align:center;
-	background-image:url(/img/footer-bg.png);
+	background-color:#1898ce;
+	text-align:left;
 }
 .bottom .header {
 	display:block;
@@ -253,10 +252,10 @@ body {
 	vertical-align:top;
 	text-align:left;
 	padding:0;
-	margin:20px 0;
+	margin:20px 0 20px 0;
 }
 .bottom .footer ul li {
-	padding:0 40px 0 40px;
+	padding:0 70px 0 30px;
 }
 .bottom .footer ul li a {
 	text-decoration:none;
@@ -273,6 +272,17 @@ body {
 	background-color:#f3f3f3;
 	width:799px;
 	height:50px;
-	margin-bottom:20px;
+	padding-left:50px;
 	margin-top:20px;
+}
+.last .copyright span {
+	font-size:11px;
+}
+.last .ccimages {
+	position:absolute;
+	height:21px;
+	width:131px;
+	right:100px;
+	bottom:27px;
+	background-image:url(/img/ccimages.png);
 }
