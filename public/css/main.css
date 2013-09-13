@@ -219,6 +219,7 @@ body {
 .middle .subscribetext {
 	color:#fff;
 	font-size:18px;
+	border:none;
 }
 .middle .signup {
 	position:absolute;
