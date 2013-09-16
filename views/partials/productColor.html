@@ -1,0 +1,9 @@
+<div class="product-color">
+	<h2>{{ colors[0].productName }}</h2>
+	<img src="{{ colors[0].images[6] }}">
+	<div class="colors">
+	{% for color in colors %}
+		<div class="color">{{ color.colorName }}</div>
+	{% endfor %}
+	</div>
+</div>

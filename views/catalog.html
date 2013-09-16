@@ -8,8 +8,8 @@
 	<h1>catalog</h1>
 	<div class="catalog-banner">{{banner|safe}}</div>
 	<div class="products">
-		{% for product in products %}
-			{% include "./partials/product.html" with product only %}
+		{% for productColor in productColors %}
+			{% include "./partials/productColor.html" with productColor only %}
 		{% endfor %}
 	</div>
 {% endblock %}
