@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="/css/catalog.css">
+{% endblock %}
+
+{% block content %}
+	<h1>catalog</h1>
+	<div class="catalog-banner">{{banner|safe}}</div>
+	<div class="products">
+		{% for product in products %}
+			{% include "./partials/product.html" with product only %}
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block foot %}
+	
+{% endblock %}
