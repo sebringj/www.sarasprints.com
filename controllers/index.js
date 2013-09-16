@@ -1,3 +1,5 @@
+var getJSON = require('../lib/getJSON.js').getJSON;
+
 module.exports.set = function(app) {
 	var year = (new Date()).getFullYear();
 	app.get('/', function(req, res){
@@ -13,17 +15,16 @@ module.exports.set = function(app) {
 		});
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
-		var products = [
-			{productName:"productone"},
-			{productName:"producttwp"},
-			{productName:"productthree"},
-			{productName:"productfour"},
-			{productName:"productfive"}
-		];
-		res.render('catalog', {
-			year : year,
-			title : "Catalog",
-			products : products
+		getJSON({port:443, host:'klim.hubsoft.ws',path:'/api/v1/products'}, function(status, data) {
+			if (status === 200) {
+				res.render('catalog', {
+					year : year,
+					title : "Catalog",
+					products : data.products
+				});
+			} else {
+				res.redirect('/500');
+			}
 		});
 	});
 	app.get(/^\/(team|story|sizing-chart|site-map)$/, function(req, res) {
