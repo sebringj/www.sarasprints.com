@@ -1,4 +1,5 @@
-var getJSON = require('../lib/getJSON.js').getJSON;
+var getJSON = require('../lib/getJSON.js').getJSON,
+	kitgui = require('../lib/kitgui.js');
 
 module.exports.set = function(app) {
 	var year = (new Date()).getFullYear();
@@ -28,25 +29,18 @@ module.exports.set = function(app) {
 		});
 	});
 	app.get(/^\/(team|story|sizing-chart|site-map)$/, function(req, res) {
-		
-		// get data from kitgui...
-		/*
-		kitgui.get([
-			{id:'title',type:'inline'},
-			{id:'body',type:'html'}
-		], function(){
+		kitgui.get({
+				req : req,
+				items: [
+					{id:'title',type:'inline'},
+					{id:'body',type:'html'}
+				]
+			}, function(data){
 			res.render('content', {
 				year : year,
-				title : title,
-				body : body
+				title : data.title,
+				html : data.body
 			});
-		});
-		*/
-		
-		res.render('content', {
-			year : year,
-			title : "template page",
-			html : ""
 		});
 	});
 	app.use(function(req, res, next){

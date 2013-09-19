@@ -1,0 +1,14 @@
+<a class="product" href="{{ productURL }}">
+	<img src="{{ images[0] }}">
+	<span class="productName">{{ productName }}</div>
+	<span class="price">
+		{% if discount %}
+			<span class="discount">
+		{% endif %}
+				<span class="unit-price">{{ sizes[0].unitPrice }}</span>
+				<span class="msrp">{{ sizes[0].msrp }}</span>
+		{% if discount %}
+			</span>
+		{% endif %}
+	</span>
+</a>

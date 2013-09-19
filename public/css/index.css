@@ -33,3 +33,7 @@
 	bottom:10px;
 	left:24px;
 }
+.middle .price .msrp { display:none; }
+.middle .price .unit-price { display:inline-block; }
+.middle .price .discount .msrp { display:inline-block; text-decoration:line-through; }
+.middle .price .discount .unit-price { color:#f00;margin-left:10px; }
