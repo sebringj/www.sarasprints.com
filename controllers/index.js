@@ -4,9 +4,25 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 module.exports.set = function(app) {
 	var year = (new Date()).getFullYear();
 	app.get('/', function(req, res){
-		res.render('index', {
-			year : year,
-			title : "Sara's Prints"
+		getJSON({port:443, host:'trewgear.hubsoft.ws',path:'/api/v1/products'}, function(status, data) {
+			var i = 0, len, product, size;
+			if (status === 200) {
+				len = data.products.length;
+				for(; i < len; i++) {
+					product = data.products[i];
+					size = products.sizes[0];
+					if (size.msrp > size.unitPrice) {
+						product.discount = true;
+					}
+				}
+				res.render('index', {
+					year : year,
+					title : "Catalog",
+					products : data.products
+				});
+			} else {
+				res.redirect('/500');
+			}
 		});
 	});
 	app.get('/contactus', function(req, res){

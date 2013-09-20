@@ -11,6 +11,11 @@
 			<div class="title">
 				<span>best sellers</span>
 			</div>
+			<div class="featured-products">
+				{% for product in products %}
+					{% include "./partials/product.html" with product only %}
+				{% endfor %}
+			</div>
 			<div class="productsbar"></div>
 		</div>
 {% endblock %}
