@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block content %}
-		<div class="top-banner">
-		</div>
+		<div class="top-banner"></div>
 		<div class="products">
 			<div class="title">
-				<span>best sellers</span>
+				<span>NEW ITEMS</span>
 			</div>
 			<div class="featured-products">
-				{% for product in products %}
+				{% for product in products %} 
 					{% include "./partials/product.html" with product only %}
 				{% endfor %}
 			</div>

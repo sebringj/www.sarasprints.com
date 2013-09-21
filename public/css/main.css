@@ -119,13 +119,13 @@ body {
 }
 .middle .content {
 	margin:0 auto;
-	width:799px;
-	min-height:400px;
+	width:798px;
+	min-height:412px;
 }
 .middle .newsletterContainer {
 	display:block;
 	position:relative;
-	width:799px;
+	width:798px;
 	height:192px;
 	background-color:#fff;
 	margin:0 auto;
@@ -203,7 +203,7 @@ body {
 }
 .bottom .footer {
 	display:block;
-	width:799px;
+	width:798px;
 	margin:0 auto;
 	background-color:#1898ce;
 	text-align:left;
@@ -240,7 +240,7 @@ body {
 	position:relative;
 	margin:0 auto;
 	background-color:#f3f3f3;
-	width:799px;
+	width:798px;
 	height:50px;
 	padding-left:50px;
 	margin-top:20px;

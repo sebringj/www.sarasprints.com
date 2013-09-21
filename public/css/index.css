@@ -11,7 +11,7 @@
 	display:block;
 	position:relative;
 	width:799px;
-	height:400px;
+	min-height:412px;
 	background-color:#fff;
 	margin:0 auto;
 }
@@ -21,9 +21,9 @@
 	top:18px;
 }
 .middle .title span {
-	font-weight:200;
-	font-size:19px;
-	color:#848382;
+	font-weight:300;
+	font-size:23px;
+	color:#000;
 }
 .middle .productsbar {
 	position:absolute;
@@ -33,22 +33,62 @@
 	bottom:10px;
 	left:24px;
 }
-.middle .price .msrp { display:none; }
-.middle .price .unit-price { display:inline-block; }
-.middle .price .discount .msrp { display:inline-block; text-decoration:line-through; }
-.middle .price .discount .unit-price { color:#f00;margin-left:10px; }
-
+.middle .featured-products {
+	font-size:0;
+	text-align:center;
+	vertical-align:top;
+}
+.middle .product-container {
+	margin-top:60px;
+	margin-left:5px;
+	vertical-align:top;	
+	display:inline-block;
+	text-align:center;
+}
+.middle .product-container .add-to-cart {
+	color:#f00;
+	display:block;
+	font-size:15px;
+	text-align:center;
+}
 .middle .product {
 	display:inline-block;
-	padding:2px;
 	color:#000;
+	width:170px;
+	border:1px solid #dad7d7;
+}
+.middle .product a {
+	display:block;
+	border:1px solid #dad7d7;
+	margin:1px;
+	width:166px;
+	height:230px;
+	font-size:13px;
 }
 .middle .product img {
-	width:100px;
-	height:auto;
+	width:166px;
+	height:170px;
 	display:block;
-	border:1px solid #000;
 }
 .middle .product .productName {
 	color:#000;
+}
+.middle .price {
+	display:block;
+	text-align:center;
+	color:#000;
+}
+.middle .price .msrp { 
+	display:none; 
+}
+.middle .price .unit-price { 
+	display:inline-block; 
+}
+.middle .price .discount .msrp { 
+	display:inline-block; 
+	text-decoration:line-through; 
+}
+.middle .price .discount .unit-price { 
+	color:#f00;
+	margin-left:10px; 
 }
