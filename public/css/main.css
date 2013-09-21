@@ -160,6 +160,7 @@ body {
 }
 .middle .subscribebar {
 	display:block;
+	cursor:pointer;
 }
 .middle a {
 	text-decoration:none;
@@ -185,11 +186,10 @@ body {
 	background-image:url(/img/subscribe-bar.png);
 	right:20px;
 	bottom:50px;
-}
-.middle .subscribetext {
 	color:#fff;
 	font-size:18px;
 	border:none;
+	cursor:pointer;
 }
 .middle .signup {
 	position:absolute;

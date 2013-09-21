@@ -17,12 +17,12 @@
 }
 .middle .title {
 	position:absolute;
-	left:24px;
+	left:37px;
 	top:18px;
 }
 .middle .title span {
-	font-weight:300;
-	font-size:23px;
+	font-weight:400;
+	font-size:22px;
 	color:#000;
 }
 .middle .productsbar {
@@ -135,7 +135,7 @@
 	background-color:#ed292d;
 	padding:3px 5px;
 }
-.text {
+.add-to-cart .text {
 	display:inline-block;
 	color:#fff;
 	text-align:center;
@@ -143,4 +143,9 @@
 .icon-shopping-cart {
 	color:#fff;
 	padding-right:5px;
+}
+.productsbar .icon-th {
+	position:relative;
+	top:6px;
+	right:5px;
 }
