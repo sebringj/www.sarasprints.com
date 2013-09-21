@@ -32,6 +32,14 @@
 	width:751px;
 	bottom:10px;
 	left:24px;
+	text-align:center;
+}
+.middle .productsbar span {
+	position:relative;
+	top:3px;
+	color:#fff;
+	font-weight:400;
+	vertical-align:middle;
 }
 .middle .featured-products {
 	font-size:0;
@@ -45,25 +53,46 @@
 	display:inline-block;
 	text-align:center;
 }
+.middle .product-container:hover .product {
+	background-color:#0098ce;
+}
+.middle .product-container .quick-view {
+	display:none;
+	position:absolute;
+	width:100%;
+	color:#fff;
+	background-color:#0098ce;
+	bottom:100px;
+}
+.middle .product-container:hover .quick-view {
+	display:block;
+}
 .middle .product-container .add-to-cart {
 	color:#f00;
-	display:block;
+	display:inline-block;
 	font-size:15px;
 	text-align:center;
 }
 .middle .product {
 	display:inline-block;
 	color:#000;
-	width:170px;
 	border:1px solid #dad7d7;
 }
 .middle .product a {
+	position:relative;
 	display:block;
 	border:1px solid #dad7d7;
-	margin:1px;
+	margin:4px;
 	width:166px;
 	height:230px;
 	font-size:13px;
+	background-color:#fff;
+}
+.middle .product-container:hover .product a {
+	border:1px solid #0098ce;
+}
+.middle .product-container:hover .text-container {
+	background-color:#0098ce;
 }
 .middle .product img {
 	width:166px;
@@ -91,4 +120,27 @@
 .middle .price .discount .unit-price { 
 	color:#f00;
 	margin-left:10px; 
+}
+.add-to-cart {
+	display:inline-block;
+	text-align:center;
+	border:none;
+	background-color:#fff;
+	cursor:pointer;
+	margin-top:5px;
+}
+.text-container {
+	display:inline-block;
+	text-align:center;
+	background-color:#ed292d;
+	padding:3px 5px;
+}
+.text {
+	display:inline-block;
+	color:#fff;
+	text-align:center;
+}
+.icon-shopping-cart {
+	color:#fff;
+	padding-right:5px;
 }
