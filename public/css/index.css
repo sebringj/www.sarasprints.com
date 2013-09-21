@@ -37,3 +37,18 @@
 .middle .price .unit-price { display:inline-block; }
 .middle .price .discount .msrp { display:inline-block; text-decoration:line-through; }
 .middle .price .discount .unit-price { color:#f00;margin-left:10px; }
+
+.middle .product {
+	display:inline-block;
+	padding:2px;
+	color:#000;
+}
+.middle .product img {
+	width:100px;
+	height:auto;
+	display:block;
+	border:1px solid #000;
+}
+.middle .product .productName {
+	color:#000;
+}

@@ -1,29 +1,44 @@
 var getJSON = require('../lib/getJSON.js').getJSON,
-	kitgui = require('../lib/kitgui.js');
+	kitgui = require('../lib/kitgui.js'),
+	cache = {};
 
 module.exports.set = function(app) {
 	var year = (new Date()).getFullYear();
+	
 	app.get('/', function(req, res){
-		getJSON({port:443, host:'trewgear.hubsoft.ws',path:'/api/v1/products'}, function(status, data) {
-			var i = 0, len, product, size;
-			if (status === 200) {
-				len = data.products.length;
-				for(; i < len; i++) {
-					product = data.products[i];
-					size = products.sizes[0];
-					if (size.msrp > size.unitPrice) {
-						product.discount = true;
+		function render(products, req, res){
+			res.render('index', {
+				year : year,
+				title : "Catalog",
+				products : products
+			});
+		}
+		if (cache.homeProducts) {
+			render(cache.homeProducts, req, res);
+		} else {
+			getJSON({port:443, host:'klim.hubsoft.ws',path:'/api/v1/products?tags=Jackets'}, function(status, data) {
+				var i = 0, len, product, size, removeCount, keepCount = 4;
+				if (status === 200) {
+					// reduce array to 4 items
+					if (data.products.length >= keepCount) {
+						removeCount = data.products.length - keepCount;
+						data.products.splice(0,removeCount);
 					}
+					len = data.products.length;
+					for(; i < len; i++) {
+						product = data.products[i];
+						size = product.sizes[0];
+						if (size.msrp > size.unitPrice) {
+							product.discount = true;
+						}
+					}
+					cache.homeProducts = data.products;
+					render(cache.homeProducts, req, res);
+				} else {
+					res.redirect('/500');
 				}
-				res.render('index', {
-					year : year,
-					title : "Catalog",
-					products : data.products
-				});
-			} else {
-				res.redirect('/500');
-			}
-		});
+			});
+		}
 	});
 	app.get('/contactus', function(req, res){
 		res.render('contactus', {
