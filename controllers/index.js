@@ -47,16 +47,9 @@ module.exports.set = function(app) {
 		});
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
-		getJSON({port:443, host:'trewgear.hubsoft.ws',path:'/api/v1/productColors'}, function(status, data) {
-			if (status === 200) {
-				res.render('catalog', {
-					year : year,
-					title : "Catalog",
-					productColors : data
-				});
-			} else {
-				res.redirect('/500');
-			}
+		res.render('catalog', {
+			year : year,
+			title : "Catalog"
 		});
 	});
 	app.get(/^\/(team|story|sizing-chart|site-map)$/, function(req, res) {
