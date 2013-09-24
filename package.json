@@ -1,12 +1,12 @@
 {
   "name": "www.sarasprints.com",
-  "version": "0.0.0-13",
+  "version": "0.0.0-17",
   "description": "website for Sara's Prints",
   "main": "app.js",
   "dependencies": {
     "express": "~3.3.6",
     "consolidate": "~0.9.1",
-    "swig": "~1.0.0-rc1",
+    "swig": "~1.0.0",
     "nodemailer": "~0.5.2",
     "config": "~0.4.29",
     "async": "~0.2.9"
