@@ -11,23 +11,39 @@
 		<ul class="nav-list">
 			<li><a href="">GIRLS</a></li>
 			<li><a href="">BOYS</a></li>
-			<li><a href="">FUZZY</a></li>
+			<li><a href="" class="fuzzy">FUZZY FLEECE</a></li>
 			<li><a href="">SALE</a></li>
 		</ul>
 	</div>
 	<div class="right-column">
 		<div class="catalog-header">HEADER</div>
 		<div class="right-container">
-			<span class="right-container-title">SLUMBER AND SMILE</span>
-			<span class="right-container-border"></span>
-			<span class="right-container-description">Lorem ipsum dolor sit amet, consectetuer <br>sed diam noncidunt ut laoreet doloe<br>iam noncidunt ut laoreet doloe</span>
+			<div class="right-container-title">SLUMBER AND SMILE</div>
+			<div class="right-container-border"></div>
+			<div class="right-container-description">
+				Lorem ipsum dolor sit amet, consectetuer sed diam noncidunt ut 
+				ut laoreet doloedfgfffen fojneorn oenog ioirjgo jgr[jrjrioe[j 
+			</div>
+			<div class="right-banner"></div>
 		</div>
-		<div class="right-banner"></div>
-		<div class="sort-product-bar"></div>
-		<div class="featured-products">
-			{% for product in products %} 
-				{% include "./partials/product.html" with product only %}
-			{% endfor %}
+		<div class="sort-product-bar">
+			<div class="left-dropdown">
+				<span class="sort-by">Sort by :</span>
+				<select class="sort-dropdown">
+			  	  	<option value="">Default</option>
+				  	<option value=""></option>
+				 	<option value=""></option>
+				  	<option value=""></option>
+				</select>
+			</div>
+			<div class="right-dropdown">
+				<span class="show">Show :</span>
+				<select class="show-dropdown">
+				  	<option value="">Search</option>
+				  	<option value=""></option>
+				  	<option value=""></option>
+				</select>
+			</div>
 		</div>
 	</div>
 {% endblock %}
