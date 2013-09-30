@@ -149,3 +149,6 @@
 	top:6px;
 	right:5px;
 }
+.quick-view-modal {
+	display : none;
+}
