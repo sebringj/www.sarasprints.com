@@ -46,10 +46,16 @@ module.exports.set = function(context) {
 			});
 		}
 	});
-	app.get('/contactus', function(req, res){
+	app.get('/contactus', function(req, res) {
 		res.render('contactus', {
 			year : year,
 			title : "Contact Us"
+		});
+	});
+	app.get('/items', function(req, res) {
+		res.render('items', {
+			year : year,
+			title : "items"
 		});
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {

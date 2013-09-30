@@ -1,7 +1,7 @@
 var express = require('express'),
 	config = require('config'),
 	app = express(),
-	server = app.listen(process.env.PORT || 3000),
+	server = app.listen(process.env.PORT || 4000),
 	controllers = require('./controllers'),
 	http = require('http'),
 	path = require('path'),

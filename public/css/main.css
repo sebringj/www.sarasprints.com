@@ -135,7 +135,7 @@ body {
 .middle .slogan {
 	position:absolute;
 	top:10px;
-	left:24px;
+	left:30px;
 }
 .middle .slogan span {
 	font-weight:100;
@@ -193,7 +193,7 @@ body {
 }
 .middle .signup {
 	position:absolute;
-	right:95px;
+	right:80px;
 	top:70px;
 }
 .middle .signup span {
