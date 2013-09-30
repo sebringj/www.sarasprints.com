@@ -8,6 +8,11 @@ module.exports.set = function(context) {
 	
 	app.get('/', function(req, res){
 		function render(products, req, res){
+			var i = 0, len = products.length, product;
+			for(; i < len; i++) {
+				product = products[i];
+				product.self = JSON.stringify(product);
+			}
 			res.render('index', {
 				year : year,
 				title : "Catalog",
