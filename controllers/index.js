@@ -2,7 +2,8 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 	kitgui = require('../lib/kitgui.js'),
 	cache = {};
 
-module.exports.set = function(app) {
+module.exports.set = function(context) {
+	var app = context.app;
 	var year = (new Date()).getFullYear();
 	
 	app.get('/', function(req, res){

@@ -6,7 +6,12 @@ var express = require('express'),
 	http = require('http'),
 	path = require('path'),
 	cons = require('consolidate'),
-	swig = require('swig');
+	swig = require('swig'),
+	cache = {},
+	context = {
+		app : app,
+		cache : cache
+	};
 
 app.engine('.html', cons.swig);
 app.set('view engine', 'html');
@@ -19,4 +24,4 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 
-controllers.set(app);
+controllers.set(cache);
