@@ -1,5 +1,5 @@
 <div class="product-container">
-	<div class="product" data-product="{{ self }}">
+	<div class="product" data-product="{{ self | url_encode }}">
 		<a href="{{ productURL }}">
 			<span class="quick-view">QUICKVIEW</span>
 			<img src="{{ images[6] }}">

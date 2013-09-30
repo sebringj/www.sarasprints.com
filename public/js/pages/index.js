@@ -1,7 +1,7 @@
 $('.quick-view-modal').modal({ show : false });
 $('.featured-products').on('click','.product', function(ev) {
 	ev.preventDefault();
-	var productNumber = $(this).data('productnumber');
-	console.log(productNumber);
+	var product = JSON.parse(unescape($(this).data('product')));
+	console.log(product);
 	$('.quick-view-modal').modal('show');
 });
