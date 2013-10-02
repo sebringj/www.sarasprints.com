@@ -42,7 +42,8 @@ module.exports.set = function(context) {
 						cache.homeProducts = data.products;
 						render(cache.homeProducts, req, res);
 					} else {
-						res.redirect('/500');
+						cache.homeProducts = [];
+						render(cache.homeProducts, req, res);
 					}
 				});
 			} catch(e) {
