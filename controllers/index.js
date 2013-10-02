@@ -52,7 +52,7 @@ module.exports.set = function(context) {
 			title : "Contact Us"
 		});
 	});
-	app.get(/^\/(-detail|product)$/, function(req, res) {
+	app.get(/-detail$/, function(req, res) {
 		res.render('product', {
 			year : year,
 			title : "product"
