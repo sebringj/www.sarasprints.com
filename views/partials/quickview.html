@@ -1,4 +1,5 @@
-<div class="modal fade quick-view-modal" tabindex="-1" role="dialog">
+<div class="modal fade quick-view-modal" tabindex="-1" role="dialog"></div>
+<script type="text/html" id="quick-view-template">
    <div class="modal-dialog">
      <div class="modal-content clearfix">
        <div class="modal-header">
@@ -11,18 +12,21 @@
 		<div class="left-column">
 			<div class="big-product-image"></div>
 			<div class="product-colors">
-				<a href=""><span class="swatch-text">Monkeys Bannas</span><span class="swatch-color-first"></span></a>
-				<a href=""><span class="swatch-text">Snowflakes Blue</span><span class="swatch-color-second"></span></a>
-				<a href=""><span class="swatch-text">Snowman</span><span class="swatch-color-third"></span></a>
+				{% for color in product.colors %}
+					<a href="{{ color.productURL }}">
+						<span class="swatch-text">{{ color.colorName }}</span>
+						<span class="swatch-color-first">{{ color.colorValue }}</span>
+					</a>
+				{% endfor %}
 			</div>
 		</div>
 		<div class="right-column">
 			<div class="product-name">
-				<span>OLD WISE OWL</span>
+				<span>{{ product.productName }}</span>
 			</div>
 			<div class="line-break"></div>
 			<div class="product-price">
-				<span>$35.00</span>
+				<span>${{ product.price }}</span>
 			</div>
 			<div class="select-pattern">
 				<select class="pattern-dropdown">
@@ -65,6 +69,6 @@
        </div>
      </div>
    </div>
- </div>
- <script src="/js/quickview.js"></script>
+</script>
+<script src="/js/quickview.js"></script>
  

@@ -11,7 +11,10 @@ $('head').append($('<link>',{ href: '/css/quickview.css', rel:'stylesheet' }));
 			return this;	
 		},
 		set : function(product) {
-			// todo
+			var tpl = $('#quick-view-template').html();
+			var output = swig.compile(tpl,{});
+			var html = output({ locals: { product: product }});
+			$('.quick-view-modal').html(output);
 			return this;
 		}
 	};
