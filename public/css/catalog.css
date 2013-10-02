@@ -18,7 +18,7 @@
 	top:10px;
 	left:-13px;
 }
-.left-column {
+.left-column-catalog {
 	display:block;
 	position:relative;
 	float:left;
@@ -68,7 +68,7 @@
 	background-repeat:no-repeat;
 	padding-top:20px;
 }
-.right-column {
+.right-column-catalog {
 	position:relative;
 	display:block;
 	float:right;

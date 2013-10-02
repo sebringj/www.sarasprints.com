@@ -34,10 +34,11 @@
 .product-colors {
 	position:relative;
 	display:block;
+	padding-left:68px;
 }
 .product-colors  a {
 	display:inline-block;
-	margin-left:40px;
+	margin-right:10px;
 }
 .swatch-text {
 	display:block;

@@ -6,7 +6,7 @@
 
 {% block content %}
 	<div class="breadcrumb"><span>Home > Girls</span></div>
-	<div class="left-column">
+	<div class="left-column-catalog">
 		<a href="" class="departments"><span>DEPARTMENTS</span></a>
 		<ul class="nav-list">
 			<li><a href="">GIRLS</a></li>
@@ -15,7 +15,7 @@
 			<li><a href="">SALE</a></li>
 		</ul>
 	</div>
-	<div class="right-column">
+	<div class="right-column-catalog">
 		<div class="catalog-header">HEADER</div>
 		<div class="right-container">
 			<div class="right-container-title">SLUMBER AND SMILE</div>
@@ -49,5 +49,5 @@
 {% endblock %}
 
 {% block foot %}
-	
+	{% include "./partials/quickview.html" %}
 {% endblock %}
