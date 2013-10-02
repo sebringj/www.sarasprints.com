@@ -22,28 +22,33 @@ module.exports.set = function(context) {
 		if (cache.homeProducts) {
 			render(cache.homeProducts, req, res);
 		} else {
-			getJSON({port:443, host:'klim.hubsoft.ws',path:'/api/v1/products?tags=Jackets'}, function(status, data) {
-				var i = 0, len, product, size, removeCount, keepCount = 4;
-				if (status === 200) {
-					// reduce array to 4 items
-					if (data.products.length >= keepCount) {
-						removeCount = data.products.length - keepCount;
-						data.products.splice(0,removeCount);
-					}
-					len = data.products.length;
-					for(; i < len; i++) {
-						product = data.products[i];
-						size = product.sizes[0];
-						if (size.msrp > size.unitPrice) {
-							product.discount = true;
+			try {	
+				getJSON({port:443, host:'klim.hubsoft.ws',path:'/api/v1/products?tags=Jackets'}, function(status, data) {
+					var i = 0, len, product, size, removeCount, keepCount = 4;
+					if (status === 200) {
+						// reduce array to 4 items
+						if (data.products.length >= keepCount) {
+							removeCount = data.products.length - keepCount;
+							data.products.splice(0,removeCount);
 						}
+						len = data.products.length;
+						for(; i < len; i++) {
+							product = data.products[i];
+							size = product.sizes[0];
+							if (size.msrp > size.unitPrice) {
+								product.discount = true;
+							}
+						}
+						cache.homeProducts = data.products;
+						render(cache.homeProducts, req, res);
+					} else {
+						res.redirect('/500');
 					}
-					cache.homeProducts = data.products;
-					render(cache.homeProducts, req, res);
-				} else {
-					res.redirect('/500');
-				}
-			});
+				});
+			} catch(e) {
+				cache.homeProducts = [];
+				render(cache.homeProducts, req, res);
+			}
 		}
 	});
 	app.get('/contactus', function(req, res) {
