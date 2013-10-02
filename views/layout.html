@@ -45,6 +45,19 @@
 		</div>
 		<div class="middle full-width">
 			<div class="site-width">
+				{% if breadcrumb %}
+					<ul class="breadcrumb">
+					{% for item in breadcrumb %}
+						<li>
+						{% if item.link %}
+							<a href="{{ item.link }}">{{ item.label }}</a> <span>&gt;</span>
+						{% else %}
+							<span class="breadcrumb-label">{{ item.label }}</span>
+						{% endif %}
+						</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
 				<div class="content clearfix">
 					<div class="inner-content">
 						{% block content %}

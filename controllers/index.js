@@ -16,7 +16,11 @@ module.exports.set = function(context) {
 			res.render('index', {
 				year : year,
 				title : "Catalog",
-				products : products
+				products : products,
+				breadcrumb : [
+					{ link: '/', label : 'home' },
+					{ label : 'ha ha' }
+				]
 			});
 		}
 		if (cache.homeProducts) {
