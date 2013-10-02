@@ -163,6 +163,13 @@
 	padding-left:2px;
 	width:50px;
 }
+.big-product-image {
+	position:relative;
+	display:block;
+	width:360px;
+	height:474px;
+	background-image:url(/img/girls-fuzzy-fleece.png);
+}
 .middle .featured-products {
 	font-size:0;
 	text-align:center;

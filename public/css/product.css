@@ -1,0 +1,191 @@
+.content {
+	font-size:0;
+	background-color:#fff;
+	padding:20px;
+}
+.breadcrumb {
+	min-height:30px;
+	background-color:#fff;
+	margin-bottom:15px;
+	border-radius:0;
+}
+.breadcrumb span {
+	font-size:15px;
+	position:relative;
+	top:10px;
+	left:-13px;
+}
+.left-column {
+	display:block;
+	position:relative;
+	float:left;
+	width:50%;
+	min-height:500px;
+	background-color:#fff;
+	overflow:hidden;
+	text-align:left;
+	vertical-align:top;	
+}
+.big-product-image {
+	position:relative;
+	display:block;
+	width:360px;
+	height:480px;
+	background-image:url(/img/girls-fuzzy-fleece.png);
+}
+.product-colors {
+	position:relative;
+	display:block;
+}
+.product-colors  a {
+	display:inline-block;
+	margin-left:40px;
+}
+.swatch-text {
+	display:block;
+	font-size:14px;
+	color:black;
+	width:40px;
+	vertical-align:middle;
+}
+.swatch-color-first {
+	display:inline-block;
+	width:50px;
+	height:50px;
+	background-color:red;
+}
+.swatch-color-second {
+	display:inline-block;
+	width:50px;
+	height:50px;
+	background-color:blue;
+}
+.swatch-color-third {
+	display:inline-block;
+	width:50px;
+	height:50px;
+	background-color:yellow;
+}
+.product-name span {
+	font-size:24px;
+	font-weight:400;
+}
+.line-break {
+	border:2px solid black;
+	width:46px;
+	margin-top:6px;
+}
+.product-price {
+	font-size:24px;
+	font-weight:400;
+	margin-top:12px;
+}
+.product-price span {
+	font-weight:400;
+}
+.select-pattern {
+	margin-top:40px;
+	padding-left:2px;
+}
+.pattern-dropdown {
+	font-size:20px;
+}
+.select-size {
+	margin-top:30px;
+	padding-left:2px;
+}
+.size-dropdown {
+	font-size:20px;
+}
+.product-next {
+	display:block;
+	position:relative;
+	margin-top:30px;
+}
+.product-next a {
+	display:inline-block;
+	margin-left:2px;
+}
+.product-next a span {
+	color:#fff;
+	font-size:14px;
+	text-align:center;
+	padding-top:13px;
+}
+.minus-product {
+	display:inline-block;
+	width:30px;
+	height:50px;
+	background-color:#0099cc;
+}
+.equal-product {
+	display:inline-block;
+	width:70px;
+	height:50px;
+	background-color:#0099cc;
+}
+.add-product {
+	display:inline-block;
+	width:30px;
+	height:50px;
+	background-color:red;
+}
+.product-add-to-cart {
+	display:block;
+	position:relative;
+	margin-top:10px;
+	padding-left:2px;
+}
+.click-add-to-cart {
+	display:block;
+	width:134px;
+	height:50px;
+	background-color:#0099cc;
+}
+.product-add-to-cart a span {
+	color:#fff;
+	font-size:14px;
+	text-align:center;
+	padding-top:14px;
+}
+.product-code {
+	margin-top:30px;
+	padding-left:2px;
+}
+.product-code span {
+	color:black;
+	font-size:14px;	
+	font-weight:400;
+}
+.product-availability {
+	margin-top:10px;
+	padding-left:2px;
+}
+.product-availability span {
+	color:black;
+	font-size:14px;	
+	font-weight:400;
+}
+.second-line-break {
+	margin-top:30px;
+	margin-left:2px;
+	width:46px;
+	border:2px solid black;
+}
+.product-description {
+	width :180px;
+	margin-top:10px;
+}
+.product-description span {
+	font-size:14px;
+	color:black;
+}
+.right-column {
+	position:relative;
+	display:block;
+	float:right;
+	width:50%;
+	min-height:300px;
+	background-color:#fff;
+	overflow:hidden;
+}

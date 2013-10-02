@@ -52,10 +52,10 @@ module.exports.set = function(context) {
 			title : "Contact Us"
 		});
 	});
-	app.get('/items', function(req, res) {
-		res.render('items', {
+	app.get(/^\/(-detail|product)$/, function(req, res) {
+		res.render('product', {
 			year : year,
-			title : "items"
+			title : "product"
 		});
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
