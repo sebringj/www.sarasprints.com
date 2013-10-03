@@ -12,7 +12,7 @@
 		<div class="left-column">
 			<div class="big-product-image"></div>
 			<div class="product-colors">
-				{% for color in product.colors %}
+				{% for color in colors %}
 					<a href="{{ color.productURL }}">
 						<span class="swatch-text">{{ color.colorName }}</span>
 						<span class="swatch-color-first">{{ color.colorValue }}</span>
@@ -22,18 +22,18 @@
 		</div>
 		<div class="right-column">
 			<div class="product-name">
-				<span>{{ product.productName }}</span>
+				<span>{{ productName }}</span>
 			</div>
 			<div class="line-break"></div>
 			<div class="product-price">
-				<span>${{ product.price }}</span>
+				<span>${{ price }}</span>
 			</div>
 			<div class="select-pattern">
 				<select class="pattern-dropdown">
 				  	<option value="">Select Pattern</option>
-				  	<option value="">Monkeys Bannas</option>
-				  	<option value="">Snowflakes Blue</option>
-					<option value="">Snowman</option>
+				  	{% for color in colors %}
+				  		<option value="">{{ color.colorName }}</option>
+				  	{% endfor %}
 				</select>
 			</div>
 			<div class="select-size">

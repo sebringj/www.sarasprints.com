@@ -1,0 +1,1 @@
+hubsoft.clientid = "klim";
