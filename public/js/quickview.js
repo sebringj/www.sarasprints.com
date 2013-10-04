@@ -1,4 +1,5 @@
 $('head').append($('<link>',{ href: '/css/quickview.css', rel:'stylesheet' }));
+$('body').append('<div class="modal fade quick-view-modal" tabindex="-1" role="dialog"></div>');
 (function(context){
 	// private vars go here
 	var tpl = $.ajax({
