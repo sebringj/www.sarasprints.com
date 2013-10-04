@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block foot %}
-	{% include "./partials/quickview.html" %}
-	<script src="/js/pages/index.js"></script>	
+	<div class="modal fade quick-view-modal" tabindex="-1" role="dialog"></div>
+	<script src="/js/quickview.js"></script>	
+	<script src="/js/pages/index.js"></script>
 {% endblock %}

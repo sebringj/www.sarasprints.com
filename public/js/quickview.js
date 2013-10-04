@@ -1,6 +1,13 @@
 $('head').append($('<link>',{ href: '/css/quickview.css', rel:'stylesheet' }));
 (function(context){
 	// private vars go here
+	var tpl = $.ajax({
+		url: '/templates/quickview.html',
+		success: function(data){
+			context.quickView.tpl = data;
+		},
+		dataType: 'text'
+	});
 	context.quickView = {
 		show : function(){
 			$('.quick-view-modal').modal('show');
@@ -11,10 +18,9 @@ $('head').append($('<link>',{ href: '/css/quickview.css', rel:'stylesheet' }));
 			return this;	
 		},
 		set : function(product) {
-			var tpl = $('#quick-view-template').html();
-			var output = swig.compile(tpl,{});
-			var html = output({ locals: { product: product }});
-			$('.quick-view-modal').html(output);
+			var output = swig.compile(quickView.tpl);
+			var html = output(product);
+			$('.quick-view-modal').html(html);
 			return this;
 		}
 	};

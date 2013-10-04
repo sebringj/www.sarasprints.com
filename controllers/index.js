@@ -1,5 +1,6 @@
 var getJSON = require('../lib/getJSON.js').getJSON,
 	kitgui = require('../lib/kitgui.js'),
+	path = require('path'),
 	cache = {};
 
 module.exports.set = function(context) {
@@ -8,11 +9,6 @@ module.exports.set = function(context) {
 	
 	app.get('/', function(req, res){
 		function render(products, req, res){
-			var i = 0, len = products.length, product;
-			for(; i < len; i++) {
-				product = products[i];
-				product.self = JSON.stringify(product);
-			}
 			res.render('index', {
 				year : year,
 				title : "Catalog",
@@ -88,6 +84,10 @@ module.exports.set = function(context) {
 				html : data.body
 			});
 		});
+	});
+	app.get(/^\/templates\/[a-z\.A-Z0-9]+$/, function(req, res, next){
+		var filename = path.resolve('./views/partials/') + '/' + req.path.split('/').pop();
+		res.sendfile(filename);
 	});
 	app.use(function(req, res, next){
 		res.status(404);
