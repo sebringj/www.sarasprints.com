@@ -7,6 +7,7 @@ $('.featured-products').on('click','.product', function(ev) {
 			productNumber : productNumber
 		}, function(data) {
 			quickView.set(data.product).show();
+			console.log(data.product);
 		});
 	});
 });

@@ -19,8 +19,9 @@ $('body').append('<div class="modal fade quick-view-modal" tabindex="-1" role="d
 			return this;	
 		},
 		set : function(product) {
-			var output = swig.compile(quickView.tpl);
-			var html = output(product);
+			var tpl = $('#quick-view-template').html();
+			var output = swig.compile(tpl,{});
+			var html = output(tpl,product);
 			$('.quick-view-modal').html(html);
 			return this;
 		}
