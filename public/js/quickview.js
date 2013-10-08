@@ -28,8 +28,7 @@ $('.quick-view-modal').modal({ show : false });
 		$.ajax({
 			url: '/templates/quickview.html',
 			success: function(data){
-				context.quickView.tpl = data;
-				sessionStorage['quickview-tpl'] = data;
+				sessionStorage['quickview-tpl'] = context.quickView.tpl = data;
 			},
 			dataType: 'text'
 		});
