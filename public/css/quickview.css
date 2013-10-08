@@ -3,21 +3,21 @@
 .quick-view-modal h1 {
 	color:#f00;
 }
-.modal-header {
+.quick-view-modal .modal-header {
 	height:50px;
 }
-.modal-dialog {
+.quick-view-modal .modal-dialog {
 	
 }
-.modal-content {
+.quick-view-modal .modal-content {
 	position:relative;
 	min-height:400px;
 	width:650px;
 }
-.modal-body {
+.quick-view-modal .modal-body {
 
 }
-.left-column {
+.quick-view-modal .left-column {
 	display:block;
 	position:relative;
 	float:left;
@@ -28,163 +28,163 @@
 	text-align:left;
 	vertical-align:top;	
 }
-.big-product-image {
+.quick-view-modal .big-product-image {
 	position:relative;
 	display:block;
 	width:290px;
 	height:480px;
 	background-image:url(/img/quickview-image.png);
 }
-.product-colors {
+.quick-view-modal .product-colors {
 	position:relative;
 	display:block;
 	padding-left:68px;
 }
-.product-colors  a {
+.quick-view-modal .product-colors  a {
 	display:inline-block;
 	margin-right:10px;
 	margin-top:20px;
 }
-.swatch-text {
+.quick-view-modal .swatch-text {
 	display:block;
 	font-size:14px;
 	color:black;
 	width:40px;
 	vertical-align:middle;
 }
-.swatch-color-first {
+.quick-view-modal .swatch-color-first {
 	display:inline-block;
 	width:50px;
 	height:50px;
 	background-color:red;
 }
-.swatch-color-second {
+.quick-view-modal .swatch-color-second {
 	display:inline-block;
 	width:50px;
 	height:50px;
 	background-color:blue;
 }
-.swatch-color-third {
+.quick-view-modal .swatch-color-third {
 	display:inline-block;
 	width:50px;
 	height:50px;
 	background-color:yellow;
 }
-.product-name span {
+.quick-view-modal .product-name span {
 	font-size:24px;
 	font-weight:400;
 }
-.line-break {
+.quick-view-modal .line-break {
 	border:2px solid black;
 	width:46px;
 	margin-top:6px;
 }
-.product-price {
+.quick-view-modal .product-price {
 	font-size:24px;
 	font-weight:400;
 	margin-top:12px;
 }
-.product-price span {
+.quick-view-modal .product-price span {
 	font-weight:400;
 }
-.select-pattern {
+.quick-view-modal .select-pattern {
 	margin-top:40px;
 	padding-left:2px;
 }
-.pattern-dropdown {
+.quick-view-modal .pattern-dropdown {
 	font-size:20px;
 }
-.select-size {
+.quick-view-modal .select-size {
 	margin-top:30px;
 	padding-left:2px;
 }
-.size-dropdown {
+.quick-view-modal .size-dropdown {
 	font-size:20px;
 }
-.product-next {
+.quick-view-modal .product-next {
 	display:block;
 	position:relative;
 	margin-top:30px;
 }
-.product-next a {
+.quick-view-modal .product-next a {
 	display:inline-block;
 	margin-left:2px;
 }
-.product-next a span {
+.quick-view-modal .product-next a span {
 	color:#fff;
 	font-size:14px;
 	text-align:center;
 	padding-top:13px;
 }
-.minus-product {
+.quick-view-modal .minus-product {
 	display:inline-block;
 	width:30px;
 	height:50px;
 	background-color:#0099cc;
 }
-.equal-product {
+.quick-view-modal .equal-product {
 	display:inline-block;
 	width:70px;
 	height:50px;
 	background-color:#0099cc;
 }
-.add-product {
+.quick-view-modal .add-product {
 	display:inline-block;
 	width:30px;
 	height:50px;
 	background-color:red;
 }
-.product-add-to-cart {
+.quick-view-modal .product-add-to-cart {
 	display:block;
 	position:relative;
 	margin-top:10px;
 	padding-left:2px;
 }
-.click-add-to-cart {
+.quick-view-modal .click-add-to-cart {
 	display:block;
 	width:134px;
 	height:50px;
 	background-color:#0099cc;
 }
-.product-add-to-cart a span {
+.quick-view-modal .product-add-to-cart a span {
 	color:#fff;
 	font-size:14px;
 	text-align:center;
 	padding-top:14px;
 }
-.product-code {
+.quick-view-modal .product-code {
 	margin-top:30px;
 	padding-left:2px;
 }
-.product-code span {
+.quick-view-modal .product-code span {
 	color:black;
 	font-size:14px;	
 	font-weight:400;
 }
-.product-availability {
+.quick-view-modal .product-availability {
 	margin-top:10px;
 	padding-left:2px;
 }
-.product-availability span {
+.quick-view-modal .product-availability span {
 	color:black;
 	font-size:14px;	
 	font-weight:400;
 }
-.second-line-break {
+.quick-view-modal .second-line-break {
 	margin-top:30px;
 	margin-left:2px;
 	width:46px;
 	border:2px solid black;
 }
-.product-description {
+.quick-view-modal .product-description {
 	width :180px;
 	margin-top:10px;
 }
-.product-description span {
+.quick-view-modal .product-description span {
 	font-size:14px;
 	color:black;
 }
-.right-column {
+.quick-view-modal .right-column {
 	position:relative;
 	display:block;
 	float:left;
@@ -193,4 +193,8 @@
 	background-color:#fff;
 	overflow:hidden;
 	padding-bottom:40px;
+}
+.quick-view-modal .slash {
+	text-decoration: line-through;
+	color : #f00;
 }

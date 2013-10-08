@@ -16,11 +16,12 @@ $('.quick-view-modal').modal({ show : false });
 			var output = swig.compile(this.tpl,{});
 			var html = output(product);
 			$('.quick-view-modal').html(html);	
+			console.log(product);
 			return this;
 		}
 	};
 
-	if (sessionStorage['quickview-tpl']) {
+	if (!sessionStorage['quickview-tpl']) {
 		context.quickView.tpl = sessionStorage['quickview-tpl'];
 	} else {
 		$.ajax({

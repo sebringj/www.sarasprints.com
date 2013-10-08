@@ -18,7 +18,10 @@
 		</div>
 		<div class="line-break"></div>
 		<div class="product-price">
-			<span>$</span>
+			{% if isSale %}
+				<span class="slash">${{ msrp }}</span>
+			{% endif %}
+				<span>${{ unitPrice }}</span>
 		</div>
 		<div class="select-pattern">
 			<select class="pattern-dropdown">
