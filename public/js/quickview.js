@@ -20,11 +20,9 @@ $('.quick-view-modal').modal({ show : false });
 			return this;	
 		},
 		set : function(product) {
-			$.get('/templates/quickview.html', function(tpl){
-				var output = swig.compile(tpl,{});
-				var html = output(product);
-				$('.quick-view-modal').html(html);	
-			},'text');
+			var output = swig.compile(this.tpl,{});
+			var html = output(product);
+			$('.quick-view-modal').html(html);	
 			return this;
 		}
 	};
