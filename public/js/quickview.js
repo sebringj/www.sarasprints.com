@@ -3,13 +3,6 @@ $('body').append('<div class="modal fade quick-view-modal" tabindex="-1" role="d
 $('.quick-view-modal').modal({ show : false });
 (function(context){
 	// private vars go here
-	var tpl = $.ajax({
-		url: '/templates/quickview.html',
-		success: function(data){
-			context.quickView.tpl = data;
-		},
-		dataType: 'text'
-	});
 	context.quickView = {
 		show : function(){
 			$('.quick-view-modal').modal('show');
@@ -26,4 +19,17 @@ $('.quick-view-modal').modal({ show : false });
 			return this;
 		}
 	};
+
+	if (sessionStorage['quickview-tpl']) {
+		context.quickView.tpl = sessionStorage['quickview-tpl'];
+	} else {
+		$.ajax({
+			url: '/templates/quickview.html',
+			success: function(data){
+				context.quickView.tpl = data;
+				sessionStorage['quickview-tpl'] = data;
+			},
+			dataType: 'text'
+		});
+	}
 })(this);
