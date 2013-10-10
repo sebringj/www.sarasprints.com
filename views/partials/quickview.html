@@ -34,10 +34,9 @@
 		<div class="select-size">
 			<select class="size-dropdown">
 			  	<option value="">Select Size</option>
-			  	<option value="">1</option>
-			  	<option value="">2</option>
-				<option value="">3</option>
-				<option value="">4</option>
+				{% for size in sizes %}
+			  		<option value="">{{ size.sizeName }}</option>
+			  	{% endfor %}
 			</select>
 		</div>
 		<div class="product-next">
