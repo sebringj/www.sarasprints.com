@@ -26,9 +26,9 @@
 		<div class="select-pattern">
 			<select class="pattern-dropdown">
 			  	<option value="">Select Pattern</option>
-			  	<option value="">Monkeys Bannas</option>
-			  	<option value="">Snowflakes Blue</option>
-				<option value="">Snowman</option>
+				{% for color in colors %}
+			  		<option value="">{{ color.colorName }}</option>
+			  	{% endfor %}
 			</select>
 		</div>
 		<div class="select-size">
