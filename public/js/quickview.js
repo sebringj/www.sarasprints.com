@@ -15,13 +15,15 @@ $('.quick-view-modal').modal({ show : false });
 		set : function(product) {
 			var output = swig.compile(this.tpl,{});
 			var html = output(product);
-			$('.quick-view-modal').html(html);	
-			console.log(product);
+			$('.quick-view-modal').html(html);
+			var backimage = 'url('+product.images[0]+')';
+			$('.big-product-image').css({"background-image" : backimage, "background-size" : "contain", "background-repeat" : "no-repeat", "background-position" : "50% 50%" });	
+			console.log(backimage);
 			return this;
 		}
 	};
 
-	if (!sessionStorage['quickview-tpl']) { // added ! to this temporarily to undo caching while working on quick view
+	if (sessionStorage['quickview-tpl']) { 
 		context.quickView.tpl = sessionStorage['quickview-tpl'];
 	} else {
 		$.ajax({
