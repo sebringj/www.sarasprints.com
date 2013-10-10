@@ -18,12 +18,11 @@ $('.quick-view-modal').modal({ show : false });
 			$('.quick-view-modal').html(html);
 			var backimage = 'url('+product.images[0]+')';
 			$('.big-product-image').css({"background-image" : backimage, "background-size" : "contain", "background-repeat" : "no-repeat", "background-position" : "50% 50%" });	
-			console.log(backimage);
 			return this;
 		}
 	};
 
-	if (sessionStorage['quickview-tpl']) { 
+	if (!sessionStorage['quickview-tpl']) { // added ! to this temporarily to undo caching while working on quick view
 		context.quickView.tpl = sessionStorage['quickview-tpl'];
 	} else {
 		$.ajax({
