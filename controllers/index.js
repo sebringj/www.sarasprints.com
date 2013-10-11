@@ -1,6 +1,7 @@
 var getJSON = require('../lib/getJSON.js').getJSON,
 	kitgui = require('../lib/kitgui.js'),
 	path = require('path'),
+	config = require('config'),
 	cache = {};
 
 module.exports.set = function(context) {
@@ -88,6 +89,20 @@ module.exports.set = function(context) {
 	app.get(/^\/templates\/[a-z\.A-Z0-9]+$/, function(req, res, next){
 		var filename = path.resolve('./views/partials/') + '/' + req.path.split('/').pop();
 		res.sendfile(filename);
+	});
+	app.get('/test', function(req, res){
+		kitgui.getContents({
+			basePath : config.kitgui.basePath,
+			host : config.kitgui.host,
+			req : req,
+			cache : cache,
+			items : [
+				{ id : 'contact-us-header', kind : 'ids', editorType : 'inline' },
+				{ id : 'newsletter-checkbox', kind : 'ids', editorType : 'html' }
+			]
+		},function(items){
+			res.json(items);
+		});
 	});
 	app.use(function(req, res, next){
 		res.status(404);
