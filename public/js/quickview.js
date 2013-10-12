@@ -22,7 +22,7 @@ $('.quick-view-modal').modal({ show : false });
 		}
 	};
 
-	if (!sessionStorage['quickview-tpl']) { // added ! to this temporarily to undo caching while working on quick view
+	if (location.search.indexOf('refresh') === -1 && sessionStorage['quickview-tpl']) { // added ! to this temporarily to undo caching while working on quick view
 		context.quickView.tpl = sessionStorage['quickview-tpl'];
 	} else {
 		$.ajax({
