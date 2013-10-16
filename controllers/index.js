@@ -13,11 +13,7 @@ module.exports.set = function(context) {
 			res.render('index', {
 				year : year,
 				title : "Catalog",
-				products : products,
-				breadcrumb : [
-					{ link: '/', label : 'home' },
-					{ label : 'ha ha' }
-				]
+				products : products
 			});
 		}
 		if (cache.homeProducts) {

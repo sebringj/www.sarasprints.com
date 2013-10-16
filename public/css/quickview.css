@@ -33,7 +33,8 @@
 	display:block;
 	width:290px;
 	height:480px;
-	background-image:url(/img/quickview-image.png);
+	background-repeat:no-repeat;
+	background-position:center center;
 }
 .quick-view-modal .product-colors {
 	position:relative;

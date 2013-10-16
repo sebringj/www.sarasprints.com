@@ -16,11 +16,12 @@ $('.quick-view-modal').modal({ show : false });
 			var output = swig.compile(this.tpl,{});
 			var html = output(product);
 			$('.quick-view-modal').html(html);
-			var backimage = 'url('+product.images[0]+')';
-			$('.big-product-image').css({"background-image" : backimage, "background-size" : "contain", "background-repeat" : "no-repeat", "background-position" : "50% 50%" });	
+			console.log(product);
+			// hack to overcome raw and safe options not working	
+			$('.quick-view-modal .product-description').html(product.descriptions[0]);
 			
 			//This adds and subtracts quantities to be ordered
-			$('.product-next a').click(function(event){
+			$('.quick-view-modal .product-next a').off().on('click',function(event){
 				event.preventDefault();
 				var val = $('.equal-product').html();
 				if($(this).children().html() == "-" && val>0) {
