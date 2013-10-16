@@ -1,5 +1,5 @@
 var getJSON = require('../lib/getJSON.js').getJSON,
-	kitgui = require('../lib/kitgui.js'),
+	kitgui = require('kitgui'),
 	path = require('path'),
 	config = require('config'),
 	cache = {};
@@ -95,13 +95,21 @@ module.exports.set = function(context) {
 			basePath : config.kitgui.basePath,
 			host : config.kitgui.host,
 			req : req,
-			cache : cache,
 			items : [
 				{ id : 'contact-us-header', kind : 'ids', editorType : 'inline' },
 				{ id : 'newsletter-checkbox', kind : 'ids', editorType : 'html' }
 			]
 		},function(items){
-			res.json(items);
+			var kg = {};
+			for(var i = 0; i < items.length; i++) {
+				kg[items[i].id] = items[i];
+				kg[items[i].id].classNames = 'kitgui-id-' + items[i].id + 
+					' kitgui-content-type-' + items[i].editorType;
+			}
+			res.render('test',{
+				kitgui : kg,
+				title : 'test'
+			});
 		});
 	});
 	app.use(function(req, res, next){
