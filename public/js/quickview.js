@@ -18,6 +18,20 @@ $('.quick-view-modal').modal({ show : false });
 			$('.quick-view-modal').html(html);
 			var backimage = 'url('+product.images[0]+')';
 			$('.big-product-image').css({"background-image" : backimage, "background-size" : "contain", "background-repeat" : "no-repeat", "background-position" : "50% 50%" });	
+			
+			//This adds and subtracts quantities to be ordered
+			$('.product-next a').click(function(event){
+				event.preventDefault();
+				var val = $('.equal-product').html();
+				if($(this).children().html() == "-" && val>0) {
+					val--;
+				} else if($(this).children().html() == "+") {
+					val++;
+				}
+				console.log(val);
+				$('.equal-product').html(val);
+			});
+			
 			return this;
 		}
 	};
@@ -34,3 +48,4 @@ $('.quick-view-modal').modal({ show : false });
 		});
 	}
 })(this);
+
