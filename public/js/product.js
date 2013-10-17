@@ -32,7 +32,7 @@
         var sku = $('.select-size select').val();
         var qty = $('.equal-product').html();
 
-        if (sku == "select size") {
+        if (sku === "") {
             alert('select a size');
             return;
         }

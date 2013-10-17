@@ -3,7 +3,7 @@
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
-    <div class="modal-body">
+    <div data-add-to-cart-widget class="modal-body">
       <!-- start of content -->
 		<div class="left-column">
 		<div class="big-product-image" style="background-image:url('{{ images[1] }}')"></div>
@@ -26,15 +26,15 @@
 			<select class="pattern-dropdown">
 			  	<option value="">Select Pattern</option>
 				{% for color in colors %}
-			  		<option value="">{{ color.colorName }}</option>
+			  		<option value="{{ color.productNumber }}">{{ color.colorName }}</option>
 			  	{% endfor %}
 			</select>
 		</div>
 		<div class="select-size">
-			<select class="size-dropdown">
+			<select data-sizes class="size-dropdown">
 			  	<option value="">Select Size</option>
 				{% for size in sizes %}
-			  		<option value="">{{ size.sizeName }}</option>
+			  		<option value="{{ size.sku }}">{{ size.sizeName }}</option>
 			  	{% endfor %}
 			</select>
 		</div>
