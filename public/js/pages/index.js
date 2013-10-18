@@ -1,6 +1,7 @@
-$('.featured-products').on('click','.product', function(ev) {
+$('.featured-products').on('click','.product .quick-view', function(ev) {
 	ev.preventDefault();
-	var productNumber = $(this).data('productnumber');
+	ev.stopPropagation();
+	var productNumber = $(this).closest('.product').data('productnumber');
 	hubsoft.ready(function(){
 		hubsoft.getProducts({
 			productNumber : productNumber

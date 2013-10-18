@@ -60,12 +60,15 @@
 	display:none;
 	position:absolute;
 	width:100%;
-	color:#fff;
+	color:white;
 	background-color:#0098ce;
 	bottom:100px;
 }
 .middle .product-container:hover .quick-view {
 	display:block;
+}
+.middle .product-container .quick-view:hover {
+	color:yellow;
 }
 .middle .product-container .add-to-cart {
 	color:#f00;
