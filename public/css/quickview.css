@@ -35,6 +35,7 @@
 	height:480px;
 	background-repeat:no-repeat;
 	background-position:center center;
+    background-size: contain;
 }
 .quick-view-modal .product-colors {
 	position:relative;
