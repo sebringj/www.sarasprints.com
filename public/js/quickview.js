@@ -20,13 +20,13 @@ $('.quick-view-modal').modal({ show : false });
 			// hack to overcome raw and safe options not working	
 			$('.quick-view-modal .product-description').html(product.descriptions[0]);
 			
-			//This adds and subtracts quantities to be ordered
+			// This adds and subtracts quantities to be ordered
 			$('.quick-view-modal .product-next a').off().on('click',function(event){
 				event.preventDefault();
 				var val = $('.equal-product').html();
-				if($(this).children().html() == "-" && val>0) {
+				if($(this).children().html() === "-" && val > 0) {
 					val--;
-				} else if($(this).children().html() == "+") {
+				} else if($(this).children().html() === "+") {
 					val++;
 				}
 				console.log(val);

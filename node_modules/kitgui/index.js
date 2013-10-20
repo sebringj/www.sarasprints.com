@@ -1,16 +1,28 @@
 var async = require('async'),
-	http = require('http');
+	http = require('http'),
+	url = require('url'),
+	xmlParser = require('xmldom').DOMParser;
 
 module.exports = (function(){	
 	function getItems(options, callback) {
 		
-		var i = 0, items = [];
+		var i = 0, items = {}, seo = {}, vars = {};
 			
 		if (!options.items || options.items.length === 0) {
 			callback([]);
+			return;
+		}
+		
+		if (options.pageID) {
+			options.items.push({ id : options.pageID + '-vars-', kind : 'vars' });
+			options.items.push({ id : options.pageID, kind : 'seo' });
 		}
 		
 		async.forEach(options.items, function(item, callback) {
+			
+			if (!item.kind) {
+				item.kind = 'ids';
+			}
 			
 			var reqOptions = {
 				host: options.host, 
@@ -18,16 +30,23 @@ module.exports = (function(){
 				path: options.basePath +  '/' + item.kind +'/' + item.id + '.txt'
 			};
 			
-			getText(reqOptions, function(statusCode, content){
-				var theItem;
+			if (item.kind === 'ids') {
+				items[item.id] = {
+					content : '',
+					editorType : item.editorType,
+					classNames : 'kitgui-id-' + item.id + ' kitgui-content-type-' + item.editorType
+				};
+			}
+			
+			getText(reqOptions, function(statusCode, content) {
 				if (statusCode === 200) {
-					theItem = {
-						id: item.id, 
-						kind: item.kind, 
-						content: content, 
-						editorType : item.editorType
-					};
-					items.push(theItem);
+					if (item.kind === 'ids') {
+						items[item.id].content = content;
+					} else if (item.kind === 'vars') {
+						vars = setVars(content);
+					} else if (item.kind === 'seo') {
+						seo = setSeo(content);
+					}
 					callback();
 				} else {
 					callback();
@@ -35,8 +54,13 @@ module.exports = (function(){
 			}, function(){
 				callback();
 			});
+			
 		}, function(err) {
-			callback(items);
+			callback({
+				seo : seo,
+				vars : vars,
+				items: items
+			});
 		});
 	}
 
@@ -68,3 +92,37 @@ function getText(options, onResult, onError) {
 
     req.end();
 };
+
+function setVars(txt) {
+	var query = {};
+	try {
+		query = url.parse('/?' + txt,true).query;
+	} catch (e) { console.log(e); }
+	return query;
+}
+
+function getXmlText(xmlDom, tag) {
+	var elems = xmlDom.getElementsByTagName(tag);
+	if (elems.length < 1 || !elems[0].firstChild || !elems[0].firstChild.nodeValue) { return ''; } 
+	return elems[0].firstChild.nodeValue;
+}
+
+function getXmlBoolean($obj) {
+	var val = getXmlText($obj);
+	return (val === 'true');
+}
+
+function setSeo(txt) {
+	var seo = {}, $xml;
+	try {
+		xmlDom = new xmlParser().parseFromString(txt);
+		return {
+			title : getXmlText(xmlDom, 'title'),
+			description : getXmlText(xmlDom, 'description'),
+			keywords : getXmlText(xmlDom, 'keywords'),
+			noindex : getXmlBoolean(xmlDom, 'noindex'),
+			nofollow : getXmlBoolean(xmlDom, 'nofollow')
+		}
+	} catch (e) { console.log(e); }
+	return seo;
+}

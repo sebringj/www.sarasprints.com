@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-  
+  <link rel="stylesheet" href="/css/content.css">
 {% endblock %}
 
 {% block content %}
-	<h1>{{title}}</h1>
-	<div>{{html|safe}}</div>
+	<h1 class="content-title {{ title.classNames }}">{{ title.content | safe }}</h1>
+	<div class="content-html {{ html.classNames }}">{{ html.content | safe }}</div>
 {% endblock %}
 
 {% block foot %}

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<title>{{title}}</title>
-		<meta name="description" content="{{description}}">
+		<title>{{seo.title}}</title>
+		<meta name="description" content="{{seo.description}}">
         <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="//use.typekit.net/ody1owy.js"></script>
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
         <link href="/css/main.css" rel="stylesheet">
+		<meta name="kitgui-page-id" content="{{ kitguiPageID }}">
 		{% block head %}
 
 		{% endblock %}
@@ -22,12 +23,12 @@
 				<a href="/" class="logo"></a>
 				<a href="/up-past-8" class="up-past-8"></a>
 				<a href="/cart" class="cart"></a>
-				<a href="#" class="facebook"></a>
+				<a href="http://www.facebook.com/sarasprints" class="facebook"></a>
 				<a href="#" class="pintrest"></a>
 				<ul class="topnav">
 					<li><a href="/">home</a></li>
-					<li><a href="">my account</a></li>
-					<li><a href="">sign in</a></li>
+					<li><a href="/my-account" rel="nofollow">my account</a></li>
+					<li><a href="/sign-in" rel="nofollow">sign in</a></li>
 				</ul>
 				<ul class="productsnav">
 					<li><a href="">home</a></li>
@@ -67,8 +68,8 @@
 				</div>
 				<div class="newsletterContainer">	
 					<div class="slogan"><span>if you love sara's, you'll adore our other brands...</span></div>	
-					<a href="" class="awlogo"></a>
-					<a href="" class="pinklogo"></a>
+					<a href="http://www.americanwidgeon.com" class="awlogo"></a>
+					<a href="http://www.candybean.com" class="pinklogo"></a>
 					<form action="subscribe.html" class="subscribebar">
 						<input type="text" name="subscribeemail" placeholder="add your email" class="subscribeemail"/> 
 						<button class="subscribetext"><span>subscribe</span></button>
@@ -81,22 +82,21 @@
 			<div class="site-width">
 				<div class="footer">
 					<ul>
-						<li><span class="header">customer service</span></li>
-						<li><a href="#">faq</a></li>
-						<li><a href="#">my account</a></li>
-						<li><a href="#">sizing</a></li>
-						<li><a href="#">site map</a></li>
+						<li><a href="/customer-service"><span class="header">customer service</span></a></li>
+						<li><a href="/faq">faq</a></li>
+						<li><a href="/my-account">my account</a></li>
+						<li><a href="/sizing">sizing</a></li>
+						<li><a href="/site-map">site map</a></li>
 					</ul>
 					<ul>
-						<li><span class="header">the sara's print's story</span></li>
-						<li><a href="#">how to keep kids safe</a></li>
-						<li><a href="#">and comfortable</a></li>
+						<li><a href="/story"><span class="header">the sara's print's story</span></a></li>
+						<li><a href="/safe-and-comfortable">how to keep kids safe <br/>and comfortable</a></li>
 					</ul>
 					<ul>
-						<li><span class="header">contact us</span></li>
+						<li><a href="/contact-us"><span class="header">contact us</span></a></li>
 						<li><span>1-888-4-PRINTS</span></li>
 						<li><span>(1-800-477-4687)</span></li>
-						<li><a href="#">info@sarasprints.com</a></li>
+						<li><a href="mailto:info@sarasprints.com">info@sarasprints.com</a></li>
 					</ul>
 				</div>
 			</div>
@@ -104,7 +104,7 @@
 		<div class="last full-width">
 			<div class="site-width">
 				<div class="copyright">
-	        		<span>Copyright &copy;{{year}} by Sara's Prints | All Rights Reserved | Privacy & Security</span>
+	        		<span>Copyright &copy;{{year}} by Sara's Prints | All Rights Reserved | <a href="privacy-security">Privacy &amp; Security</a></span>
 					<div class="ccimages"></div>
 	    		</div>
 			</div>
@@ -118,9 +118,12 @@
 
 		{% endblock %}
 		<script type="text/javascript">
-			var kitgui = { key: 'd3f9de3896714860aa94d6b441376df4', tabVisible: false };
+			var kitgui = { key: '{{ kitguiAccountKey }}', tabVisible: false };
+			$(function(){
+				$('.copyright').click(function(){ kitgui.showTab(); });
+			});
 		</script>
-		<script src="//d34ic8my8k87as.cloudfront.net/js/kitgui.js"></script>
+		<script src="/kitgui/js/kitgui.js"></script>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

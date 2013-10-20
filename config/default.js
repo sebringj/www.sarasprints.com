@@ -1,10 +1,11 @@
+var kitguiAccountKey = '91665af666d748c18ada90b477463a59';
 module.exports = {
 	kitgui : {
 		host : 's3.amazonaws.com',
-		basePath : '/kitgui/clients/df3175db10a44a63a99751f5a075ddec'
+		basePath : '/kitgui/clients/' + kitguiAccountKey,
+		accountKey : kitguiAccountKey
 	},
 	hubsoft : {
-		accountKey : '',
-		defaultPromotion : ''
+		clientid : 'sarasprints'
 	}
 };
