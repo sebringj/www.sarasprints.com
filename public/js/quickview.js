@@ -29,10 +29,17 @@ $('.quick-view-modal').modal({ show : false });
 				} else if($(this).children().html() === "+") {
 					val++;
 				}
-				console.log(val);
 				$('.equal-product').html(val);
 			});
 			
+			//Change Size Skus when Product material/color changes
+			$('.pattern-dropdown').change(function() {
+				var newsizes = "";
+				for (var i=0; i<product.sizes.length; i++) {
+					newsizes += '<option value="'+product.sizes[i].sku+'">'+product.sizes[i].sizeName+'</option>';
+				}
+				$('.size-dropdown').html(newsizes);
+			});			
 			return this;
 		}
 	};
