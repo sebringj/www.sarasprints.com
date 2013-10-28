@@ -11,8 +11,8 @@
 				<span>NEW ITEMS</span>
 			</div>
 			<div class="featured-products">
-				{% for product in products %} 
-					{% include "./partials/product.html" with product only %}
+				{% for productColor in productColors %} 
+					{% include "./partials/productColor.html" with productColor only %}
 				{% endfor %}
 			</div>
 			<a href="" class="productsbar"><i class="icon-th"></i><span>SHOW MORE</span></a>
@@ -21,7 +21,5 @@
 
 {% block foot %}
 	<script src="/js/quickview.js"></script>	
-	<script src="/js/hubsoft.js"></script>	
-	<script src="/js/product.js"></script>	
 	<script src="/js/pages/index.js"></script>
 {% endblock %}

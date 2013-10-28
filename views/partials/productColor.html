@@ -1,9 +1,23 @@
-<div class="product-color">
-	<h2>{{ colors[0].productName }}</h2>
-	<img src="{{ colors[0].images[6] }}">
-	<div class="colors">
-	{% for color in colors %}
-		<div class="color">{{ color.colorName }}</div>
-	{% endfor %}
+<div class="product-container">
+	<div class="product" data-productnumber="{{ productNumber }}">
+		<a href="{{ productURL }}">
+			<span class="quick-view">QUICKVIEW</span>
+			<img src="{{ images[0] }}">
+			<span class="productName">{{ productName }}</span>
+			<span class="price">
+				{% if discount %}
+					<span class="discount">
+				{% endif %}
+						<span class="unit-price">${{ sizes[0].unitPrice }}</span>
+						<span class="msrp">${{ sizes[0].msrp }}</span>
+				{% if discount %}
+					</span>
+				{% endif %}
+			</span>
+		</a>
 	</div>
+	<div></div>
+	<button class="add-to-cart">
+		<span class="text-container"><i class="icon-shopping-cart"></i><span class="text">add to cart</span></span>
+	</button>
 </div>

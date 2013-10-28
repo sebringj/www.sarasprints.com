@@ -23,7 +23,7 @@
 
     hs.cart.triggerUpdateUI();
     hs.ready(function () {
-        drawProduct();
+        //drawProduct();
     });
 
     // events

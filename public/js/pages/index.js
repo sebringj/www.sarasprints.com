@@ -2,6 +2,7 @@ $('.featured-products').on('click','.product .quick-view', function(ev) {
 	ev.preventDefault();
 	ev.stopPropagation();
 	var productNumber = $(this).closest('.product').data('productnumber');
+	console.log(hubsoft.clientid);
 	hubsoft.ready(function(){
 		hubsoft.getProducts({
 			productNumber : productNumber

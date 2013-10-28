@@ -16,7 +16,7 @@ module.exports.set = function(context) {
 			res.render('index', {
 				year : year,
 				seo : cache.home.kitgui.seo,
-				products : cache.home.products,
+				productColors : cache.home.productColors,
 				kitgui : cache.home.kitgui,
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
@@ -32,23 +32,23 @@ module.exports.set = function(context) {
 			cache.home = {};
 			async.parallel([
 				function(callback) {
-					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?tags=Jackets'}, function(status, data) {
-						var i = 0, len, product, size, removeCount, keepCount = 4;
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors'}, function(status, data) {
+						var i = 0, len, productColor, size, removeCount, keepCount = 4;
 						if (status === 200) {
 							// reduce array to 4 items
-							if (data.products.length >= keepCount) {
-								removeCount = data.products.length - keepCount;
-								data.products.splice(0,removeCount);
+							if (data.length >= keepCount) {
+								removeCount = data.length - keepCount;
+								data.splice(0,removeCount);
 							}
-							len = data.products.length;
+							len = data.length;
 							for(; i < len; i++) {
-								product = data.products[i];
-								size = product.sizes[0];
+								productColor = data[i];
+								size = productColor.colors[0].sizes[0];
 								if (size.msrp > size.unitPrice) {
 									product.discount = true;
 								}
 							}
-							cache.home.products = data.products;
+							cache.home.productColors = data;
 						} else {
 							cache.home = [];
 						}
@@ -87,13 +87,29 @@ module.exports.set = function(context) {
 		});
 	});
 	app.get(/-detail$/, function(req, res) {
-		res.render('product', {
-			year : year,
-			title : "product",
-			clientid : clientid,
-			kitguiAccountKey : kitguiAccountKey,
-			kitguiPageID : getPageID(req.path)
-		});
+		
+		function renderProduct(product) {
+			res.render('product', {
+				year : year,
+				title : product.productName,
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : getPageID(req.path),
+				product : product
+			});
+		}
+		
+		console.log('/api/v1/products?productURL' + req.path)
+		
+		if (!req.query.refresh && cache[req.path]) {
+			renderProduct(cache[req.path]);
+		} else {
+			getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {
+				console.log(data);
+				cache[req.path] = data.product;
+				renderProduct(cache[req.path]);
+			});
+		}
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
 		res.render('catalog', {

@@ -29,7 +29,9 @@
 	display:block;
 	width:360px;
 	height:480px;
-	background-image:url(/img/girls-fuzzy-fleece.png);
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center center;
 }
 .product-colors {
 	position:relative;
