@@ -1,16 +1,16 @@
 <div class="product-container">
-	<div class="product" data-productnumber="{{ productNumber }}">
-		<a href="{{ productURL }}">
+	<div class="product" data-productnumber="{{ colors[0].productNumber }}">
+		<a href="{{ colors[0].productURL }}">
 			<span class="quick-view">QUICKVIEW</span>
-			<img src="{{ images[0] }}">
-			<span class="productName">{{ productName }}</span>
+			<img src="{{ colors[0].images[0] }}">
+			<span class="productName">{{ colors[0].productName }}</span>
 			<span class="price">
-				{% if discount %}
+				{% if colors[0].discount %}
 					<span class="discount">
 				{% endif %}
-						<span class="unit-price">${{ sizes[0].unitPrice }}</span>
-						<span class="msrp">${{ sizes[0].msrp }}</span>
-				{% if discount %}
+						<span class="unit-price">${{ colors[0].sizes[0].unitPrice }}</span>
+						<span class="msrp">${{ colors[0].sizes[0].msrp }}</span>
+				{% if colors[0].discount %}
 					</span>
 				{% endif %}
 			</span>

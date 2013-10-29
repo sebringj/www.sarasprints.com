@@ -42,7 +42,7 @@
 .nav-list {
 	display:block;
 	text-align:left;
-	margin-top:20px;
+	margin-top:40px;
 	padding:0;
 }
 .nav-list li {
@@ -60,13 +60,6 @@
 	font-size:15px;
 	font-weight:300;
 	color:black;	
-}
-.nav-list li a.fuzzy {
-	display:inline-block;
-	background-image:url(/img/fuzzy.png);
-	background-position:top left;
-	background-repeat:no-repeat;
-	padding-top:20px;
 }
 .right-column-catalog {
 	position:relative;

@@ -45,7 +45,7 @@ module.exports.set = function(context) {
 								productColor = data[i];
 								size = productColor.colors[0].sizes[0];
 								if (size.msrp > size.unitPrice) {
-									product.discount = true;
+									productColor.discount = true;
 								}
 							}
 							cache.home.productColors = data;
@@ -99,13 +99,10 @@ module.exports.set = function(context) {
 			});
 		}
 		
-		console.log('/api/v1/products?productURL' + req.path)
-		
 		if (!req.query.refresh && cache[req.path]) {
 			renderProduct(cache[req.path]);
 		} else {
 			getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {
-				console.log(data);
 				cache[req.path] = data.product;
 				renderProduct(cache[req.path]);
 			});

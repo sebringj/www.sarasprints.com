@@ -38,9 +38,15 @@
 	display:block;
 	padding-left:68px;
 }
-.product-colors  a {
+.product-colors a {
 	display:inline-block;
 	margin-right:10px;
+	margin-bottom:10px;
+	overflow:hidden;
+	width:50px;
+	height:50px;
+	background-color:#ccc;
+	font-size:0;
 }
 .swatch-text {
 	display:block;

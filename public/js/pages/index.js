@@ -8,17 +8,15 @@ $('.featured-products').on('click','.product .quick-view', function(ev) {
 			productNumber : productNumber
 		}, function(data) {
 		    var p = data.product,
-		    	s = p.sizes[0], 
-		    	unitPrice = s.unitPrice,
-		    	msrp = s.msrp,
-		    	isSale = (unitPrice < msrp);
-		    	console.log(p)
+		    	s = p.sizes[0];
 		    	
-		    p.unitPrice = unitPrice.toFixed(2);
-		    p.msrp = msrp.toFixed(2);
-		    p.isSale = isSale;	
+		    p.unitPrice = s.unitPrice.toFixed(2);
+		    p.msrp = s.msrp.toFixed(2);
+		    p.isSale = (p.unitPrice < p.msrp);
+			
+			console.log(p.image);
 		    	
-			quickView.set(data.product).show();
+			quickView.set(p).show();
 		});
 	});
 });

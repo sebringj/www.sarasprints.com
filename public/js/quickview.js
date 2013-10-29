@@ -16,7 +16,6 @@ $('.quick-view-modal').modal({ show : false });
 			var output = swig.compile(this.tpl,{});
 			var html = output(product);
 			$('.quick-view-modal').html(html);
-			console.log(product);
 			// hack to overcome raw and safe options not working	
 			$('.quick-view-modal .product-description').html(product.descriptions[0]);
 			

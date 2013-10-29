@@ -21,9 +21,9 @@
 		<div class="line-break"></div>
 		<div class="product-price">
 			{% if isSale %}
-				<span class="slash">${{ msrp.toFixed(2) }}</span>
+				<span class="slash">${{ product.sizes[0].msrp }}</span>
 			{% endif %}
-			<span>${{ unitPrice.toFixed(2) }}</span>
+			<span>${{ product.sizes[0].unitPrice }}</span>
 		</div>
 		<div class="select-pattern">
 			<select class="pattern-dropdown">
@@ -43,7 +43,7 @@
 		</div>
 		<div class="product-next">
 			<a href=""><span class="minus-product">-</span></a>
-			<a href=""><span class="equal-product">2</span></a>
+			<a href=""><span class="equal-product">1</span></a>
 			<a href=""><span class="add-product">+</span></a>
 		</div>
 		<div class="product-add-to-cart">
