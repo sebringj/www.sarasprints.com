@@ -17,7 +17,7 @@ module.exports.set = function(context) {
 				year : year,
 				seo : cache.home.kitgui.seo,
 				productColors : cache.home.productColors,
-				kitgui : cache.home.kitgui,
+				kitgui : cache.home.kitgui.items,
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
 				kitguiPageID : getPageID(req.path)
@@ -77,14 +77,66 @@ module.exports.set = function(context) {
 			});
 		}
 	});
+	app.get('/cart', function(req, res) {
+		function render() {
+			res.render('contactus', {
+				year : year,
+				title : "Cart",
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : getPageID(req.path),
+				seo : cache.cart.kitgui.seo,
+				kitgui : cache.cart.kitgui.items
+			});	
+		}
+		if (req.query.refresh) {
+			delete cache.cart;
+		}
+		if (cache.cart) {
+			render();
+		} else {
+			cache.cart = {};
+			kitgui.getContents({
+				basePath : config.kitgui.basePath,
+				host : config.kitgui.host,
+				pageID : 'cart'
+			}, function(kg){
+				cache.cart.kitgui = kg;
+				render();
+			});
+		}
+	});
 	app.get('/contact-us', function(req, res) {
-		res.render('contactus', {
-			year : year,
-			title : "Contact Us",
-			clientid : clientid,
-			kitguiAccountKey : kitguiAccountKey,
-			kitguiPageID : getPageID(req.path)
-		});
+		function render() {
+			res.render('contactus', {
+				year : year,
+				title : "Contact Us",
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : getPageID(req.path),
+				kitgui : cache.contact.kitgui.items,
+				seo : cache.contact.kitgui.seo,
+			});
+		}
+		if (req.query.refresh) {
+			delete cache.contact;
+		}
+		if (cache.contact) {
+			render();
+		} else {
+			cache.contact = {};
+			kitgui.getContents({
+				basePath : config.kitgui.basePath,
+				host : config.kitgui.host,
+				pageID : 'contact-us',
+				items : [
+					{ id : 'contactuswording', editorType : 'inline' }
+				]
+			}, function(kg){
+				cache.contact.kitgui = kg;
+				render();
+			});
+		}
 	});
 	app.get(/-detail$/, function(req, res) {
 		
@@ -107,6 +159,7 @@ module.exports.set = function(context) {
 				renderProduct(cache[req.path]);
 			});
 		}
+		
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
 		res.render('catalog', {
@@ -166,6 +219,15 @@ module.exports.set = function(context) {
 		res.type('txt').send('not found');
 	});
 };
+
+function setCache(req, cache, key) {
+	if (req.query.refres) {
+		delete cache[key];
+	}
+	if (!cache[key]) {
+		cache[key] = {};
+	}
+}
 
 function getPageID(path) {
 	return path.replace(/[^a-z0-9]/gi,'-').replace(/-+/gi,'-');
