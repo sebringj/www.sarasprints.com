@@ -32,12 +32,21 @@ $('.quick-view-modal').modal({ show : false });
 			});
 			
 			//Change Size Skus when Product material/color changes
-			$('.pattern-dropdown').change(function() {
-				var newsizes = "";
-				for (var i=0; i<product.sizes.length; i++) {
-					newsizes += '<option value="'+product.sizes[i].sku+'">'+product.sizes[i].sizeName+'</option>';
-				}
-				$('.size-dropdown').html(newsizes);
+			$('.pattern-dropdown').change(function() {	
+				$('.size-dropdown').prop('disabled',true);
+				var newPattern = $(this).val();
+				hubsoft.getProducts({
+						productNumber : newPattern
+				}, function(data) {
+						var p = data.product;
+						console.log(p);
+						var newOpts = '<option value="">Select Size</option>';
+						for (var i=0; i<p.sizes.length; i++) {
+							newOpts += '<option value="'+product.sizes[i].sku+'">'+product.sizes[i].sizeName+'</option>';
+						}
+					$('.size-dropdown').html(newOpts);
+					$('.size-dropdown').prop('disabled',false);
+				});
 			});			
 			return this;
 		}
