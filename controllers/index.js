@@ -79,14 +79,18 @@ module.exports.set = function(context) {
 	});
 	app.get('/cart', function(req, res) {
 		function render() {
-			res.render('contactus', {
+			res.render('cart', {
 				year : year,
 				title : "Cart",
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
 				kitguiPageID : getPageID(req.path),
 				seo : cache.cart.kitgui.seo,
-				kitgui : cache.cart.kitgui.items
+				kitgui : cache.cart.kitgui.items,
+				breadcrumb : [
+					{ link : '/', label: 'home' },
+					{ label: 'cart'}
+				]
 			});	
 		}
 		if (req.query.refresh) {
@@ -101,10 +105,18 @@ module.exports.set = function(context) {
 				host : config.kitgui.host,
 				pageID : 'cart'
 			}, function(kg){
+				if (!kg.seo) {
+					kg.seo = {};
+				}
 				cache.cart.kitgui = kg;
 				render();
 			});
 		}
+	});
+	app.get('/checkout', function(req, res){
+		res.render('checkout', {
+			title : 'checkout'
+		});
 	});
 	app.get('/contact-us', function(req, res) {
 		function render() {

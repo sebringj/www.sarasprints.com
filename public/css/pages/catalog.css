@@ -1,22 +1,5 @@
-.content {
-	font-size:0;
-	background-color:#fff;
-}
-.inner-content {
-	padding:20px;
-}
-.breadcrumb {
-	min-height:30px;
-	background-color:#fff;
-	border-bottom:1px solid #bcc0c0;
-	margin-bottom:15px;
-	border-radius:0;
-}
-.breadcrumb span {
-	font-size:15px;
-	position:relative;
-	top:10px;
-	left:-13px;
+.middle .content {
+	background:#fff;
 }
 .left-column-catalog {
 	display:block;

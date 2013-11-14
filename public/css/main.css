@@ -165,7 +165,6 @@ body {
 .middle a {
 	text-decoration:none;
 	vertical-align:center;
-	color:#fff;
 }
 .middle .subscribebar .subscribeemail {
 	position:absolute;
@@ -255,4 +254,18 @@ body {
 	right:100px;
 	bottom:27px;
 	background-image:url(/img/ccimages.png);
+}
+.modal { display:none; }
+ul.sp-breadcrumb {
+	display:block;
+	background-color:#fff;
+	padding:5px 10px;
+	width:798px;
+	margin:0 auto;
+}
+ul.sp-breadcrumb li {
+	list-style:none;
+	display:inline-block;
+	padding:0;
+	margin:0;
 }

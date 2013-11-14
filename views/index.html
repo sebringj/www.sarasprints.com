@@ -1,22 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/pages/index.css">
 {% endblock %}
 
 {% block content %}
-		<div class="top-banner {{ kitgui.homeslider.classNames }}">{{ kitgui.homeslider.content | safe }}</div>
-		<div class="products">
-			<div class="title">
-				<span>NEW ITEMS</span>
-			</div>
-			<div class="featured-products">
-				{% for productColor in productColors %} 
-					{% include "./partials/productColor.html" with productColor only %}
-				{% endfor %}
-			</div>
-			<a href="" class="productsbar"><i class="icon-th"></i><span>SHOW MORE</span></a>
+	<div class="top-banner {{ kitgui.homeslider.classNames }}">{{ kitgui.homeslider.content | safe }}</div>
+	<div class="products">
+		<div class="title">
+			<span>NEW ITEMS</span>
 		</div>
+		<div class="featured-products">
+			{% for productColor in productColors %} 
+				{% include "./partials/productColor.html" with productColor only %}
+			{% endfor %}
+		</div>
+		<a href="" class="productsbar"><i class="fa fa-th"></i> <span>SHOW MORE</span></a>
+	</div>
 {% endblock %}
 
 {% block foot %}
