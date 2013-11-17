@@ -36,6 +36,11 @@ module.exports.set = function(context) {
 						var i = 0, len, productColor, size, removeCount, keepCount = 4;
 						if (status === 200) {
 							// reduce array to 4 items
+							if (!data || !data.length) { 
+								cache.home.productColors = [];
+								callback();
+								return; 
+							}
 							if (data.length >= keepCount) {
 								removeCount = data.length - keepCount;
 								data.splice(0,removeCount);
@@ -50,7 +55,7 @@ module.exports.set = function(context) {
 							}
 							cache.home.productColors = data;
 						} else {
-							cache.home = [];
+							cache.home.productColors = [];
 						}
 						callback();
 					});
@@ -159,7 +164,8 @@ module.exports.set = function(context) {
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
 				kitguiPageID : getPageID(req.path),
-				product : product
+				product : product,
+				seo : { title : product.productName, description : product.metaDescription }
 			});
 		}
 		
@@ -169,6 +175,8 @@ module.exports.set = function(context) {
 			getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {
 				cache[req.path] = data.product;
 				renderProduct(cache[req.path]);
+			}, function() {
+				res.redirect('/500');
 			});
 		}
 		
@@ -229,6 +237,11 @@ module.exports.set = function(context) {
 			return;
 		}
 		res.type('txt').send('not found');
+	});
+	app.use(function(err, req, res, next){
+		res.status(err.status || 500);
+		console.log(err);
+		res.render('500', { error: err });
 	});
 };
 
