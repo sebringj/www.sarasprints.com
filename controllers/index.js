@@ -36,6 +36,7 @@ module.exports.set = function(context) {
 						var i = 0, len, productColor, size, removeCount, keepCount = 4;
 						if (status === 200) {
 							// reduce array to 4 items
+							console.log(data)
 							if (!data || !data.length) { 
 								cache.home.productColors = [];
 								callback();

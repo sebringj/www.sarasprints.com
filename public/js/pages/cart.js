@@ -22,6 +22,8 @@
                 $('#cart').fadeOut('fast', function () {
                     $('#no-items').fadeIn('fast');
                 });
+            } else {
+            	$('#cart').show();
             }
         });
     }

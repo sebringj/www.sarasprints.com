@@ -5,10 +5,10 @@ hubsoft.ready(function(){
 		var count = hubsoft.cart.itemCount(),
 		label = (count === 1) ? 'item' : 'items';
 			
-		$('.top .items [data-quantity]').text(count + ' ' + label);
+		$('.top .items [data-quantity] a').text(count + ' ' + label);
 		hubsoft.getCartProducts(function(data){
 			console.log(data);
-			$('.top .items [data-subtotal]').text(data.subtotal);
+			$('.top .items [data-subtotal] a').text(data.subtotal);
 		});
 	});	
 	hubsoft.cart.triggerUpdateUI();
