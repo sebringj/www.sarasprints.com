@@ -3,7 +3,8 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 	path = require('path'),
 	config = require('config'),
 	cache = {},
-	async = require('async');
+	async = require('async'),
+	fs = require('fs');
 
 module.exports.set = function(context) {
 	var app = context.app;
@@ -183,13 +184,58 @@ module.exports.set = function(context) {
 		
 	});
 	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
-		res.render('catalog', {
-			year : year,
-			title : "Catalog",
-			clientid : clientid,
-			kitguiAccountKey : kitguiAccountKey,
-			kitguiPageID : getPageID(req.path)
+		
+		var productColors = [];
+		var seo = {};
+		var kg = {};
+		
+		var tag = req.path.split('/').pop();
+		
+		function render() {
+			res.render('catalog', {
+				year : year,
+				title : "Catalog",
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : tag,
+				productColors : productColors,
+				seo: seo,
+				kitgui : kg
+			});			
+		}
+		
+		async.parallel([
+			function(callback){
+				getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors?tags=' + tag}, function(data){
+					productColors = data;
+					callback();
+				});
+			},
+			function(callback) {
+				kitgui.getContents({
+					basePath : config.kitgui.basePath,
+					host : config.kitgui.host,
+					pageID : tag,
+					items : [
+						{ id : tag + '-header', editorType : 'inline' },
+						{ id : tag + '-boxtitle', editorType : 'inline' },
+						{ id : tag + '-boxdescription', editorType : 'inline' }
+					]
+				}, function(result){
+					kg = {
+						header : result.items[tag + '-header'],
+						boxtitle : result.items[tag + '-boxtitle'],
+						boxdescription : result.items[tag + '-boxdescription']
+					};
+					seo = result.seo;
+					callback();
+				});
+			}
+		],
+		function(err){
+			render();
 		});
+		
 	});
 	app.get(/^\/(privacy-security|terms|return-policy|safe-and-comfortable|faq|team|story|sizing|site-map|customer-service)$/, function(req, res) {
 		var prefix = getPageID(req.path);
@@ -216,11 +262,21 @@ module.exports.set = function(context) {
 	});
 	app.get(/^\/templates\/[a-z\.A-Z0-9]+$/, function(req, res, next){
 		var filename = path.resolve('./views/partials/') + '/' + req.path.split('/').pop();
-		res.sendfile(filename);
+		fs.exists(filename, function (exists) {
+			if (!exists) {
+				res.end('dne');
+				return;
+			}
+			var stream = fs.createReadStream(filename);
+			stream.pipe(res);
+		});
 	});
 	app.get('/refresh', function(req, res){
 		cache = {};
 		res.json({ message : 'ok' });
+	});
+	app.get('/500',function(req, res){
+		res.render('500', {})
 	});
 	app.use(function(req, res, next){
 		res.status(404);

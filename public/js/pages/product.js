@@ -1,14 +1,3 @@
-hubsoft.ready(function(){
-	$('.pattern-dropdown').change(function(){
-		var $this = $(this),
-		productNumber = $this.val();
-		if (productNumber === '') {
-			return;
-		}
-		hubsoft.getProducts({
-			productNumber : productNumber
-		}, function(json){
-			console.log(json);
-		});
-	});
-});
+(function(){
+	$('[data-colors]').val($('.product-code [data-productnumber]').text());
+})();

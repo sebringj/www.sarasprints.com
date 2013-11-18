@@ -5,51 +5,52 @@
 {% endblock %}
 
 {% block content %}
+<div data-product>
 	<div class="left-column">
-		<div class="big-product-image" style="background-image:url({{ product.images[0] }})"></div>
+		<div class="big-product-image" data-big-product-image style="background-image:url({{ product.images[0] }})"></div>
 		<div class="product-colors">
 			{% for color in product.colors %}	
-				<a href="{{ color.productURL }}"><span class="swatch-text">{{ color.colorName }}</span><span class="swatch-color" style="background-color:{{ color.colorValue }};background-image:url('{{ color.imageSwatchUrl }}')"></span></a>
+				<a href="{{ color.productURL }}" data-productnumber="{{ color.productNumber }}" data-color><span class="swatch-text">{{ color.colorName }}</span><span class="swatch-color" style="background-color:{{ color.colorValue }};background-image:url('{{ color.imageSwatchUrl }}')"></span></a>
 			{% endfor %}
 		</div>
 	</div>
 	<div class="right-column">
 		<div class="product-name">
-			<span>{{ product.productName }}</span>
+			<span data-product-name>{{ product.productName }}</span>
 		</div>
 		<div class="line-break"></div>
 		<div class="product-price">
 			{% if isSale %}
 				<span class="slash">${{ product.sizes[0].msrp }}</span>
 			{% endif %}
-			<span>${{ product.sizes[0].unitPrice }}</span>
+			<span data-product-price>${{ product.sizes[0].unitPrice }}</span>
 		</div>
 		<div class="select-pattern">
-			<select class="pattern-dropdown">
+			<select class="pattern-dropdown" data-colors>
 			  	<option value="">Select Pattern</option>
 			  	{% for color in product.colors %}
 				<option value="{{ color.productNumber }}">{{ color.colorName }}</option>
 				{% endfor %}
-			</select>
+			</select>  <i class="fa fa-asterisk" data-required style="display:none"></i>
 		</div>
 		<div class="select-size">
-			<select class="size-dropdown">
+			<select class="size-dropdown" data-sizes>
 			  	<option value="">Select Size</option>
 			  	{% for size in product.sizes %}
 				<option value="{{ size.sku }}">{{ size.sizeName }}</option>
 				{% endfor %}
-			</select>
+			</select> <i class="fa fa-asterisk" data-required style="display:none"></i>
 		</div>
-		<div class="product-next">
-			<a href=""><span class="minus-product">-</span></a>
-			<a href=""><span class="equal-product">1</span></a>
-			<a href=""><span class="add-product">+</span></a>
+		<div class="product-next unselectable">
+			<a data-decrement><span class="minus-product">-</span></a>
+			<a><span class="equal-product" data-quantity>1</span></a>
+			<a data-increment><span class="add-product">+</span></a>
 		</div>
 		<div class="product-add-to-cart">
-			<a href=""><span class="click-add-to-cart">ADD TO CART</span></a>
+			<a href=""><span class="click-add-to-cart" data-add-to-cart>ADD TO CART</span></a>
 		</div>
 		<div class="product-code">
-			<span>Product Code: {{ product.productNumber }}</span>
+			<span>Product Code: <span data-productnumber>{{ product.productNumber }}</span></span>
 		</div>
 		<div class="product-availability"><span>
 			{% if inStock %}
@@ -61,6 +62,7 @@
 		<div class="product-description"><span>{{ product.descriptions[0] }}</span>
 		</div>
 	</div>
+</div>
 {% endblock %}
 
 {% block foot %}

@@ -2,6 +2,9 @@
 	background-color:#fff;
 	padding:0 20px;
 }
+#cartList {
+	margin-bottom:20px;
+}
 #cart {
     width:600px;
     margin:0 auto;

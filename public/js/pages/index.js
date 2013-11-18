@@ -7,14 +7,18 @@ $('.featured-products').on('click','.product .quick-view', function(ev) {
 		hubsoft.getProducts({
 			productNumber : productNumber
 		}, function(data) {
+			
+			if (!data.product) {
+				alert('could not fetch product');
+				return;
+			}
+			
 		    var p = data.product,
 		    	s = p.sizes[0];
 		    	
 		    p.unitPrice = s.unitPrice.toFixed(2);
 		    p.msrp = s.msrp.toFixed(2);
 		    p.isSale = (p.unitPrice < p.msrp);
-			
-			console.log(p.image);
 		    	
 			quickView.set(p).show();
 		});

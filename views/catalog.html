@@ -8,23 +8,24 @@
 	<div class="left-column-catalog">
 		<a href="" class="departments"><span>DEPARTMENTS</span></a>
 		<ul class="nav-list">
-			<li><a href="">GIRLS</a></li>
-			<li><a href="">BOYS</a></li>
-			<li><a href="">Up Past 8</a></li>
-			<li><a href="">FUZZY FLEECE</a></li>
-			<li><a href="">SALE</a></li>
+			<li><a href="/pjs-for-girls">GIRLS</a></li>
+			<li><a href="/pjs-for-boys">BOYS</a></li>
+			<li><a href="/up-past-8">Up Past 8</a></li>
+			<li><a href="/fuzzy-fleece">FUZZY FLEECE</a></li>
+			<li><a href="/sale">SALE</a></li>
 		</ul>
 	</div>
 	<div class="right-column-catalog">
-		<div class="catalog-header">HEADER</div>
+		<div class="catalog-header {{ kitgui.catalogheader.classNames }}">{{ kitgui.catalogheader.content }}</div>
 		<div class="right-container">
-			<div class="right-container-title">SLUMBER AND SMILE</div>
+			<div class="right-container-title {{ kitgui.boxtitle.classNames }}">{{ kitgui.boxtitle.content }}</div>
 			<div class="right-container-border"></div>
-			<div class="right-container-description">
-				Lorem ipsum dolor sit amet, consectetuer sed diam noncidunt ut 
-				ut laoreet doloedfgfffen fojneorn oenog ioirjgo jgr[jrjrioe[j 
+			<div class="right-container-description {{ kitgui.boxdescription.classNames }}">
+				{{ kitgui.boxescription.content }}
 			</div>
-			<div class="right-banner"></div>
+			<div class="right-banner {{ kitgui.boximage.classNames }}">
+				{{ kitgui.boximage.content }}
+			</div>
 		</div>
 		<div class="sort-product-bar">
 			<div class="left-dropdown">
@@ -45,9 +46,18 @@
 				</select>
 			</div>
 		</div>
+		<div class="productColors">
+			{% for productColor in productColors %}
+				<div class="product" data-productnumber="{{ productColor.colors[0].productNumber }}">
+					<div class="product-image" style="background-image:url('{{ productColor.colors[0].images[0] }}');"></div>
+					<div class="product-name">{{ productColor.colors[0].productName }}</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}
 
 {% block foot %}
 	{% include "./partials/quickview.html" %}
+	<script src=""></script>
 {% endblock %}
