@@ -160,6 +160,7 @@ module.exports.set = function(context) {
 	app.get(/-detail$/, function(req, res) {
 		
 		function renderProduct(product) {
+			console.log(product);
 			res.render('product', {
 				year : year,
 				title : product.productName,

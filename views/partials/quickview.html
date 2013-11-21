@@ -9,7 +9,7 @@
 		<div class="big-product-image" data-big-product-image style="background-image:url('{{ images[0] }}')"></div>
 		<div class="product-colors">
 			{% for color in colors %}	
-				<a href="{{ color.productURL }}" data-color data-productnumber="{{ color.productNumber }}"><span class="swatch-text">{{ color.colorName }}</span><span class="swatch-color" style="background-color:{{ color.colorValue }};background-image:url('{{ color.imageSwatchUrl }}')"></span></a>
+				<a href="{{ color.productURL }}" data-color data-productnumber="{{ color.productNumber }}"><span class="swatch-color" style="background-image:url('{{ color.images[6] }}')"></span></a>
 			{% endfor %}
 		</div>
 		</div>
