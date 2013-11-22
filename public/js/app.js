@@ -111,7 +111,11 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 	productNumber = $this.data('productnumber');
 	
 	$parent.find('[data-colors]').val(productNumber).trigger('change');
-	window.scrollTo(0,0);
+	if ($parent.closest('.modal').length) {
+		$parent.closest('.modal').scrollTop(0);
+	} else {
+		window.scrollTo(0,0);
+	}
 });
 $('body').on('click','.product .quick-view', function(ev) {
 	ev.preventDefault();
