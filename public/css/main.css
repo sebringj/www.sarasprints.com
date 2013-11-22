@@ -377,3 +377,12 @@ li span.sp-breadcrumb-label {
 .quick-view-modal {
 	display : none;
 }
+.selected {
+	color:#fff !important;
+	text-shadow:1px 1px 3px #000;
+}
+.selected img {
+    -moz-box-shadow:    3px 3px 5px 0px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 0px #ccc;
+    box-shadow:         3px 3px 5px 0px #ccc;
+}

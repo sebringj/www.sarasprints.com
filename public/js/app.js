@@ -14,6 +14,20 @@ hubsoft.ready(function(){
 	hubsoft.cart.triggerUpdateUI();
 });
 
+$('a[href]').each(function(){
+	var $this = $(this),
+	href = $this.attr('href'),
+	path = location.pathname;
+	if (href === '/' && path === '/') {
+		$this.addClass('selected');
+		return;
+	} else if (href === '/') {
+		return;
+	} else if (path.indexOf(href) === 0) {
+		$this.addClass('selected');
+	}
+});
+
 $('body').on('click','[data-add-to-cart]',function(ev){
 	ev.preventDefault();
 
