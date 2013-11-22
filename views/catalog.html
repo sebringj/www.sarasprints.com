@@ -10,7 +10,7 @@
 		<ul class="nav-list">
 			<li><a href="/pjs-for-girls">GIRLS</a></li>
 			<li><a href="/pjs-for-boys">BOYS</a></li>
-			<li><a href="/up-past-8">Up Past 8</a></li>
+			<li><a href="/up-past-8"><img src="/img/up-past-8.png"></a></li>
 			<li><a href="/fuzzy-fleece">FUZZY FLEECE</a></li>
 			<li><a href="/sale">SALE</a></li>
 		</ul>
@@ -47,11 +47,8 @@
 			</div>
 		</div>
 		<div class="productColors">
-			{% for productColor in productColors %}
-				<div class="product" data-productnumber="{{ productColor.colors[0].productNumber }}">
-					<div class="product-image" style="background-image:url('{{ productColor.colors[0].images[0] }}');"></div>
-					<div class="product-name">{{ productColor.colors[0].productName }}</div>
-				</div>
+			{% for product in products %} 
+				{% include "./partials/product.html" with product only %}
 			{% endfor %}
 		</div>
 	</div>
@@ -59,5 +56,5 @@
 
 {% block foot %}
 	{% include "./partials/quickview.html" %}
-	<script src=""></script>
+	<script src="/js/quickview.js"></script>
 {% endblock %}

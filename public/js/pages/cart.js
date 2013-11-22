@@ -1,10 +1,7 @@
 (function () {
-	var cartTemplate = '', tpl;
-	$.get('/templates/cart.html', function(data){
-		console.log(data);
-		cartTemplate = data;
-		tpl = swig.compile(cartTemplate,{});
-	});
+	var cartTemplate = $('#carttemplate').html(), tpl;
+	tpl = swig.compile(cartTemplate,{});
+	
     function updateCart() {
         hubsoft.getCartProducts(function (data) {
             var i, len, item;

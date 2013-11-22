@@ -94,12 +94,16 @@ module.exports.set = function(context) {
 				kitguiPageID : getPageID(req.path),
 				seo : cache.cart.kitgui.seo,
 				kitgui : cache.cart.kitgui.items,
+				cartFile : cache.cart.cartFile,
 				breadcrumb : [
 					{ link : '/', label: 'home' },
 					{ label: 'cart'}
 				]
 			});	
 		}
+		
+		var cartFile = '';
+		
 		if (req.query.refresh) {
 			delete cache.cart;
 		}
@@ -107,15 +111,28 @@ module.exports.set = function(context) {
 			render();
 		} else {
 			cache.cart = {};
-			kitgui.getContents({
-				basePath : config.kitgui.basePath,
-				host : config.kitgui.host,
-				pageID : 'cart'
-			}, function(kg){
-				if (!kg.seo) {
-					kg.seo = {};
+			async.parallel([
+				function(callback){
+					kitgui.getContents({
+						basePath : config.kitgui.basePath,
+						host : config.kitgui.host,
+						pageID : 'cart'
+					}, function(kg){
+						if (!kg.seo) {
+							kg.seo = {};
+						}
+						cache.cart.kitgui = kg;
+						callback();
+					});
+				},
+				function(callback) {
+					var filename = path.resolve('./views/partials/cart.html');
+					fs.readFile(filename, function(err, data) {
+						cache.cart.cartFile = data;
+						callback();
+					});
 				}
-				cache.cart.kitgui = kg;
+			], function(err){
 				render();
 			});
 		}
@@ -184,31 +201,47 @@ module.exports.set = function(context) {
 		}
 		
 	});
-	app.get(/^\/(pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)$/, function(req, res) {
+	app.get(/^\/(catalog|pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)\/?$/, function(req, res) {
 		
-		var productColors = [];
+		function makeProper(str) {
+			var ls = str.split('-');
+			/*for(var i = 0; i < ls.length; i++) {
+				if (ls[i].length > 1) {
+					ls[i] = ls[i].substr(0,1)() + ls[i].substr(1);
+				}
+			}*/
+			return ls.join(' ');
+		}
+		
+		var products = [];
 		var seo = {};
 		var kg = {};
 		
 		var tag = req.path.split('/').pop();
+		var properTag = makeProper(tag);
+		var tagQuery = (tag === 'catalog') ? '' : tag;
 		
 		function render() {
 			res.render('catalog', {
 				year : year,
-				title : "Catalog",
+				title : properTag + " catalog",
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
 				kitguiPageID : tag,
-				productColors : productColors,
+				products : products,
 				seo: seo,
-				kitgui : kg
+				kitgui : kg,
+				breadcrumb : [
+					{ link : '/', label: 'home' },
+					{ label: properTag}
+				]
 			});			
 		}
 		
 		async.parallel([
 			function(callback){
-				getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors?tags=' + tag}, function(data){
-					productColors = data;
+				getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?tags=' + tagQuery}, function(status,data){
+					products = data.products;
 					callback();
 				});
 			},

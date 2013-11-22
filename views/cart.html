@@ -10,5 +10,8 @@
 {% endblock %}
 
 {% block foot %}
+	<script type="text/template" id="carttemplate">
+	{{ cartFile | safe }}
+	</script>
 	<script src="/js/pages/cart.js"></script>
 {% endblock %}

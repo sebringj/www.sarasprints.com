@@ -27,6 +27,7 @@
 	text-align:left;
 	margin-top:40px;
 	padding:0;
+	margin-left:20px;
 }
 .nav-list li {
 	list-style:none;
@@ -54,7 +55,7 @@
 	overflow:hidden;
 }
 .catalog-header {
-	padding:3px 0 3px 0;
+	padding:0;
 	font-size:24px;
 	border-bottom:1px solid #bcc0c0;
 	margin-bottom:45px;
@@ -169,4 +170,11 @@
 .middle .price .discount .unit-price { 
 	color:#f00;
 	margin-left:10px; 
+}
+.product-image {
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-size:contain;
+	width:200px;
+	height:300px;
 }
