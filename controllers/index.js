@@ -11,6 +11,44 @@ module.exports.set = function(context) {
 	var year = (new Date()).getFullYear();
 	var clientid = config.hubsoft.clientid;
 	var kitguiAccountKey = config.kitgui.accountKey;
+	var mailchimp = context.mailchimp;
+	
+	function commonFlow(options) {
+		
+		var kitguiItems = [];
+		if (options.items) {
+			kitguiItems = options.items;
+		}
+		
+		function render() {
+			options.res.render(options.template, {
+				year : year,
+				title : options.pageID,
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : getPageID(options.req.path),
+				kitgui : cache[options.cacheKey].kitgui.items,
+				seo : cache[options.cacheKey].kitgui.seo,
+			});
+		}
+		if (options.req.query.refresh) {
+			delete cache[options.cacheKey];
+		}
+		if (cache[options.cacheKey]) {
+			render();
+		} else {
+			cache[options.cacheKey] = {};
+			kitgui.getContents({
+				basePath : config.kitgui.basePath,
+				host : config.kitgui.host,
+				pageID : options.pageID,
+				items : kitguiItems
+			}, function(kg){
+				cache[options.cacheKey].kitgui = kg;
+				render();
+			});
+		}
+	}
 	
 	app.get('/', function(req, res){
 		function render(req, res){
@@ -143,36 +181,13 @@ module.exports.set = function(context) {
 		});
 	});
 	app.get('/contact-us', function(req, res) {
-		function render() {
-			res.render('contactus', {
-				year : year,
-				title : "Contact Us",
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path),
-				kitgui : cache.contact.kitgui.items,
-				seo : cache.contact.kitgui.seo,
-			});
-		}
-		if (req.query.refresh) {
-			delete cache.contact;
-		}
-		if (cache.contact) {
-			render();
-		} else {
-			cache.contact = {};
-			kitgui.getContents({
-				basePath : config.kitgui.basePath,
-				host : config.kitgui.host,
-				pageID : 'contact-us',
-				items : [
-					{ id : 'contactuswording', editorType : 'inline' }
-				]
-			}, function(kg){
-				cache.contact.kitgui = kg;
-				render();
-			});
-		}
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'contactus', cacheKey : 'contact', pageID : 'contact-us',
+			items : [
+				{ id : 'contactuswording', editorType : 'inline' }
+			]
+		});
 	});
 	app.get(/-detail$/, function(req, res) {
 		
@@ -305,6 +320,19 @@ module.exports.set = function(context) {
 			stream.pipe(res);
 		});
 	});
+	app.get('/sign-in', function(req, res) {
+		commonFlow({ req : req, res : res, template : 'sign-in', cacheKey : 'signin', pageID : 'signin' });
+	});
+	app.get('/account', function(req, res) {
+		commonFlow({ req : req, res : res, template : 'account', cacheKey : 'account', pageID : 'account' });
+	});
+	app.post('/subscribe',function(req, res){
+		mailchimp.lists.subscribe({id: config.mailchimp.listID, email: {email:req.body.email}}, function(data) {
+	    	res.json(data);
+		}, function(error) {
+	        res.json({ err : error });
+		});
+	});
 	app.get('/refresh', function(req, res){
 		cache = {};
 		res.json({ message : 'ok' });
@@ -337,7 +365,7 @@ module.exports.set = function(context) {
 };
 
 function setCache(req, cache, key) {
-	if (req.query.refres) {
+	if (req.query.refresh) {
 		delete cache[key];
 	}
 	if (!cache[key]) {

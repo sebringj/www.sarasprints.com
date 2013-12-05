@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+	<div class="row" style="margin-bottom:10px;">
+		<div class="col-sm-offset-2 col-sm-5"><h3>Account Sign In</h3></div>
+	</div>
+	<form class="form-horizontal sign-in-form" role="form" novalidate>
+	  <div class="form-group">
+	    <label for="email" class="col-sm-2 control-label">Email</label>
+	    <div class="col-sm-5">
+	      <input type="email" required class="form-control" id="email" placeholder="Email">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="password" class="col-sm-2 control-label">Password</label>
+	    <div class="col-sm-5">
+	      <input type="password" required class="form-control" id="password" placeholder="Password">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-5">
+			<div class="alert alert-danger" style="display:none"></div>
+			<button type="submit" class="btn btn-default">Sign in</button>
+	    </div>
+	  </div>
+	</form>
+{% endblock %}
+
+{% block foot %}
+	<script src="/js/pages/sign-in.js"></script>
+{% endblock %}

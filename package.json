@@ -1,6 +1,6 @@
 {
   "name": "www.sarasprints.com",
-  "version": "0.0.0-53",
+  "version": "0.0.0-54",
   "description": "website for Sara's Prints",
   "main": "app.js",
   "dependencies": {
@@ -10,7 +10,8 @@
     "nodemailer": "~0.5.2",
     "config": "~0.4.29",
     "async": "~0.2.9",
-    "kitgui": "0.0.0"
+    "kitgui": "0.0.0",
+    "mailchimp-api": "~2.0.4"
   },
   "devDependencies": {},
   "scripts": {

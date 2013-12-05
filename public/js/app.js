@@ -157,3 +157,42 @@ $('body').on('click','.product .quick-view', function(ev) {
 		});
 	});
 });
+$('form.subscribebar').submit(function(ev){
+	ev.preventDefault();
+	var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	var email = $(this).find('input').val();
+	if (!emailRE.test(email)) {
+		$(this).find('input').css({'border-color':'red'});
+		console.log('subscriber email input bad');
+		return;
+	}
+	
+	function subscribeAnswer(title, message) {
+		
+	}
+	
+	$.post('/subscribe', { email: email }, function(data){
+		var $dialog = $('[data-global-dialog]'),
+		title, message;
+		if (!data.error) {
+			title = 'Success!';
+			message = 'Thank you for subscribing!';
+			$('.newsletter').css({visibility:'hidden'});
+			sessionStorage.hideSubscribe = '1';
+		} else {
+			title = 'Oops.';
+			message = 'We were unable to subscribe you.';
+		}
+		$dialog.find('.modal-title').text(title).end()
+			.find('.modal-body p').text(message).end()
+		.modal('show');
+	}).always(function(){
+		
+	});
+});
+$('form.subscribebar input').focus(function(){
+	$(this).css({'border-color':''});
+});
+if (sessionStorage.hideSubscribe) {
+	$('.newsletter').css({visibility:'hidden'});
+}

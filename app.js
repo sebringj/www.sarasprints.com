@@ -8,11 +8,13 @@ var express = require('express'),
 	cons = require('consolidate'),
 	swig = require('swig'),
 	cache = {},
+	mcapi = require('mailchimp-api'),
 	context = {
 		app : app,
-		cache : cache
+		cache : cache,
+		mailchimp : (new mcapi.Mailchimp(config.mailchimp.apikey))
 	};
-
+	
 app.engine('.html', cons.swig);
 app.set('view engine', 'html');
 app.set('view cache', false);
@@ -25,3 +27,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 
 controllers.set(context);
+console.log('running on port ' + (process.env.PORT || 4000));
