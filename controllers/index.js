@@ -323,7 +323,7 @@ module.exports.set = function(context) {
 	app.get('/sign-in', function(req, res) {
 		commonFlow({ req : req, res : res, template : 'sign-in', cacheKey : 'signin', pageID : 'signin' });
 	});
-	app.get('/account', function(req, res) {
+	app.get('/my-account', function(req, res) {
 		commonFlow({ req : req, res : res, template : 'account', cacheKey : 'account', pageID : 'account' });
 	});
 	app.post('/subscribe',function(req, res){
