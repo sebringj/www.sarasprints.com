@@ -1,11 +1,9 @@
-$('.sign-in-form').submit(function(ev){
+$('.forgot-password-form').submit(function(ev){
 	ev.preventDefault();
 	
 	var $form = $(this),
 	$email = $form.find('#email'),
-	email = $.trim($email.val()),
-	$password = $form.find('#password'),
-	password = $.trim($password.val());
+	email = $.trim($email.val());
 	
 	var emailRE = /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/;
 	
@@ -13,20 +11,22 @@ $('.sign-in-form').submit(function(ev){
 	
 	console.log('email: ' + email);
 	
-	if (!emailRE.test(email) || password === '') {
+	if (!emailRE.test(email)) {
 		$form.find('.alert-danger').text('Please fill in the form completely.').slideDown('fast');
 		return;
 	} 
 	
 	hubsoft.ready(function(){
-		hubsoft.login({
-			email : email,
-			password : password
+		hubsoft.resetPassword({
+			email : email
 		}, function(data){
 			if (!data.success) {
-				$form.find('.alert-danger').text(data.message).slideDown('fast');
+				$form.find('.alert-danger').text(data.message.split(':')[1]).slideDown('fast');
 			} else {
-				
+				$form.find('.alert-danger')
+					.removeClass('alert-danger')
+					.addClass('alert-success')
+					.text('Please check your email inbox.');
 			}
 			console.log(data);
 		});

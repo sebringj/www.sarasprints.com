@@ -320,11 +320,10 @@ module.exports.set = function(context) {
 			stream.pipe(res);
 		});
 	});
-	app.get('/sign-in', function(req, res) {
-		commonFlow({ req : req, res : res, template : 'sign-in', cacheKey : 'signin', pageID : 'signin' });
-	});
-	app.get('/my-account', function(req, res) {
-		commonFlow({ req : req, res : res, template : 'account', cacheKey : 'account', pageID : 'account' });
+	app.get(/^\/(sign-in|forgot-password|my-account)$/, function(req, res) {
+		var pathPart = req.path.split('/').pop(),
+		key = pathPart.replace('-','');
+		commonFlow({ req : req, res : res, template : pathPart, cacheKey : key, pageID : key });
 	});
 	app.post('/subscribe',function(req, res){
 		mailchimp.lists.subscribe({id: config.mailchimp.listID, email: {email:req.body.email}}, function(data) {
