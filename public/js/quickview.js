@@ -20,6 +20,9 @@ $('.quick-view-modal').modal({ show : false });
 		},
 		set : function(product) {
 			var output = swig.compile(this.tpl,{});
+			product.unitPrice = product.sizes[0].unitPrice;
+			product.msrp = product.sizes[0].msrp;
+			console.log(product);
 			var html = output(product);
 			this.product = product;
 			$('.quick-view-modal').html(html);

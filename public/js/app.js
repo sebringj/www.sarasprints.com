@@ -1,4 +1,5 @@
 hubsoft.clientid = 'sarasprints';
+hubsoft.thumbNailImageIndex = 0;
 
 hubsoft.ready(function(){
 	hubsoft.cart.updateUI(function(){

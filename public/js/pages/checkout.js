@@ -71,7 +71,7 @@ function initCart(data) {
                         item.sku,
                         item.productName + " - " + item.colorName + " (" + item.productNumber + ")",
                         'no category',
-                        item.unitPrice.toFixed(2) + '',
+                        item.msrp.toFixed(2) + '',
                         cart.getVal(item.sku) + ''
                     ]);
             }
@@ -115,7 +115,9 @@ function initCart(data) {
             $shippingForm.find('.loading').stop(true, true).fadeIn('fast');
             $shippingForm.closest('.step').data('complete', true);
             $('.right .shipping, .right .tax, .right .total').hide();
-            hubsoft.authShipping(hubsoft.getFormJSON($('#cart-page .shipping-step form')), function (d) {
+			var formJSON = hubsoft.getFormJSON($('#cart-page .shipping-step form'));
+			formJSON.usemsrp = 'true';
+            hubsoft.authShipping(formJSON, function (d) {
                 var stateValue = '';
                 drawCartContents(d.orderNumber);
                 blockForm = false;
@@ -282,8 +284,8 @@ function initCart(data) {
                     $tempItem.find('.name').text(item.productName);
                     $tempItem.find('.size').text(item.sizeName);
                     $tempItem.find('.color').text(item.colorName);
-                    $tempItem.find('.qty').text(cart.getVal(item.sku) + ' @ $' + item.unitPrice.toFixed(2) + ' each');
-                    $tempItem.find('.total').text('$' + (item.unitPrice * cart.getVal(item.sku)).toFixed(2));
+                    $tempItem.find('.qty').text(cart.getVal(item.sku) + ' @ $' + item.msrp.toFixed(2) + ' each');
+                    $tempItem.find('.total').text('$' + (item.msrp * cart.getVal(item.sku)).toFixed(2));
                     $tempItems.append($tempItem.html());
                 }
                 $('#cart-page .receipt .cart .contents').html($tempItems.html());

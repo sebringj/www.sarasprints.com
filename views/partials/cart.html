@@ -13,7 +13,7 @@
             <td><a href="{{ item.url }}"><img class="cart-image" src="{{ item.images[0] }}"></a></td>
             <td>{{ item.productName }} - {{ item.colorName }} - {{ item.sizeName }}</td>
             <td><input class="qty input-min" type="text" value="{{ item.quantity }}" maxlength="2"></td>
-            <td>${{ item.unitPrice.toFixed(2) }}</td>
+            <td>${{ item.msrp.toFixed(2) }}</td>
             <td>${{ item.subtotal.toFixed(2) }}</td>
             <td><button class="btn btn-danger btn-mini btn-close"><i class="fa fa-minus-circle"></i></button></td>
         </tr>
