@@ -166,7 +166,7 @@
     position:absolute;
     color:#fff;
     width:55px;
-    top:20px;
+    top:0;
     left:0;
     font-size:40px;
     text-align:center;
@@ -501,7 +501,7 @@ select.error
 #cart-page .right
 {
     float:right;
-    width:207px;
+    width:250px;
     position:relative;
     color:#000;
     border:1px solid #E2E2E2;
@@ -604,6 +604,7 @@ select.error
 {
     display:inline-block;
     vertical-align:middle;
+	width:160px;
 }
 #cart-page .right .cart .contents div span strong
 {
