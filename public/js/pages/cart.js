@@ -9,7 +9,7 @@
             if (data.items != null && data.items.length > 0) {
                 for (i = 0, len = data.items.length; i < len; i++) {
                     item = data.items[i];
-					item.subtotal = (item.msrp * item.quantity);
+					item.subtotal = (item.unitPrice * item.quantity);
                     data.subtotal += item.subtotal;
                 }
                 $('#cartList').html(tpl(data));
