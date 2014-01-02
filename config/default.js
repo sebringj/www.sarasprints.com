@@ -15,7 +15,7 @@ module.exports = {
 	},
 	email : {
         user: 'noreply@emeraldcode.com',
-		to: 'jason.sebring@emeraldcode.com',
+		to: 'info@sarasprints.com',
         pass: 'Abc123!~!',
 		from: 'noreply@emeraldcode.com'
 	}
