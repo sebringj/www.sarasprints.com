@@ -37,7 +37,11 @@
 			<select class="size-dropdown" data-sizes>
 			  	<option value="">Select Size</option>
 			  	{% for size in product.sizes %}
-				<option value="{{ size.sku }}">{{ size.sizeName }}</option>
+					{% if size.inStockNow %}
+						<option value="{{ size.sku }}">{{ size.sizeName }}</option>
+					{% else %}
+						<option value="{{ size.sku }}" disabled>{{ size.sizeName }} (out of stock)</option>
+					{% endif %}
 				{% endfor %}
 			</select> <i class="fa fa-asterisk" data-required style="display:none"></i>
 		</div>

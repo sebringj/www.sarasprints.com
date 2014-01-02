@@ -89,7 +89,7 @@ function initCart(data) {
     if (cart.items.length === 0) {
         $('#cart-page > div').hide();
         $('#cart-page .cart-empty-message').show();
-        window.location = './cart.htm';
+        window.location = './cart';
         return;
     } else {
         hubsoft.subTotal = getSubTotal();
