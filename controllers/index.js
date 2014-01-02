@@ -4,7 +4,12 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 	config = require('config'),
 	cache = {},
 	async = require('async'),
-	fs = require('fs');
+	fs = require('fs'),
+	emailer = require('../lib/email.js'),
+	htmlEncode = function(str) {
+		if (!str) { return ''; }
+		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+	};
 
 module.exports.set = function(context) {
 	var app = context.app;
@@ -185,8 +190,24 @@ module.exports.set = function(context) {
 			req : req, res : res, 
 			template : 'contactus', cacheKey : 'contact', pageID : 'contact-us',
 			items : [
+				{ id : 'contactustitle', editorType : 'inline' },
 				{ id : 'contactuswording', editorType : 'inline' }
 			]
+		});
+	});
+	app.post('/contact-us', function(req, res){
+		if (!req.body.email || !emailer.isEmail(req.body.email) || !req.body.message || !req.body.name) {
+			res.json({ err: { msg : 'badInput' }});
+			return;
+		}
+		emailer.send({
+			to : config.email.to,
+			from : config.email.from,
+			subject : 'Saras Prints Website Inquiry',
+			email : req.body.email,
+			html : '<strong>"'+ htmlEncode(req.body.name) +'" &lt;'+ req.body.email +'&gt;</strong> wrote:<p>'+ htmlEncode(req.body.message) +'</p>'
+		}, function(){
+			res.json({ ok : true });
 		});
 	});
 	app.get(/-detail$/, function(req, res) {

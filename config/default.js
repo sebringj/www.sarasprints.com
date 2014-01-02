@@ -12,5 +12,11 @@ module.exports = {
 		apikey : '61cfdad314586272cefa5610112f2fe9-us3',
 		url : 'https://us3.api.mailchimp.com/2.0/',
 		listID : '0fb905b8bc'
+	},
+	email : {
+        user: 'noreply@emeraldcode.com',
+		to: 'jason.sebring@emeraldcode.com',
+        pass: 'Abc123!~!',
+		from: 'noreply@emeraldcode.com'
 	}
 };

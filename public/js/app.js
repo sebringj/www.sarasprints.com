@@ -1,6 +1,7 @@
 hubsoft.clientid = 'sarasprints';
 hubsoft.thumbNailImageIndex = 0;
 hubsoft.global = { googleAnalytics : 'UA-43824235-1' };
+hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 hubsoft.ready(function(){
 	hubsoft.cart.updateUI(function(){
@@ -104,7 +105,12 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 				$select.append('<option value="">Select Size</option>');
 				var sizes = json.product.sizes;
 				for(var i = 0; i < sizes.length; i++) {
-					$select.append($('<option>').text(sizes[i].sizeName).val(sizes[i].sku));
+					if (sizes[i].inStockNow) {
+						$select.append($('<option>').text(sizes[i].sizeName).val(sizes[i].sku));
+					} else {
+						$select.append($('<option disabled>').text(sizes[i].sizeName + ' (out of stock)').val(sizes[i].sku));
+					}
+					
 					$this.html($select.html());
 				}
 			});
@@ -161,9 +167,8 @@ $('body').on('click','.product .quick-view', function(ev) {
 });
 $('form.subscribebar').submit(function(ev){
 	ev.preventDefault();
-	var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	var email = $(this).find('input').val();
-	if (!emailRE.test(email)) {
+	if (!hubsoft.emailRE.test(email)) {
 		$(this).find('input').css({'border-color':'red'});
 		console.log('subscriber email input bad');
 		return;

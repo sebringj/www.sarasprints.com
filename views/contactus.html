@@ -7,8 +7,34 @@
 {% block content %}
 	<h1 class="{{ kitgui.contactustitle.classNames }}">{{ kitgui.contactustitle.content }}</h1>
 	<p class="{{ kitgui.contactuswording.classNames }}">{{ kitgui.contactuswording.content }}</p>
+	<form class="form-horizontal" id="contactusform" role="form" novalidate>
+  	  <div class="form-group">
+  	    <label for="email" class="col-sm-2 control-label">Name</label>
+  	    <div class="col-sm-5">
+  	      <input type="text" required class="form-control" name="name" id="name" placeholder="Your Name">
+  	    </div>
+  	  </div>
+	  <div class="form-group">
+	    <label for="email" class="col-sm-2 control-label">Email</label>
+	    <div class="col-sm-5">
+	      <input type="email" required class="form-control" name="email" id="email" placeholder="Your Email">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="message" class="col-sm-2 control-label">Message</label>
+	    <div class="col-sm-5">
+	      <textarea style="width:600px;height:150px;" required class="form-control" name="message" id="message" placeholder="Type your message..."></textarea>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-5">
+			<div class="alert alert-danger" style="display:none"></div>
+			<button type="submit" class="btn btn-default">Send</button>
+	    </div>
+	  </div>
+	</form>
 {% endblock %}
 
 {% block foot %}
-	
+	<script src="/js/pages/contactus.js"></script>
 {% endblock %}
