@@ -72,7 +72,7 @@ module.exports.set = function(context) {
 			async.parallel([
 				function(callback) {
 					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors'}, function(status, data) {
-						var i = 0, len, productColor, size, removeCount, keepCount = 4;
+						var i = 0, len, productColor, size, removeCount, keepCount = 5;
 						if (status === 200) {
 							// reduce array to 4 items
 							console.log(data)

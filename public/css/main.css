@@ -124,23 +124,29 @@ body {
 }
 .middle .content {
 	margin:0 auto;
-	width:798px;
+	width:980px;
 	min-height:412px;
 }
 .middle .newsletterContainer {
 	display:block;
 	position:relative;
-	width:798px;
+	width:980px;
 	height:192px;
 	background-color:#fff;
 	margin:0 auto;
 	margin-top:20px;
 	margin-bottom:20px;
 }
+.middle .newsletterContainer .move {
+	position:relative;
+	top:40px;
+	left:80px;
+}
+.middle .newsletterContainer .moveRight {
+	top:70px;
+} 
 .middle .slogan {
-	position:absolute;
-	top:10px;
-	left:30px;
+
 }
 .middle .slogan span {
 	font-weight:100;
@@ -148,20 +154,18 @@ body {
 	color:#848382;
 }
 .middle .awlogo {
-	position:absolute;
 	height:58px;
 	width:199px;
 	background-image:url(/img/american-w.png);
-	left:50px;
-	bottom:60px;
+	display:inline-block;
+	vertical-align:middle;
 }
 .middle .pinklogo {
-	position:absolute;
 	height:109px;
 	width:118px;
 	background-image:url(/img/candy-bean.png);
-	left:290px;
-	bottom:30px;
+	display:inline-block;
+	vertical-align:middle;
 }
 .middle .subscribebar {
 	display:block;
@@ -172,33 +176,26 @@ body {
 	vertical-align:center;
 }
 .middle .subscribebar .subscribeemail {
-	position:absolute;
 	border-width:1px;
 	border-style:solid;
 	border-color:#d6d5d6;
 	height:39px;
 	width:140px;
-	right:170px;
-	top:100px;
 	padding-left:10px;
 	font-size:17px;
+	display:inline-block;
 }
 .middle .subscribetext {
-	position:absolute;
 	height:42px;
 	width:141px;
 	background-image:url(/img/subscribe-bar.png);
-	right:20px;
-	bottom:50px;
 	color:#fff;
 	font-size:18px;
 	border:none;
 	cursor:pointer;
 }
 .middle .signup {
-	position:absolute;
-	right:80px;
-	top:70px;
+
 }
 .middle .signup span {
 	font-size:17px;
@@ -207,7 +204,7 @@ body {
 }
 .bottom .footer {
 	display:block;
-	width:798px;
+	width:980px;
 	margin:0 auto;
 	background-color:#1898ce;
 	text-align:left;
@@ -226,10 +223,10 @@ body {
 	vertical-align:top;
 	text-align:left;
 	padding:0;
-	margin:20px 0 20px 0;
+	margin:20px 0 40px 0;
 }
 .bottom .footer ul li {
-	padding:0 70px 0 30px;
+	padding:0 100px 0 60px;
 }
 .bottom .footer ul li a {
 	text-decoration:none;
@@ -265,7 +262,7 @@ ul.sp-breadcrumb {
 	display:block;
 	background-color:#fff;
 	padding:5px 10px;
-	width:798px;
+	width:980px;
 	margin:0 auto;
 }
 ul.sp-breadcrumb li {

@@ -1,6 +1,6 @@
 hubsoft.clientid = 'sarasprints';
 hubsoft.thumbNailImageIndex = 0;
-hubsoft.global = { googleAnalytics : 'UA-43824235-1'};
+hubsoft.global = { googleAnalytics : 'UA-43824235-1' };
 
 hubsoft.ready(function(){
 	hubsoft.cart.updateUI(function(){
