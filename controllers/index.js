@@ -346,6 +346,128 @@ module.exports.set = function(context) {
 		key = pathPart.replace('-','');
 		commonFlow({ req : req, res : res, template : pathPart, cacheKey : key, pageID : key });
 	});
+	app.get('/join-saras-club', function(req, res){
+		function render() {
+			var c = cache.joinSarasClub;
+			res.render('join-saras-club',{
+				year : year,
+				seo : c.kitgui.seo,
+				kitgui : c.kitgui.items,
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : getPageID(req.path)
+			});
+		}
+		if (req.query.refresh) {
+			delete cache.joinSarasClub;
+		}
+		if (cache.joinSarasClub) {
+			render();
+		} else {
+			cache.joinSarasClub = {};
+			kitgui.getContents({
+				basePath : config.kitgui.basePath,
+				host : config.kitgui.host,
+				pageID : 'joinSarasClub',
+				items : [
+					{ id : 'joinSarasClubTitle', editorType : 'inline' },
+					{ id : 'joinSarasClubDescription', editorType : 'html' },
+					{ id : 'joinSarasClubEmail', editorType : 'inline' },
+					{ id : 'joinSarasClubChildrenInstructions', editorType : 'inline' }
+				]
+			}, function(kg){
+				cache.joinSarasClub.kitgui = kg;
+				render();
+			});
+		}
+	});
+	app.post('/join-saras-club', function(req, res){
+		var data = null;
+		
+		try {
+			data = JSON.parse(req.body.data);
+		} catch(ex) {
+			console.log(ex);
+			res.json({
+				err : {
+					msg : 'oops, something went wrong'
+				}
+			});
+			return;
+		}
+		
+		function ifnull(obj, key, inStr) {
+			if (inStr) {
+				obj[key] = inStr;
+			}
+		}
+
+		var merge_vars = {};
+		ifnull(merge_vars, 'FNAME', data.firstName);
+		ifnull(merge_vars, 'LNAME', data.lastName);
+		ifnull(merge_vars, 'ADDRESS1', data.address1);
+		ifnull(merge_vars, 'ADDRESS2', data.address2);
+		ifnull(merge_vars, 'CITY', data.city);
+		ifnull(merge_vars, 'STATE', data.state);
+		ifnull(merge_vars, 'ZIP', data.zip);
+		ifnull(merge_vars, 'PHONE', data.phone);
+		
+		var monthData = {
+			January : { key : 'JAN_NAMES', names : [] },
+			February : { key : 'FEB_NAMES', names : [] },
+			March : { key : 'MAR_NAMES', names : [] },
+			April : { key : 'APR_NAMES', names : [] },
+			May : { key : 'MAY_NAMES', names : [] },
+			June : { key : 'JUN_NAMES', names : [] },
+			July : { key : 'JUL_NAMES', names : [] },
+			August : { key : 'AUG_NAMES', names : [] },
+			September : { key : 'SEP_NAMES', names : [] },
+			October : { key : 'OCT_NAMES', names : [] },
+			November : { key : 'NOV_NAMES', names : [] },
+			December : { key : 'DEC_NAMES', names : [] },
+		};
+		
+		if (data.children) {
+			(function(){
+				merge_vars.BDAY_JSON = JSON.stringify(data.children);
+				var child, i, names, last;
+				for(i = 0; i < data.children.length; i++) {
+					child = data.children[i];
+					monthData[child.month].names.push(child.name);
+				}
+				for(i in monthData) {
+					if (monthData.hasOwnProperty(i)) {
+						names = monthData[i].names;
+						if (names.length === 0) {
+							merge_vars[ monthData[i].key ] = 'BLANK'; 
+						} else if (names.length === 1) {
+							merge_vars[ monthData[i].key ] = names[0];
+						} else {
+							last = names.pop();
+							merge_vars[ monthData[i].key ] = names.join(', ') + ' and ' + last;
+						}
+					}
+				}
+			})();
+		}
+		
+		var mailChimpJSON = {
+			id: config.mailchimp.sarasClublistID, 
+			email: {
+				email: data.email
+			},
+			merge_vars : merge_vars,
+			update_existing: true
+		};
+		
+		console.log(mailChimpJSON);
+		
+		mailchimp.lists.subscribe(mailChimpJSON, function(data) {
+	    	res.json({ ok : true });
+		}, function(error) {
+	        res.json({ err : error });
+		});
+	});
 	app.post('/subscribe',function(req, res){
 		mailchimp.lists.subscribe({id: config.mailchimp.listID, email: {email:req.body.email}}, function(data) {
 	    	res.json(data);

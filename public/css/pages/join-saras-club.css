@@ -1,0 +1,25 @@
+.child {
+	margin-bottom:10px;
+}
+.child label {
+	text-align:right;position:relative;top:7px;
+}
+.add-child {
+	margin-top:10px;
+}
+.birth-year {
+	width:100px;
+}
+.error input.form-control {
+	border:1px solid #f00;
+	color:#f00;
+}
+.error select.form-control {
+	color:#f00;
+}
+.error label {
+	color:#f00;
+}
+.alert {
+	font-size:16px;
+}

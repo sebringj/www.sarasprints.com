@@ -1,6 +1,6 @@
 {
   "name": "www.sarasprints.com",
-  "version": "0.0.0-67",
+  "version": "0.0.0-70",
   "description": "website for Sara's Prints",
   "main": "app.js",
   "dependencies": {
@@ -22,6 +22,10 @@
   "author": "Emerald Code Inc.",
   "license": "BSD",
   "subdomain": "sarasprints",
+  "domains": [
+    "sarasprints.com",
+    "www.sarasprints.com"
+  ],
   "engines": {
     "node": "0.10.x"
   }
