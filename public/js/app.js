@@ -167,8 +167,6 @@ $('body').on('click','.product .quick-view', function(ev) {
 	console.log(productURL);
 	var $div = $('<div>');
 	$div.load(productURL + ' [data-detail-div]', function() {
-		console.log($div.html());
-		console.log($('.quick-view-modal').find('.modal-body').length);
 		$('.quick-view-modal').find('.modal-body').html($div.find('[data-detail-div]').html());
 		$('.quick-view-modal').modal('show');
 		$('.quick-view-modal select.pattern-dropdown option[data-href="'+ productURL +'"]').get(0).selected = true;
