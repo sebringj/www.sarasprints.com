@@ -5,7 +5,29 @@
 {% endblock %}
 
 {% block content %}
-	<div class="top-banner {{ kitgui.homeslider.classNames }}">{{ kitgui.homeslider.content | safe }}</div>
+	<div class="top-banner carousel slide {{ kitgui.homeslider3.classNames }}" id="homecarousel" data-ride="carousel">
+		{% if kitgui.homeslider3.content %}
+			<div class="carousel-inner">
+				{% for item in kitgui.homeslider3.content %}
+				   {% if loop.first %}
+   				    <div class="item active">
+   				      <img src="{{ item.src }}" alt="{{ item.alt }}">
+   				      <div class="carousel-caption">{{ item.caption }}</div>
+   				    </div>
+				   {% else %}
+   				    <div class="item">
+   				      <img src="{{ item.src }}" alt="{{ item.alt }}">
+   				      <div class="carousel-caption">{{ item.caption }}</div>
+   				    </div>
+				   {% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+	<div class="content-area site-width">
+		<h1 class="{{ kitgui.homeTitle.classNames }}">{{ kitgui.homeTitle.content | safe }}</h1>
+		<div class="text {{ kitgui.homeHTML.classNames }}">{{ kitgui.homeHTML.content | safe }}</div>
+	</div>
 	<div class="products">
 		<div class="title">
 			<span>NEW ITEMS</span>
@@ -15,11 +37,10 @@
 				{% include "./partials/productColor.html" with productColor only %}
 			{% endfor %}
 		</div>
-		<a href="/catalog" class="productsbar"><i class="fa fa-th"></i> <span>SHOW MORE</span></a>
+		<a href="/shop-pajamas" class="productsbar"><i class="fa fa-th"></i> <span>SHOW MORE</span></a>
 	</div>
 {% endblock %}
 
-{% block foot %}
-	<script src="/js/quickview.js"></script>	
+{% block foot %}	
 	<script src="/js/pages/index.js"></script>
 {% endblock %}

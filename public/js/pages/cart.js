@@ -30,7 +30,7 @@
         hubsoft.validateCart(function (data) {
             if (data.success) {
                 if (data.message) {
-                    alert(data.message);
+                    $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
                 }
             }
         });
@@ -59,13 +59,13 @@
                 hubsoft.validateCart(function (data) {
                     if (data.success) {
                         if (data.message) {
-                            alert(data.message);
+                            $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
                         }
                     } else {
                         if (data.errors) {
                             hubsoft.cart.undo();
                             updateCart();
-                            alert(data.errors[0].message);
+                             $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
                         }
                     }
                 });

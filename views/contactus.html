@@ -6,7 +6,7 @@
 
 {% block content %}
 	<h1 class="{{ kitgui.contactustitle.classNames }}">{{ kitgui.contactustitle.content }}</h1>
-	<p class="{{ kitgui.contactuswording.classNames }}">{{ kitgui.contactuswording.content }}</p>
+	<p class="{{ kitgui.contactuswording.classNames }}">{{ kitgui.contactuswording.content | safe }}</p>
 	<form class="form-horizontal" id="contactusform" role="form" novalidate>
   	  <div class="form-group">
   	    <label for="email" class="col-sm-2 control-label">Name</label>

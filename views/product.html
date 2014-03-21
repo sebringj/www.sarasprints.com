@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div data-product>
+<div data-product data-detail-div>
 	<div class="left-column">
 		<div class="big-product-image" data-big-product-image style="background-image:url({{ product.images[0] }})"></div>
 		<div class="product-colors">
@@ -15,8 +15,9 @@
 		</div>
 	</div>
 	<div class="right-column">
-		<div class="product-name">
-			<span data-product-name>{{ product.productName }}</span>
+		<h1 class="{{ items[pageID + 'Title'].classNames }}">{{ title | safe }}</h1>
+		<div class="description {{ items[pageID + 'Description'].classNames }}">
+			{{ description | safe }}
 		</div>
 		<div class="line-break"></div>
 		<div class="product-price">
@@ -29,7 +30,7 @@
 			<select class="pattern-dropdown" data-colors>
 			  	<option value="">Select Pattern</option>
 			  	{% for color in product.colors %}
-				<option value="{{ color.productNumber }}">{{ color.colorName }}</option>
+				<option value="{{ color.productNumber }}" data-href="{{ color.productURL}}">{{ color.colorName }}</option>
 				{% endfor %}
 			</select>  <i class="fa fa-asterisk" data-required style="display:none"></i>
 		</div>
@@ -57,7 +58,7 @@
 			<span>Product Code: <span data-productnumber>{{ product.productNumber }}</span></span>
 		</div>
 		<div class="product-availability"><span>
-			{% if inStock %}
+			{% if product.inStock %}
 			Availability: In Stock
 			{% else %}
 			Availability: Out of Stock

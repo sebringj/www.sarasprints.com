@@ -166,12 +166,9 @@
 	width:46px;
 	border:2px solid black;
 }
-.product-description {
+.description {
 	margin-top:10px;
-}
-.product-description span {
 	font-size:14px;
-	color:black;
 }
 .right-column {
 	position:relative;

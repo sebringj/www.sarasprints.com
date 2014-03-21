@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="//use.typekit.net/ody1owy.js"></script>
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
         <link href="/css/main.css" rel="stylesheet">
+		<link href="/css/quickview.css" rel="stylesheet">
 		<meta name="kitgui-page-id" content="{{ kitguiPageID }}">
 		{% block head %}
 
@@ -18,48 +19,35 @@
     </head>
     <body>
 		<div class="top full-width">
-			<div class="banner">
+			<ul class="smallnav site-width">
+				<li class="signedin"><a href="/account">My Account</a></li>
+				<li class="signedin"><a href="/signout">Sign Out</a></li>
+				<li class="signedout"><a href="/sign-in">Sign In</a></li>
+				<li><a href="http://www.facebook.com/sarasprints" class="facebook"><i class="fa fa-facebook-square"></i></a></li>
+				<li><a href="#" class="pintrest"><i class="fa fa-pinterest"></i></a></li>
+			</ul>
+			<div class="banner site-width">
 				<a href="/" class="logo"></a>
-				<a href="/up-past-8" class="up-past-8"></a>
-				<a href="/cart" class="cart"></a>
-				<a href="http://www.facebook.com/sarasprints" class="facebook"></a>
-				<a href="#" class="pintrest"></a>
 				<ul class="topnav">
-					<li><a href="/">home</a></li>
-					<li><a href="/my-account" rel="nofollow">my account</a></li>
-					<li><a href="/sign-in" rel="nofollow">sign in</a></li>
+					<li><a href="/shop-pajamas">Shop Pajamas</a></li>
+					<li><a href="/boys-pajamas">Pajamas for Boys</a></li>
+					<li><a href="/girls-pajamas">Pajamas for Girls</a></li>
+					<li><a href="/fuzzy-fleece">Fuzzy Fleece</a></li>
+					<li><a href="/sale">Sale</a></li>
 				</ul>
-				<ul class="productsnav">
-					<li><a href="/catalog">catalog</a></li>
-					<li><a href="/pjs-for-girls">pjs for girls</a></li>
-					<li><a href="/pjs-for-boys">pjs for boys</a></li>
-					<li><a href="/fuzzy-fleece">fuzzy fleece</a></li>
-					<li><a href="/sale">sale</a></li>
-				</ul>
-				<ul class="items">
-					<li data-quantity><a href="/cart">0 items</a></li>
+				<ul class="cart">
+					<li><i class="fa fa-shopping-cart"></i></li>
+					<li data-quantity>0 items</li>
 					<li>|</li>
-					<li data-subtotal><a href="/cart">0.00</a></li>
+					<li data-subtotal>0.00</li>
 				</ul>
 			</div>
 		</div>
 		<div class="middle full-width">
 			<div class="site-width">
-				{% if breadcrumb %}
-					<ul class="sp-breadcrumb">
-					{% for item in breadcrumb %}
-						<li>
-						{% if item.link %}
-							<a href="{{ item.link }}">{{ item.label }}</a> <span>&gt;</span>
-						{% else %}
-							<span class="sp-breadcrumb-label">{{ item.label }}</span>
-						{% endif %}
-						</li>
-					{% endfor %}
-					</ul>
-				{% endif %}
 				<div class="content clearfix">
 					<div class="inner-content">
+						{% include "./partials/quickview.html" %}
 						{% block content %}
 				
 						{% endblock %}
@@ -75,6 +63,7 @@
 					</div>
 					<form action="subscribe.html" class="col-md-6 subscribebar newsletter">
 						<div class="move moveRight">
+							<a class="join-saras-club" href="/join-saras-club"><span>Join Sara's Club</span></a>
 							<div class="signup newsletter"><span>sign up for event and promotions</span></div>
 							<input type="text" name="subscribeemail" placeholder="add your email" class="subscribeemail"/> 
 							<button class="subscribetext"><span>subscribe</span></button>
@@ -88,10 +77,8 @@
 				<div class="footer">
 					<ul>
 						<li><a href="/customer-service"><span class="header">customer service</span></a></li>
-						<li><a href="/faq">faq</a></li>
 						<li><a href="/my-account">my account</a></li>
 						<li><a href="/sizing">sizing</a></li>
-						<li><a href="/site-map">site map</a></li>
 					</ul>
 					<ul>
 						<li><a href="/story"><span class="header">the sara's print's story</span></a></li>
@@ -114,20 +101,6 @@
 	    		</div>
 			</div>
 		</div>
-		<div class="modal fade" data-cart-dialog data-global-dialog role="dialog" tabindex="-1">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title"></h4>
-		      </div>
-		      <div class="modal-body">
-		        <p></p>
-		      </div>
-		      <div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></div>
-		    </div>
-		  </div>
-		</div>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script src="/js/plugins/swig.pack.min.js"></script>
@@ -148,10 +121,10 @@
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		
-		  ga('create', 'UA-43824235-1', 'sarasprints.com');
+
+		  ga('create', 'UA-48962437-1', 'sarasprints.com');
 		  ga('send', 'pageview');
-		
+
 		</script>
     </body>
 </html>

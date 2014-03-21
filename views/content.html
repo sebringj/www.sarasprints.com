@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-	<h1 class="content-title {{ title.classNames }}">{{ title.content | safe }}</h1>
-	<div class="content-html {{ html.classNames }}">{{ html.content | safe }}</div>
+	<h1 class="content-title {{ kitgui[kitguiPageID + 'Title'].classNames }}">{{ kitgui[kitguiPageID + 'Title'].content | safe }}</h1>
+	<div class="content-html {{ kitgui[kitguiPageID + 'Html'].classNames }}">{{ kitgui[kitguiPageID + 'Html'].content | safe }}</div>
 {% endblock %}
 
 {% block foot %}

@@ -10,6 +10,30 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 		if (!str) { return ''; }
 		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 	};
+	
+	var styles2To14 = ['1010','2997','4901','4900','1489','1488','5575','1503'];
+	var styles2To16 = ['1010','2997','4901','4900','1489','1488','5575','1503','1556','1557'];
+	var styles12mTo14m = ['1600','1530'];
+	
+	var filterLookup = {
+		'3-month-olds' : [],
+		'6-month-olds' : [],
+		'9-month-olds' : [],
+		'12-month-olds' : styles12mTo14m,
+		'18-month-olds' : [],
+		'24-month-olds' : styles2To14,
+		'2-year-olds' : styles2To14,
+		'3-year-olds' : styles2To14,
+		'4-year-olds' : styles2To14,
+		'5-year-olds' : styles2To14,
+		'6-year-olds' : styles2To14,
+		'7-year-olds' : styles2To14,
+		'8-year-olds' : styles2To14,
+		'10-year-olds' : styles2To14,
+		'12-year-olds' : styles2To14,
+		'14-year-olds' : styles2To14,
+		'16-year-olds' : styles2To16
+	};
 
 module.exports.set = function(context) {
 	var app = context.app;
@@ -36,7 +60,7 @@ module.exports.set = function(context) {
 				seo : cache[options.cacheKey].kitgui.seo,
 			});
 		}
-		if (options.req.query.refresh) {
+		if (options.req.query.refresh || options.req.cookies.kitgui) {
 			delete cache[options.cacheKey];
 		}
 		if (cache[options.cacheKey]) {
@@ -67,7 +91,7 @@ module.exports.set = function(context) {
 				kitguiPageID : getPageID(req.path)
 			});
 		}
-		if (req.query.refresh) {
+		if (req.query.refresh || req.cookies.kitgui) {
 			delete cache.home;
 		}
 		if (cache.home) {
@@ -76,7 +100,7 @@ module.exports.set = function(context) {
 			cache.home = {};
 			async.parallel([
 				function(callback) {
-					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors'}, function(status, data) {
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors?tags=new'}, function(status, data) {
 						var i = 0, len, productColor, size, removeCount, keepCount = 5;
 						if (status === 200) {
 							// reduce array to 4 items
@@ -111,7 +135,9 @@ module.exports.set = function(context) {
 						host : config.kitgui.host,
 						pageID : 'home',
 						items : [
-							{ id : 'homeslider', editorType : 'image-rotator' }
+							{ id : 'homeslider3', editorType : 'bootstrap-carousel-json' },
+							{ id : 'homeTitle', editorType : 'inline' },
+							{ id : 'homeHTML', editorType : 'html' }
 						]
 					}, function(kg){
 						cache.home.kitgui = kg;
@@ -212,297 +238,217 @@ module.exports.set = function(context) {
 	});
 	app.get(/-detail$/, function(req, res) {
 		
-		function renderProduct(product) {
-			console.log(product);
-			res.render('product', {
+		var cacheKey = getPageID(req.path);
+		
+		function render() {
+			res.render('product', cache[cacheKey]);
+		}
+		
+		if (req.query.refresh || req.cookies.kitgui) {
+			delete cache[cacheKey];
+		}
+		if (cache[cacheKey]) {
+			render(cache[cacheKey]);
+		} else {
+			cache[cacheKey] = {
 				year : year,
-				title : product.productName,
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path),
-				product : product,
-				seo : { title : product.productName, description : product.metaDescription }
-			});
-		}
-		
-		if (!req.query.refresh && cache[req.path]) {
-			renderProduct(cache[req.path]);
-		} else {
-			getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {
-				cache[req.path] = data.product;
-				renderProduct(cache[req.path]);
-			}, function() {
-				res.redirect('/500');
-			});
-		}
-		
-	});
-	app.get(/^\/(catalog|pjs-for-girls|pjs-for-boys|fuzzy-fleece|sale|up-past-8)\/?$/, function(req, res) {
-		
-		function makeProper(str) {
-			var ls = str.split('-');
-			/*for(var i = 0; i < ls.length; i++) {
-				if (ls[i].length > 1) {
-					ls[i] = ls[i].substr(0,1)() + ls[i].substr(1);
+				kitguiPageID : cacheKey,
+				pageID : cacheKey
+			};
+			var kg;
+			async.parallel([
+				function(callback) {
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {						
+						cache[cacheKey].product = data.product;
+						cache[cacheKey].title = data.product.productName;
+						cache[cacheKey].description = data.product.descriptions[0];
+						cache[cacheKey].seo = {
+							title : data.product.productName,
+							description : data.product.descriptions[0]
+						};
+						callback();
+					}, function() {
+						callback();
+					});
+				},
+				function(callback) {
+					kitgui.getContents({
+						basePath : config.kitgui.basePath,
+						host : config.kitgui.host,
+						pageID : cacheKey,
+						items : [
+							{ id : cacheKey + 'Title', editorType : 'inline' },
+							{ id : cacheKey + 'Description', editorType : 'inline' }
+						]
+					}, function(kgObject){
+						kg = kgObject; 
+						cache[cacheKey].items = kg.items;
+						callback();
+					});
 				}
-			}*/
-			return ls.join(' ');
+			], function() {
+				cache[cacheKey].items = kg.items;
+				if (kg.items[cacheKey + 'Title'].content) {
+					cache[cacheKey].title = kg.items[cacheKey + 'Title'].content;
+				}
+				if (kg.items[cacheKey + 'Description'].content) {
+					cache[cacheKey].description = kg.items[cacheKey + 'Description'].content;
+				}
+				if (kg.seo.title) {
+					cache[cacheKey].seo.title = kg.seo.title;
+				}
+				if (kg.seo.description) {
+					cache[cacheKey].seo.description = kg.seo.description;
+				}
+				render();
+			});
+
 		}
 		
-		var products = [];
-		var seo = {};
-		var kg = {};
+	});
+	app.get(/(month|year|pajamas|fuzzy-fleece|sale|spring-summer|fall-winter|holiday|new|nightgowns)/, function(req, res) {
+		var cacheKey = getPageID(req.path);
 		
-		var tag = req.path.split('/').pop();
-		var properTag = makeProper(tag);
-		var tagQuery = (tag === 'catalog') ? '' : tag;
+		var tags = req.path.substr(1).split('/');
+		var tagList = '';
+		var ageTags = [];
+		
+		if (tags.length) {
+			if (tags[0] === 'shop-pajamas') {
+				tags.splice(0,1);
+			}
+			for(var i = 0; i < tags.length; i++) {
+				if (filterLookup[tags[i]]) {
+					ageTags.push(tags[i]);
+					tags.splice(i,1);
+					i--;
+				}
+			}
+		}
+		
+		tagList = tags.join(',');
+		if (tagList === ',') { tagList = ''; }
 		
 		function render() {
-			res.render('catalog', {
-				year : year,
-				title : properTag + " catalog",
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : tag,
-				products : products,
-				seo: seo,
-				kitgui : kg,
-				breadcrumb : [
-					{ link : '/', label: 'home' },
-					{ label: properTag}
-				]
-			});			
+			res.render('catalog', cache[cacheKey]);
 		}
 		
-		async.parallel([
-			function(callback){
-				getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?tags=' + tagQuery}, function(status,data){
-					products = data.products;
-					callback();
-				});
-			},
-			function(callback) {
-				kitgui.getContents({
-					basePath : config.kitgui.basePath,
-					host : config.kitgui.host,
-					pageID : tag,
-					items : [
-						{ id : tag + '-header', editorType : 'inline' },
-						{ id : tag + '-boxtitle', editorType : 'inline' },
-						{ id : tag + '-boxdescription', editorType : 'inline' }
-					]
-				}, function(result){
-					kg = {
-						header : result.items[tag + '-header'],
-						boxtitle : result.items[tag + '-boxtitle'],
-						boxdescription : result.items[tag + '-boxdescription']
-					};
-					seo = result.seo;
-					callback();
-				});
-			}
-		],
-		function(err){
-			render();
-		});
-		
-	});
-	app.get(/^\/(privacy-security|terms|return-policy|safe-and-comfortable|faq|team|story|sizing|site-map|customer-service)$/, function(req, res) {
-		var prefix = getPageID(req.path);
-		kitgui.getContents({
-			basePath : config.kitgui.basePath,
-			host : config.kitgui.host,
-			req : req,
-			pageID : prefix,
-			items : [
-				{ id : prefix + '-title', kind : 'ids', editorType : 'inline' },
-				{ id : prefix + '-html', kind : 'ids', editorType : 'html' }
-			]
-		},function(kg){		
-			res.render('content', {
-				seo : kg.seo,
-				title : kg.items[prefix + '-title'],
-				html : kg.items[prefix + '-html'],
-				year: year,
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path)
-			});
-		});
-	});
-	app.get(/^\/templates\/[a-z\.A-Z0-9]+$/, function(req, res, next){
-		var filename = path.resolve('./views/partials/') + '/' + req.path.split('/').pop();
-		fs.exists(filename, function (exists) {
-			if (!exists) {
-				res.end('dne');
-				return;
-			}
-			var stream = fs.createReadStream(filename);
-			stream.pipe(res);
-		});
-	});
-	app.get(/^\/(sign-in|forgot-password|my-account)$/, function(req, res) {
-		var pathPart = req.path.split('/').pop(),
-		key = pathPart.replace('-','');
-		commonFlow({ req : req, res : res, template : pathPart, cacheKey : key, pageID : key });
-	});
-	app.get('/join-saras-club', function(req, res){
-		function render() {
-			var c = cache.joinSarasClub;
-			res.render('join-saras-club',{
-				year : year,
-				seo : c.kitgui.seo,
-				kitgui : c.kitgui.items,
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path)
-			});
+		if (req.query.refresh || req.cookies.kitgui) {
+			delete cache[cacheKey];
 		}
-		if (req.query.refresh) {
-			delete cache.joinSarasClub;
-		}
-		if (cache.joinSarasClub) {
-			render();
+		if (cache[cacheKey]) {
+			render(cache[cacheKey]);
 		} else {
-			cache.joinSarasClub = {};
-			kitgui.getContents({
-				basePath : config.kitgui.basePath,
-				host : config.kitgui.host,
-				pageID : 'joinSarasClub',
-				items : [
-					{ id : 'joinSarasClubTitle', editorType : 'inline' },
-					{ id : 'joinSarasClubDescription', editorType : 'html' },
-					{ id : 'joinSarasClubEmail', editorType : 'inline' },
-					{ id : 'joinSarasClubChildrenInstructions', editorType : 'inline' }
-				]
-			}, function(kg){
-				cache.joinSarasClub.kitgui = kg;
+			cache[cacheKey] = {
+				year : year,
+				clientid : clientid,
+				kitguiAccountKey : kitguiAccountKey,
+				kitguiPageID : cacheKey,
+				pageID : cacheKey,
+				tags : tags
+			};
+			var kg;
+			async.parallel([
+				function(callback) {
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?tags=' + tags}, function(status, data) {
+						if (data && data.products) {
+							if (ageTags.length) {
+								(function(){
+									var ageProducts = [], arr;
+									for(var i = 0; i < ageTags.length; i++) {
+										arr = ageTags[i];
+										for(var j = 0; j < arr.length; j++) {
+											for(var z = 0; z < data.products.length; z++) {
+												if (data.products[z].productNumber.indexOf(arr[j]) === 0) {
+													ageProducts.push(data.products[z]);
+												}
+											}
+										}
+									}
+									data.products = ageProducts;
+								})();								
+							}
+							
+							cache[cacheKey].products = data.products;
+						} else {
+							cache[cacheKey].products = [];
+						}
+						
+						callback();
+					}, function() {
+						callback();
+					});
+				},
+				function(callback) {
+					kitgui.getContents({
+						basePath : config.kitgui.basePath,
+						host : config.kitgui.host,
+						pageID : cacheKey,
+						items : [
+							{ id : cacheKey + 'Slider', editorType : 'bootstrap-carousel-json' },
+							{ id : cacheKey + 'H1', editorType : 'inline' },
+							{ id : cacheKey + 'Description', editorType : 'inline' }
+						]
+					}, function(kg){
+						cache[cacheKey].seo = kg.seo;
+						cache[cacheKey].items = kg.items;
+						callback();
+					});
+				}
+			], function() {
 				render();
 			});
 		}
 	});
-	app.post('/join-saras-club', function(req, res){
-		var data = null;
-		
-		try {
-			data = JSON.parse(req.body.data);
-		} catch(ex) {
-			console.log(ex);
-			res.json({
-				err : {
-					msg : 'oops, something went wrong'
-				}
-			});
-			return;
-		}
-		
-		function ifnull(obj, key, inStr) {
-			if (inStr) {
-				obj[key] = inStr;
-			}
-		}
-
-		var merge_vars = {};
-		ifnull(merge_vars, 'FNAME', data.firstName);
-		ifnull(merge_vars, 'LNAME', data.lastName);
-		ifnull(merge_vars, 'ADDRESS1', data.address1);
-		ifnull(merge_vars, 'ADDRESS2', data.address2);
-		ifnull(merge_vars, 'CITY', data.city);
-		ifnull(merge_vars, 'STATE', data.state);
-		ifnull(merge_vars, 'ZIP', data.zip);
-		ifnull(merge_vars, 'PHONE', data.phone);
-		
-		var monthData = {
-			January : { key : 'JAN_NAMES', names : [] },
-			February : { key : 'FEB_NAMES', names : [] },
-			March : { key : 'MAR_NAMES', names : [] },
-			April : { key : 'APR_NAMES', names : [] },
-			May : { key : 'MAY_NAMES', names : [] },
-			June : { key : 'JUN_NAMES', names : [] },
-			July : { key : 'JUL_NAMES', names : [] },
-			August : { key : 'AUG_NAMES', names : [] },
-			September : { key : 'SEP_NAMES', names : [] },
-			October : { key : 'OCT_NAMES', names : [] },
-			November : { key : 'NOV_NAMES', names : [] },
-			December : { key : 'DEC_NAMES', names : [] },
-		};
-		
-		if (data.children) {
-			(function(){
-				merge_vars.BDAY_JSON = JSON.stringify(data.children);
-				var child, i, names, last;
-				for(i = 0; i < data.children.length; i++) {
-					child = data.children[i];
-					monthData[child.month].names.push(child.name);
-				}
-				for(i in monthData) {
-					if (monthData.hasOwnProperty(i)) {
-						names = monthData[i].names;
-						if (names.length === 0) {
-							merge_vars[ monthData[i].key ] = 'BLANK'; 
-						} else if (names.length === 1) {
-							merge_vars[ monthData[i].key ] = names[0];
-						} else {
-							last = names.pop();
-							merge_vars[ monthData[i].key ] = names.join(', ') + ' and ' + last;
-						}
-					}
-				}
-			})();
-		}
-		
-		var mailChimpJSON = {
-			id: config.mailchimp.sarasClublistID, 
-			email: {
-				email: data.email
-			},
-			merge_vars : merge_vars,
-			update_existing: true
-		};
-		
-		console.log(mailChimpJSON);
-		
-		mailchimp.lists.subscribe(mailChimpJSON, function(data) {
-	    	res.json({ ok : true });
-		}, function(error) {
-	        res.json({ err : error });
+	app.get('/join-saras-club', function(req, res){
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'join-saras-club', cacheKey : 'join-saras-club', pageID : 'join-saras-club',
+			items : [
+				{ id : 'joinSarasClubDescription', editorType : 'inline' },
+				{ id : 'joinSarasClubChildrenInstructions', editorType : 'inline' }
+			]
 		});
 	});
-	app.post('/subscribe',function(req, res){
-		mailchimp.lists.subscribe({id: config.mailchimp.listID, email: {email:req.body.email}}, function(data) {
-	    	res.json(data);
-		}, function(error) {
-	        res.json({ err : error });
+	app.get('/sign-in', function(req, res){
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'sign-in', cacheKey : 'sign-in', pageID : 'sign-in',
+			items : []
+		});
+	});
+	app.get('/my-account', function(req, res){
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'my-account', cacheKey : 'my-account', pageID : 'my-account',
+			items : []
+		});
+	});
+	app.get('/forgot-password', function(req, res){
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'forgot-password', cacheKey : 'forgot-password', pageID : 'forgot-password',
+			items : []
+		});
+	});
+	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service)$/, function(req, res){
+		var pageID = getPageID(req.path);
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'content', cacheKey : pageID, pageID : pageID,
+			items : [
+				{ id : pageID + 'Title', editorType : 'inline' },
+				{ id : pageID + 'Html', editorType : 'html' }
+			]
 		});
 	});
 	app.get('/refresh', function(req, res){
-		cache = {};
-		res.json({ message : 'ok' });
-	});
-	app.get('/500',function(req, res){
-		res.render('500', {})
-	});
-	app.use(function(req, res, next){
-		res.status(404);
-		if (req.accepts("html")){
-			res.render('404', {
-				year : year,
-				title : "404 page not found",
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path)
-			});
-			return;
-		} else if (req.accepts("json")){
-			res.send({ error: 'not found'});
-			return;
-		}
-		res.type('txt').send('not found');
-	});
-	app.use(function(err, req, res, next){
-		res.status(err.status || 500);
-		console.log(err);
-		res.render('500', { error: err });
+		getJSON({port:443, host:'sarasprints.hubsoft.ws',path:'/api/v1/refresh'}, function(status, data) {
+			cache = {};
+			res.json({ ok : true });
+		});
 	});
 };
 
