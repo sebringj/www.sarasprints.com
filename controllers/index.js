@@ -81,7 +81,7 @@ module.exports.set = function(context) {
 	
 	app.get('/', function(req, res){
 		function render(req, res){
-			res.render('index', {
+			res.render('index.html', {
 				year : year,
 				seo : cache.home.kitgui.seo,
 				productColors : cache.home.productColors,
@@ -104,7 +104,6 @@ module.exports.set = function(context) {
 						var i = 0, len, productColor, size, removeCount, keepCount = 5;
 						if (status === 200) {
 							// reduce array to 4 items
-							console.log(data)
 							if (!data || !data.length) { 
 								cache.home.productColors = [];
 								callback();
@@ -122,7 +121,17 @@ module.exports.set = function(context) {
 									productColor.discount = true;
 								}
 							}
-							cache.home.productColors = data;
+							var colors = [], j, color;
+							for(i = 0; i < data.length; i++) {
+								if (data[i].colors.length && data[i].colors[0].sizes.length) {
+									color = data[i].colors[0];
+									color.discount = data[i].discount;
+									color.size = color.sizes[0];
+									color.image = color.images[0];
+									colors.push(data[i].colors[0]);
+								}
+							}
+							cache.home.productColors = colors;
 						} else {
 							cache.home.productColors = [];
 						}
@@ -155,7 +164,7 @@ module.exports.set = function(context) {
 	});
 	app.get('/cart', function(req, res) {
 		function render() {
-			res.render('cart', {
+			res.render('cart.html', {
 				year : year,
 				title : "Cart",
 				clientid : clientid,
@@ -207,14 +216,14 @@ module.exports.set = function(context) {
 		}
 	});
 	app.get('/checkout', function(req, res){
-		res.render('checkout', {
+		res.render('checkout.html', {
 			title : 'checkout'
 		});
 	});
 	app.get('/contact-us', function(req, res) {
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'contactus', cacheKey : 'contact', pageID : 'contact-us',
+			template : 'contactus.html', cacheKey : 'contact', pageID : 'contact-us',
 			items : [
 				{ id : 'contactustitle', editorType : 'inline' },
 				{ id : 'contactuswording', editorType : 'inline' }
@@ -241,7 +250,7 @@ module.exports.set = function(context) {
 		var cacheKey = getPageID(req.path);
 		
 		function render() {
-			res.render('product', cache[cacheKey]);
+			res.render('product.html', cache[cacheKey]);
 		}
 		
 		if (req.query.refresh || req.cookies.kitgui) {
@@ -327,12 +336,13 @@ module.exports.set = function(context) {
 				}
 			}
 		}
-		
+		console.log(ageTags);
 		tagList = tags.join(',');
+		console.log(tagList);
 		if (tagList === ',') { tagList = ''; }
 		
 		function render() {
-			res.render('catalog', cache[cacheKey]);
+			res.render('catalog.html', cache[cacheKey]);
 		}
 		
 		if (req.query.refresh || req.cookies.kitgui) {
@@ -358,7 +368,7 @@ module.exports.set = function(context) {
 								(function(){
 									var ageProducts = [], arr;
 									for(var i = 0; i < ageTags.length; i++) {
-										arr = ageTags[i];
+										arr = filterLookup[ageTags[i]];
 										for(var j = 0; j < arr.length; j++) {
 											for(var z = 0; z < data.products.length; z++) {
 												if (data.products[z].productNumber.indexOf(arr[j]) === 0) {
@@ -405,7 +415,7 @@ module.exports.set = function(context) {
 	app.get('/join-saras-club', function(req, res){
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'join-saras-club', cacheKey : 'join-saras-club', pageID : 'join-saras-club',
+			template : 'join-saras-club.html', cacheKey : 'join-saras-club', pageID : 'join-saras-club',
 			items : [
 				{ id : 'joinSarasClubDescription', editorType : 'inline' },
 				{ id : 'joinSarasClubChildrenInstructions', editorType : 'inline' }
@@ -415,29 +425,29 @@ module.exports.set = function(context) {
 	app.get('/sign-in', function(req, res){
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'sign-in', cacheKey : 'sign-in', pageID : 'sign-in',
+			template : 'sign-in.html', cacheKey : 'sign-in', pageID : 'sign-in',
 			items : []
 		});
 	});
 	app.get('/my-account', function(req, res){
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'my-account', cacheKey : 'my-account', pageID : 'my-account',
+			template : 'my-account.html', cacheKey : 'my-account', pageID : 'my-account',
 			items : []
 		});
 	});
 	app.get('/forgot-password', function(req, res){
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'forgot-password', cacheKey : 'forgot-password', pageID : 'forgot-password',
+			template : 'forgot-password.html', cacheKey : 'forgot-password', pageID : 'forgot-password',
 			items : []
 		});
 	});
-	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service)$/, function(req, res){
+	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service|testimonials)$/, function(req, res){
 		var pageID = getPageID(req.path);
 		commonFlow({ 
 			req : req, res : res, 
-			template : 'content', cacheKey : pageID, pageID : pageID,
+			template : 'content.html', cacheKey : pageID, pageID : pageID,
 			items : [
 				{ id : pageID + 'Title', editorType : 'inline' },
 				{ id : pageID + 'Html', editorType : 'html' }

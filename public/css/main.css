@@ -210,6 +210,8 @@ body {
 	font-weight:100;
 	font-size:19px;
 	color:#848382;
+	position:relative;
+	top:2px;
 }
 .middle .awlogo {
 	height:58px;
@@ -217,6 +219,9 @@ body {
 	background-image:url(/img/american-w.png);
 	display:inline-block;
 	vertical-align:middle;
+	position:relative;
+	top:30px;
+	left:60px;
 }
 .middle .pinklogo {
 	height:109px;
@@ -261,7 +266,7 @@ body {
 	top:-27px;
 }
 .middle .join-saras-club span {
-	font-size:17px;
+	font-size:20px;
 	font-weight:400;
 	color:#1898ce;
 }

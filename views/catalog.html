@@ -25,9 +25,9 @@
 	{% endif %}
 </div>
 <div class="site-width content-area">
-	<h1 class="{{ items[pageID + 'H1'].classNames }}">{{ items[pageID + 'H1'].content }}</h1>
+	<h1 class="{{ items[pageID + 'H1'].classNames }}">{{ items[pageID + 'H1'].content | safe }}</h1>
 	<div class="description {{ items[pageID + 'Description'].classNames }}">
-		{{ items[pageID + 'Description'].content }}
+		{{ items[pageID + 'Description'].content | safe }}
 	</div>
 	<div class="row">
 		<div class="col-sm-2">
@@ -69,7 +69,7 @@
 			<div class="productColors">
 				{% if products.length %}
 					{% for product in products %} 
-						{% include "./partials/product.html" with product only %}
+						{% include "./partials/product.html" %}
 					{% endfor %}
 				{% else %}
 					<div class="alert alert-danger" style="margin-top:30px">No Results.</div>
@@ -81,6 +81,6 @@
 {% endblock %}
 
 {% block foot %}
-	<script>var tags = {{ JSON.stringify(tags) }};</script>
+	<script>var tags = {{ tags | stringify | safe }};</script>
 	<script src="/js/pages/catalog.js"></script>
 {% endblock %}

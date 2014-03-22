@@ -135,10 +135,10 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 			});
 			var wording = (json.product.inStock) ? 'Availability: In Stock' : 'Availability: Out of Stock';
 			$('.product-availability span').text(wording);
+			$('.right-column .description').html( json.product.descriptions[0] );
 		var $div = $('<div>');
 		$div.load(json.product.productURL + ' [data-detail-div]', function() {
-			$('.description').html( $div.find('.description').html() );
-			console.log($div.find('.description').html());
+			$('.right-column .description').html( $div.find('.description').html() );
 		});
 	});
 	

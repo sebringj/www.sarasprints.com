@@ -12,7 +12,8 @@
     "async": "~0.2.9",
     "kitgui": "0.0.0",
     "mailchimp-api": "~2.0.4",
-    "jquery": "~2.1.0-beta3"
+    "jquery": "~2.1.0-beta3",
+    "nunjucks": "~1.0.1"
   },
   "devDependencies": {},
   "scripts": {

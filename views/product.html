@@ -7,7 +7,7 @@
 {% block content %}
 <div data-product data-detail-div>
 	<div class="left-column">
-		<div class="big-product-image" data-big-product-image style="background-image:url({{ product.images[0] }})"></div>
+		<div class="big-product-image" data-big-product-image style="background-image:url('{{ product.images[0] | safe }}')"></div>
 		<div class="product-colors">
 			{% for color in product.colors %}	
 				<a href="{{ color.productURL }}" data-productnumber="{{ color.productNumber }}" data-color><span class="swatch-color" style="background-image:url('{{ color.images[6] }}')"></span></a>
@@ -22,9 +22,9 @@
 		<div class="line-break"></div>
 		<div class="product-price">
 			{% if isSale %}
-				<span class="slash">${{ product.sizes[0].msrp }}</span>
+				<span class="slash">{{ product.sizes[0].msrp | cur }}</span>
 			{% endif %}
-			<span data-product-price>${{ product.sizes[0].unitPrice }}</span>
+			<span data-product-price>{{ product.sizes[0].unitPrice | cur }}</span>
 		</div>
 		<div class="select-pattern">
 			<select class="pattern-dropdown" data-colors>
