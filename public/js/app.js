@@ -191,7 +191,7 @@ $('form.subscribebar').submit(function(ev){
 		if (!data.error) {
 			title = 'Success!';
 			message = 'Thank you for subscribing!';
-			$('.newsletter').css({visibility:'hidden'});
+			$('input[name=subscribeemail],button.subscribetext').prop('disabled',true);
 			sessionStorage.hideSubscribe = '1';
 		} else {
 			title = 'Oops.';
@@ -208,7 +208,7 @@ $('form.subscribebar input').focus(function(){
 	$(this).css({'border-color':''});
 });
 if (sessionStorage.hideSubscribe) {
-	$('.newsletter').css({visibility:'hidden'});
+	$('input[name=subscribeemail],button.subscribetext').prop('disabled',true);
 }
 
 $('.top .cart').click(function(){
