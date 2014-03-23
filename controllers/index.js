@@ -6,6 +6,7 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 	async = require('async'),
 	fs = require('fs'),
 	emailer = require('../lib/email.js'),
+	redirects = require('./redirects.js'),
 	htmlEncode = function(str) {
 		if (!str) { return ''; }
 		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -443,7 +444,7 @@ module.exports.set = function(context) {
 			items : []
 		});
 	});
-	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service|testimonials)$/, function(req, res){
+	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service|testimonials|privacy-security)$/, function(req, res){
 		var pageID = getPageID(req.path);
 		commonFlow({ 
 			req : req, res : res, 
@@ -555,12 +556,20 @@ module.exports.set = function(context) {
 		});
 	});
 	app.get('/500',function(req, res){
-		res.render('500', {})
+		res.render('500.html', {})
 	});
+	for(var i = 0; i < redirects.length; i++) {
+		(function(r){
+			app.get(r.path, function(req, res){
+				res.redirect(301,r.redirect);
+			});
+		})(redirects[i]);
+	}
+
 	app.use(function(req, res, next){
 		res.status(404);
 		if (req.accepts("html")){
-			res.render('404', {
+			res.render('404.html', {
 				year : year,
 				title : "404 page not found",
 				clientid : clientid,
@@ -576,7 +585,7 @@ module.exports.set = function(context) {
 	});
 	app.use(function(err, req, res, next){
 		res.status(err.status || 500);
-		res.render('500', { error: err });
+		res.render('500.html', { error: err });
 	});
 };
 
