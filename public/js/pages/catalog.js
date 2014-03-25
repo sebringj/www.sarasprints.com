@@ -39,7 +39,21 @@
 	
 	$('input[type=checkbox]').click(function(){
 		var tags = [];
-		
+		$('input[type=checkbox]').each(function(){
+			$(this).removeData('justclicked');
+		});
+		$(this).data('justclicked',true);
+		var $cur = $(this).closest('.checkbox')
+		while($cur.hasClass('checkbox')) {
+			$cur = $cur.prev();
+		}
+		$cur = $cur.next();
+		while($cur.hasClass('checkbox')) {
+			if (!$cur.find('input').data('justclicked')) {
+				$cur.find('input').prop('checked',false);
+			}
+			$cur = $cur.next();
+		}
 		$('input[type=checkbox]:checked').each(function(){
 			tags.push($(this).val());
 		});
