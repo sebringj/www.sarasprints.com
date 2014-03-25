@@ -3,7 +3,7 @@
 		<a href="{{ product.productURL }}">
 			<span class="quick-view">QUICKVIEW</span>
 			<img src="{{ product.images[0] }}">
-			<span class="productName">{{ product.productName }}</span>
+			<span class="productName" data-product-name>{{ product.productName }}</span>
 			<span class="price">
 				{% if product.discount %}
 					<span class="discount">

@@ -114,10 +114,12 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 	hubsoft.getProducts({
 		productNumber : productNumber
 	}, function(json){
+		console.log(json.product.productName);
 		$parent
-			.find('[data-product-name]').text(json.product.productName).end()
+			//.find('[data-product-name]').text(json.product.productName).end()
 			.find('[data-big-product-image]').css({ "background-image" : 'url("'+ json.product.images[0] +'")'}).end()
 			.find('.product-code [data-product-number]').text(json.product.productNumber).end()
+			.find('[data-product-price]').text('$' + json.product.sizes[0].unitPrice.toFixed(2)).end()
 			.find('[data-sizes]').each(function(){
 				var $this = $(this),
 				$select = $('<select>');
@@ -139,6 +141,7 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 		var $div = $('<div>');
 		$div.load(json.product.productURL + ' [data-detail-div]', function() {
 			$('.right-column .description').html( $div.find('.description').html() );
+			$('[data-product-name]').text( $div.find('[data-product-name]').text() );
 		});
 	});
 	

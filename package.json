@@ -1,6 +1,6 @@
 {
   "name": "www.sarasprints.com",
-  "version": "0.0.0-106",
+  "version": "0.0.0-110",
   "description": "website for Sara's Prints",
   "main": "app.js",
   "dependencies": {
