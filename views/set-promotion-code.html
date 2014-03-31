@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+  
+{% endblock %}
+
+{% block content %}	
+<div style="padding:100px 0">
+	<div class="loading">
+		<h1>Setting Promotion...</h1>
+	</div>
+	<div class="alert alert-danger" style="display:none">
+		We're sorry. The promotion code you are trying to use is not valid.
+	</div>
+</div>
+{% endblock %}
+
+{% block foot %}
+	<script>
+	hubsoft.ready(function(){
+		hubsoft.validateAuthCode({
+			code : '{{ authcode }}'
+		}, function(data) {
+			if (data.success) {
+				location = '/?ran='+escape(Math.random());
+			} else {
+				$('.loading').hide();
+				$('.alert').show();
+			}
+		});
+	});
+	</script>
+{% endblock %}

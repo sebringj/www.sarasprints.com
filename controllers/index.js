@@ -43,6 +43,8 @@ module.exports.set = function(context) {
 	var kitguiAccountKey = config.kitgui.accountKey;
 	var mailchimp = context.mailchimp;
 	
+	cache = context.cache;
+	
 	function commonFlow(options) {
 		
 		var kitguiItems = [];
@@ -81,12 +83,14 @@ module.exports.set = function(context) {
 	}
 	
 	app.get('/', function(req, res){
+		
+		var productsCacheKey = getProductsCacheKey(req, 'home');
 
-		function render(req, res){
+		function render(){
 			res.render('index.html', {
 				year : year,
 				seo : cache.home.kitgui.seo,
-				productColors : cache.home.productColors,
+				productColors : cache.home.products[productsCacheKey],
 				kitgui : cache.home.kitgui.items,
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
@@ -96,18 +100,28 @@ module.exports.set = function(context) {
 		if (req.query.refresh || req.cookies.kitgui) {
 			delete cache.home;
 		}
-		if (cache.home) {
-			render(req, res);
+		
+		if (cache.home && cache.home.products && cache.home.products[productsCacheKey]) {
+			render();
 		} else {
-			cache.home = {};
+			cache.home = cache.home || {};
 			async.parallel([
 				function(callback) {
-					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/productColors?tags=new'}, function(status, data) {
+					cache.home.products = cache.home.products || {};
+					if (cache.home.products[productsCacheKey]) { return callback(); }
+					var path = '/api/v1/productColors?tags=new';
+					if (req.cookies.coupon) {
+						path += '&coupon=' + req.cookies.coupon;
+					}
+					if (req.cookies.promotion) {
+						path += '&promotion=' + req.cookies.promotion;
+					}
+					cache.home.products[productsCacheKey] = [];
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:path}, function(status, data) {
 						var i = 0, len, productColor, size, removeCount, keepCount = 5;
 						if (status === 200) {
 							// reduce array to 4 items
 							if (!data || !data.length) { 
-								cache.home.productColors = [];
 								callback();
 								return; 
 							}
@@ -133,14 +147,13 @@ module.exports.set = function(context) {
 									colors.push(data[i].colors[0]);
 								}
 							}
-							cache.home.productColors = colors;
-						} else {
-							cache.home.productColors = [];
+							cache.home.products[productsCacheKey] = colors;
 						}
 						callback();
 					});
 				}, 
 				function(callback) {
+					if (cache.home && cache.home.kitgui) { return callback(); }
 					kitgui.getContents({
 						basePath : config.kitgui.basePath,
 						host : config.kitgui.host,
@@ -157,7 +170,7 @@ module.exports.set = function(context) {
 				}
 			],function(err) {
 				if (!err) {
-					render(req, res);
+					render();
 				} else {
 					res.redirect('/500');
 				}
@@ -251,28 +264,49 @@ module.exports.set = function(context) {
 		
 		var cacheKey = getPageID(req.path);
 		
+		var productCacheKey = getProductsCacheKey(req, cacheKey);
+		
 		function render() {
-			res.render('product.html', cache[cacheKey]);
+			res.render('product.html', {
+				year : cache[cacheKey].year,
+				clientid : cache[cacheKey].clientid,
+				kitguiAccountKey : cache[cacheKey].kitguiAccountKey,
+				kitguiPageID : cache[cacheKey].kitguiPageID,
+				pageID : cache[cacheKey].pageID,
+				product : cache[cacheKey].product[productCacheKey],
+				title : cache[cacheKey].title,
+				description : cache[cacheKey].description,
+				seo : cache[cacheKey].seo
+			});
 		}
 		
 		if (req.query.refresh || req.cookies.kitgui) {
 			delete cache[cacheKey];
 		}
-		if (cache[cacheKey]) {
-			render(cache[cacheKey]);
+		if (cache[cacheKey] && cache[cacheKey].product && cache[cacheKey].product[productCacheKey]) {
+			render();
 		} else {
-			cache[cacheKey] = {
-				year : year,
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : cacheKey,
-				pageID : cacheKey
-			};
+			cache[cacheKey] = cache[cacheKey] || {};
+			cache[cacheKey].year = year;
+			cache[cacheKey].clientid = clientid;
+			cache[cacheKey].kitguiAccountKey = kitguiAccountKey;
+			cache[cacheKey].kitguiPageID = cacheKey;
+			cache[cacheKey].pageID = cacheKey;
+			cache[cacheKey].product = cache[cacheKey].product || {};
+			
 			var kg;
+			
 			async.parallel([
 				function(callback) {
-					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?productURL=' + req.path}, function(status, data) {						
-						cache[cacheKey].product = data.product;
+					var path = '/api/v1/products?productURL=' + req.path;
+					if (req.cookies.coupon) {
+						path += '&coupon=' + req.cookies.coupon;
+					}
+					if (req.cookies.promotion) {
+						path += '&promotion=' + req.cookies.promotion;
+					}
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:path}, function(status, data) {	
+						cache[cacheKey].product[productCacheKey] = data.product;
 						cache[cacheKey].title = data.product.productName;
 						cache[cacheKey].description = data.product.descriptions[0];
 						cache[cacheKey].seo = {
@@ -285,6 +319,7 @@ module.exports.set = function(context) {
 					});
 				},
 				function(callback) {
+					if (cache[cacheKey].items) { return callback(); }
 					kitgui.getContents({
 						basePath : config.kitgui.basePath,
 						host : config.kitgui.host,
@@ -294,13 +329,12 @@ module.exports.set = function(context) {
 							{ id : cacheKey + 'Description', editorType : 'inline' }
 						]
 					}, function(kgObject){
-						kg = kgObject; 
+						kg = kgObject;
 						cache[cacheKey].items = kg.items;
 						callback();
 					});
 				}
 			], function() {
-				cache[cacheKey].items = kg.items;
 				if (kg.items[cacheKey + 'Title'].content) {
 					cache[cacheKey].title = kg.items[cacheKey + 'Title'].content;
 				}
@@ -321,6 +355,7 @@ module.exports.set = function(context) {
 	});
 	app.get(/(month|year|pajamas|fuzzy-fleece|sale|spring-summer|fall-winter|holiday|new|nightgowns)/, function(req, res) {
 		var cacheKey = getPageID(req.path);
+		var productsCacheKey = getProductsCacheKey(req, cacheKey);
 		
 		var tags = req.path.substr(1).split('/');
 		var tagList = '';
@@ -338,33 +373,50 @@ module.exports.set = function(context) {
 				}
 			}
 		}
-		console.log(ageTags);
+
 		tagList = tags.join(',');
-		console.log(tagList);
 		if (tagList === ',') { tagList = ''; }
 		
 		function render() {
-			res.render('catalog.html', cache[cacheKey]);
+			res.render('catalog.html', {
+				year : cache[cacheKey].year,
+				clientid : cache[cacheKey].clientid,
+				kitguiAccountKey : cache[cacheKey].kitguiAccountKey,
+				kitguiPageID : cache[cacheKey].kitguiPageID,
+				pageID : cache[cacheKey].pageID,
+				tags : cache[cacheKey].tags,
+				seo: cache[cacheKey].seo,
+				items: cache[cacheKey].items,
+				products : cache[cacheKey].products[productsCacheKey]
+			});
 		}
 		
 		if (req.query.refresh || req.cookies.kitgui) {
 			delete cache[cacheKey];
 		}
-		if (cache[cacheKey]) {
-			render(cache[cacheKey]);
+		if (cache[cacheKey] && cache[cacheKey].products && cache[cacheKey].products[productsCacheKey] && cache[cacheKey].products[productsCacheKey].length) {
+			render();
 		} else {
-			cache[cacheKey] = {
-				year : year,
-				clientid : clientid,
-				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : cacheKey,
-				pageID : cacheKey,
-				tags : tags
-			};
-			var kg;
+			cache[cacheKey] = cache[cacheKey] || {};
+			cache[cacheKey].year = year;
+			cache[cacheKey].clientid = clientid;
+			cache[cacheKey].kitguiAccountKey = kitguiAccountKey;
+			cache[cacheKey].kitguiPageID = cacheKey;
+			cache[cacheKey].pageID = cacheKey;
+			cache[cacheKey].tags = tags;
+			
+			cache[cacheKey].products = cache[cacheKey].products || {};
+			cache[cacheKey].products[productsCacheKey] = [];
 			async.parallel([
 				function(callback) {
-					getJSON({port:443, host:clientid + '.hubsoft.ws',path:'/api/v1/products?tags=' + tags}, function(status, data) {
+					var path = '/api/v1/products?tags=' + tags;
+					if (req.cookies.coupon) {
+						path += '&coupon=' + req.cookies.coupon;
+					}
+					if (req.cookies.promotion) {
+						path += '&promotion=' + req.cookies.promotion;
+					}
+					getJSON({port:443, host:clientid + '.hubsoft.ws',path:path}, function(status, data) {
 						if (data && data.products) {
 							if (ageTags.length) {
 								(function(){
@@ -383,9 +435,7 @@ module.exports.set = function(context) {
 								})();								
 							}
 							
-							cache[cacheKey].products = data.products;
-						} else {
-							cache[cacheKey].products = [];
+							cache[cacheKey].products[productsCacheKey] = data.products;
 						}
 						
 						callback();
@@ -394,6 +444,7 @@ module.exports.set = function(context) {
 					});
 				},
 				function(callback) {
+					if (cache[cacheKey].items) { return callback(); }
 					kitgui.getContents({
 						basePath : config.kitgui.basePath,
 						host : config.kitgui.host,
@@ -458,7 +509,17 @@ module.exports.set = function(context) {
 	});
 	app.get('/refresh', function(req, res){
 		getJSON({port:443, host:'sarasprints.hubsoft.ws',path:'/api/v1/refresh'}, function(status, data) {
-			cache = {};
+			if (cache) {
+				for(var i in cache) {
+					if (!cache.hasOwnProperty(i)) { continue; }
+					if (cache[i].products) {
+						delete cache[i].products;
+					}
+					if (cache[i].product) {
+						delete cache[i].product;
+					}
+				}
+			}
 			res.json({ ok : true });
 		});
 	});
@@ -556,6 +617,12 @@ module.exports.set = function(context) {
 	        res.json({ err : error });
 		});
 	});
+	app.get('/set-coupon',function(req, res) {
+		res.render('set-coupon.html',{ coupon : req.query.coupon });
+	});
+	app.get('/set-promotion-code',function(req, res) {
+		res.render('set-promotion-code.html',{ authcode : req.query.authcode });
+	});
 	app.get('/500',function(req, res){
 		res.render('500.html', {})
 	});
@@ -601,4 +668,16 @@ function setCache(req, cache, key) {
 
 function getPageID(path) {
 	return path.replace(/[^a-z0-9]/gi,'-').replace(/-+/gi,'-');
+}
+
+function getProductsCacheKey(req, prefix) {
+	var coupon = 'default';
+	if (req.cookies.coupon) {
+		coupon = req.cookies.coupon;
+	}
+	var promotion = 'default';
+	if (req.cookies.promotion) {
+		promotion = req.cookies.promotion;
+	}
+	return prefix + '-' + promotion + '-' + coupon;
 }
