@@ -415,9 +415,6 @@ li span.sp-breadcrumb-label {
 	text-align:center;
 	color:#000;
 }
-.middle .price .msrp { 
-	display:none; 
-}
 .middle .price .unit-price { 
 	display:inline-block; 
 }
@@ -451,4 +448,8 @@ li span.sp-breadcrumb-label {
     -moz-box-shadow:    3px 3px 5px 0px #ccc;
     -webkit-box-shadow: 3px 3px 5px 0px #ccc;
     box-shadow:         3px 3px 5px 0px #ccc;
+}
+.slash {
+	text-decoration: line-through;
+	color : #f00;
 }

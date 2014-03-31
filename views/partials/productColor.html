@@ -5,14 +5,10 @@
 			<img src="{{ color.images[0] }}">
 			<span class="productName">{{ color.productName }}</span>
 			<span class="price">
-				{% if color.discount %}
-					<span class="discount">
+				{% if color.size.msrp > color.size.unitPrice %}
+					<span class="msrp slash">{{ color.size.msrp | cur }}</span>
 				{% endif %}
 				<span class="unit-price">{{ color.size.unitPrice | cur }}</span>
-				<span class="msrp">{{ color.size.msrp | cur }}</span>
-				{% if color.discount %}
-					</span>
-				{% endif %}
 			</span>
 		</a>
 	</div>

@@ -68,12 +68,15 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 
 	hubsoft.cart.snapshot();
 	hubsoft.cart.set(sku,quantity);
-	hubsoft.validateCart(function(data){
+	hubsoft.validateCart(function(data) {
 		if (!data.success) {
-			hubsoft.cart.undo();
-			console.log(data);
-			//$('[data-cart-dialog]').find('.modal-body p').text(data.errors[0].message);
-			//$('[data-cart-dialog]').modal('show');
+			if (data.message === 'connection error') {
+				hubsoft.cart.clearCookie();
+			} else {
+				hubsoft.cart.undo();
+				$('[data-cart-dialog]').find('.modal-body p').text(data.errors[0].message);
+				$('[data-cart-dialog]').modal('show');
+			}
 		} else {
 			location = '/cart';
 		}
@@ -108,18 +111,21 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 		return; 
 	}
 	
-	$('span[data-productnumber]').text(productNumber);
+	$('span[data-productnumber]').text( productNumber );
 	
 	
 	hubsoft.getProducts({
 		productNumber : productNumber
 	}, function(json){
 		console.log(json.product.productName);
+		var product = json.product;
+		var size = product.sizes[0];
 		$parent
 			//.find('[data-product-name]').text(json.product.productName).end()
-			.find('[data-big-product-image]').css({ "background-image" : 'url("'+ json.product.images[0] +'")'}).end()
-			.find('.product-code [data-product-number]').text(json.product.productNumber).end()
-			.find('[data-product-price]').text('$' + json.product.sizes[0].unitPrice.toFixed(2)).end()
+			.find('[data-big-product-image]').css({ "background-image" : 'url("'+ product.images[0] +'")'}).end()
+			.find('.product-code [data-product-number]').text(product.productNumber).end()
+			.find('[data-product-unit-price]').text('$' + size.unitPrice.toFixed(2)).end()
+			.find('[data-product-msrp]').text('$' + size.msrp.toFixed(2)).end()
 			.find('[data-sizes]').each(function(){
 				var $this = $(this),
 				$select = $('<select>');
@@ -127,14 +133,20 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 				var sizes = json.product.sizes;
 				for(var i = 0; i < sizes.length; i++) {
 					if (sizes[i].inStockNow) {
-						$select.append($('<option>').text(sizes[i].sizeName).val(sizes[i].sku));
+						$select.append($('<option>').text(size.sizeName).val(sizes[i].sku));
 					} else {
 						$select.append($('<option disabled>').text(sizes[i].sizeName + ' (out of stock)').val(sizes[i].sku));
 					}
-					
 					$this.html($select.html());
 				}
 			});
+			
+			if (size.msrp > size.unitPrice) {
+				$parent.find('[data-product-msrp]').show();
+			} else {
+				$parent.find('[data-product-msrp]').hide();
+			}
+			
 			var wording = (json.product.inStock) ? 'Availability: In Stock' : 'Availability: Out of Stock';
 			$('.product-availability span').text(wording);
 			$('.right-column .description').html( json.product.descriptions[0] );

@@ -5,14 +5,10 @@
 			<img src="{{ product.images[0] }}">
 			<span class="productName" data-product-name>{{ product.productName }}</span>
 			<span class="price">
-				{% if product.discount %}
-					<span class="discount">
+				{% if product.sizes[0].msrp > product.sizes[0].unitPrice %}
+					<span class="msrp slash">{{ product.sizes[0].msrp | cur }}</span>
 				{% endif %}
-						<span class="unit-price">{{ product.sizes[0].unitPrice | cur }}</span>
-						<span class="msrp">{{ product.sizes[0].msrp | cur }}</span>
-				{% if discount %}
-					</span>
-				{% endif %}
+				<span class="unit-price">{{ product.sizes[0].unitPrice | cur }}</span>				
 			</span>
 		</a>
 	</div>

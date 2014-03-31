@@ -21,10 +21,12 @@
 		</div>
 		<div class="line-break"></div>
 		<div class="product-price">
-			{% if isSale %}
-				<span class="slash">{{ product.sizes[0].msrp | cur }}</span>
+			{% if product.sizes[0].msrp > product.sizes[0].unitPrice %}
+				<span class="slash" data-product-msrp>{{ product.sizes[0].msrp | cur }}</span>
+			{% else %}
+				<span class="slash" data-product-msrp style="display:none">{{ product.sizes[0].msrp | cur }}</span>
 			{% endif %}
-			<span data-product-price>{{ product.sizes[0].unitPrice | cur }}</span>
+			<span data-product-unit-price>{{ product.sizes[0].unitPrice | cur }}</span>
 		</div>
 		<div class="select-pattern">
 			<select class="pattern-dropdown" data-colors>

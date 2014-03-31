@@ -81,6 +81,7 @@ module.exports.set = function(context) {
 	}
 	
 	app.get('/', function(req, res){
+
 		function render(req, res){
 			res.render('index.html', {
 				year : year,
@@ -89,7 +90,7 @@ module.exports.set = function(context) {
 				kitgui : cache.home.kitgui.items,
 				clientid : clientid,
 				kitguiAccountKey : kitguiAccountKey,
-				kitguiPageID : getPageID(req.path)
+				kitguiPageID : 'home'
 			});
 		}
 		if (req.query.refresh || req.cookies.kitgui) {
