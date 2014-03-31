@@ -74,8 +74,10 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 				hubsoft.cart.clearCookie();
 			} else {
 				hubsoft.cart.undo();
-				$('[data-cart-dialog]').find('.modal-body p').text(data.errors[0].message);
-				$('[data-cart-dialog]').modal('show');
+				$('[data-global-dialog]').find('.modal-body p')
+					.addClass('alert-danger')
+					.removeClass('alert-info').text('quantity not available');
+				$('[data-global-dialog]').modal('show');
 			}
 		} else {
 			location = '/cart';
@@ -121,7 +123,6 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 		var product = json.product;
 		var size = product.sizes[0];
 		$parent
-			//.find('[data-product-name]').text(json.product.productName).end()
 			.find('[data-big-product-image]').css({ "background-image" : 'url("'+ product.images[0] +'")'}).end()
 			.find('.product-code [data-product-number]').text(product.productNumber).end()
 			.find('[data-product-unit-price]').text('$' + size.unitPrice.toFixed(2)).end()
@@ -133,7 +134,7 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 				var sizes = json.product.sizes;
 				for(var i = 0; i < sizes.length; i++) {
 					if (sizes[i].inStockNow) {
-						$select.append($('<option>').text(size.sizeName).val(sizes[i].sku));
+						$select.append($('<option>').text(sizes[i].sizeName).val(sizes[i].sku));
 					} else {
 						$select.append($('<option disabled>').text(sizes[i].sizeName + ' (out of stock)').val(sizes[i].sku));
 					}
@@ -143,8 +144,10 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 			
 			if (size.msrp > size.unitPrice) {
 				$parent.find('[data-product-msrp]').show();
+				$parent.find('[data-product-unit-price]').addClass('sale');
 			} else {
 				$parent.find('[data-product-msrp]').hide();
+				$parent.find('[data-product-unit-price]').removeClass('sale');
 			}
 			
 			var wording = (json.product.inStock) ? 'Availability: In Stock' : 'Availability: Out of Stock';
@@ -179,7 +182,6 @@ $('body').on('click','.product .quick-view', function(ev) {
 	ev.preventDefault();
 	ev.stopPropagation();
 	var productURL = $(this).closest('a').attr('href');
-	console.log(productURL);
 	var $div = $('<div>');
 	$div.load(productURL + ' [data-detail-div]', function() {
 		$('.quick-view-modal').find('.modal-body').html($div.find('[data-detail-div]').html());
@@ -192,7 +194,6 @@ $('form.subscribebar').submit(function(ev){
 	var email = $(this).find('input').val();
 	if (!hubsoft.emailRE.test(email)) {
 		$(this).find('input').css({'border-color':'red'});
-		console.log('subscriber email input bad');
 		return;
 	}
 	

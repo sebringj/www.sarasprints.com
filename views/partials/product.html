@@ -7,8 +7,10 @@
 			<span class="price">
 				{% if product.sizes[0].msrp > product.sizes[0].unitPrice %}
 					<span class="msrp slash">{{ product.sizes[0].msrp | cur }}</span>
-				{% endif %}
-				<span class="unit-price">{{ product.sizes[0].unitPrice | cur }}</span>				
+					<span class="unit-price sale">{{ product.sizes[0].unitPrice | cur }}</span>	
+				{% else %}
+					<span class="unit-price">{{ product.sizes[0].unitPrice | cur }}</span>	
+				{% endif %}			
 			</span>
 		</a>
 	</div>

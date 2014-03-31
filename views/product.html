@@ -23,10 +23,11 @@
 		<div class="product-price">
 			{% if product.sizes[0].msrp > product.sizes[0].unitPrice %}
 				<span class="slash" data-product-msrp>{{ product.sizes[0].msrp | cur }}</span>
+				<span data-product-unit-price class="sale">{{ product.sizes[0].unitPrice | cur }}</span>
 			{% else %}
 				<span class="slash" data-product-msrp style="display:none">{{ product.sizes[0].msrp | cur }}</span>
+				<span data-product-unit-price>{{ product.sizes[0].unitPrice | cur }}</span>
 			{% endif %}
-			<span data-product-unit-price>{{ product.sizes[0].unitPrice | cur }}</span>
 		</div>
 		<div class="select-pattern">
 			<select class="pattern-dropdown" data-colors>

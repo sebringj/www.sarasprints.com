@@ -451,5 +451,8 @@ li span.sp-breadcrumb-label {
 }
 .slash {
 	text-decoration: line-through;
+	color : #000;
+}
+.sale {
 	color : #f00;
 }

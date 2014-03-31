@@ -30,7 +30,10 @@
         hubsoft.validateCart(function (data) {
             if (data.success) {
                 if (data.message) {
-                    $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
+					if (!sessionStorage.showShippingMessage) {
+                    	$('.modal-cart').modal('show').find('.modal-body p').text(data.message);
+						sessionStorage.showShippingMessage = '1';
+					}
                 }
             }
         });
@@ -59,13 +62,22 @@
                 hubsoft.validateCart(function (data) {
                     if (data.success) {
                         if (data.message) {
-                            $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
+							if (!sessionStorage.showShippingMessage) {
+                            	$('.modal-cart').modal('show')
+								.find('.modal-body p.alert')
+									.removeClass('alert-danger')
+									.addClass('alert-info').text(data.message);
+								sessionStorage.showShippingMessage = '1';
+							}
                         }
                     } else {
-                        if (data.errors) {
+                        if (data.errors && data.errors.length) {
                             hubsoft.cart.undo();
                             updateCart();
-                             $('.modal-cart').modal('show').find('.modal-body p').text(data.message);
+                        	$('.modal-cart').modal('show')
+							.find('.modal-body p.alert')
+								.removeClass('alert-info')
+								.addClass('alert-danger').text('The requested quantity is not available.');
                         }
                     }
                 });

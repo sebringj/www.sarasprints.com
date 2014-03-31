@@ -7,8 +7,10 @@
 			<span class="price">
 				{% if color.size.msrp > color.size.unitPrice %}
 					<span class="msrp slash">{{ color.size.msrp | cur }}</span>
+					<span class="unit-price sale">{{ color.size.unitPrice | cur }}</span>
+				{% else %}
+					<span class="unit-price">{{ color.size.unitPrice | cur }}</span>
 				{% endif %}
-				<span class="unit-price">{{ color.size.unitPrice | cur }}</span>
 			</span>
 		</a>
 	</div>

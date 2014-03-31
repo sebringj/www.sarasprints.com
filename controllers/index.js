@@ -496,7 +496,7 @@ module.exports.set = function(context) {
 			items : []
 		});
 	});
-	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service|testimonials|privacy-security)$/, function(req, res){
+	app.get(/^\/(sizing|story|safe-and-comfortable|customer-service|testimonials|privacy-security|american-widgeon)$/, function(req, res){
 		var pageID = getPageID(req.path);
 		commonFlow({ 
 			req : req, res : res, 
