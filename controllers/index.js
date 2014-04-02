@@ -507,6 +507,17 @@ module.exports.set = function(context) {
 			]
 		});
 	});
+	app.get('/create-account',function(req, res){
+		var pageID = getPageID(req.path);
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'create-account.html', cacheKey : pageID, pageID : pageID,
+			items : [
+				{ id : pageID + 'Title', editorType : 'inline' },
+				{ id : pageID + 'Html', editorType : 'html' }
+			]
+		});
+	});
 	app.get('/refresh', function(req, res){
 		getJSON({port:443, host:'sarasprints.hubsoft.ws',path:'/api/v1/refresh'}, function(status, data) {
 			if (cache) {

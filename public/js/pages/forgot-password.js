@@ -26,7 +26,7 @@ $('.forgot-password-form').submit(function(ev){
 				$form.find('.alert-danger')
 					.removeClass('alert-danger')
 					.addClass('alert-success')
-					.text('Please check your email inbox.');
+					.text('Please check your email inbox.').slideDown('fast');
 			}
 			console.log(data);
 		});

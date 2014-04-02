@@ -47,7 +47,8 @@
             updateCart();
         });
     }).on('keypress', '#cart input.qty', function (ev) {
-        if (ev.which !== 0 && ev.which !== 8 && (ev.which < 48 || ev.which > 57)) {
+		console.log(ev.which);
+        if (ev.which !== 13 && ev.which !== 0 && ev.which !== 8 && (ev.which < 48 || ev.which > 57)) {
             return false;
         }
     }).on('keyup', '#cart input.qty', function (ev) {

@@ -70,6 +70,7 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 	hubsoft.cart.set(sku,quantity);
 	hubsoft.validateCart(function(data) {
 		if (!data.success) {
+			console.log(data);
 			if (data.message === 'connection error') {
 				hubsoft.cart.clearCookie();
 			} else {
