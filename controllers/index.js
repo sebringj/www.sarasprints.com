@@ -482,6 +482,13 @@ module.exports.set = function(context) {
 			items : []
 		});
 	});
+	app.get('/sign-out', function(req, res){
+		commonFlow({ 
+			req : req, res : res, 
+			template : 'sign-out.html', cacheKey : 'sign-in', pageID : 'sign-in',
+			items : []
+		});
+	});
 	app.get('/my-account', function(req, res){
 		commonFlow({ 
 			req : req, res : res, 

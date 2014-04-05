@@ -1,80 +1,20 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-
+<link rel="stylesheet" href="/css/pages/my-account.css">
 {% endblock %}
 
 {% block content %}
-<div class="modal" data-signin role="dialog" tabindex="-1" style="display:none">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-		  <form>
-	          <input type="email" required class="email" placeholder="email" />
-	          <input type="password" required class="password" placeholder="password" />
-	          <div class="alert alert-error" style="display:none;">
-	              <button type="button" class="close">×</button>
-	              <span class="message">Credentials are invalid</span>
-	          </div>
-	  	  </form>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>	 
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="modal" data-resetpassword role="dialog" tabindex="-1" style="display:none">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-		  <form>
-	          <input type="email" required class="email" placeholder="email" />
-	          <div class="alert alert-error" style="display:none;">
-	              <button type="button" class="close">×</button>
-	              <span class="message">Could not find email address</span>
-	          </div>
-	          <div class="alert alert-success" style="display:none;">
-	              <button type="button" class="close">×</button>
-	              <span class="message">Check your email for your new password</span>
-	          </div>
-	  	  </form>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>	  
-	  </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-    <div class="loggedout">
-        <h1>My Account</h1>
-        <p><a href="/account">Sign in</a> to access your account.</p>
-    </div>
-    <div id="accountContent" class="loggedin"></div>
-</div>
+<div id="accountContent"><h1>Loading Account Information...</h1></div>
 
 {% endblock %}
 
 {% block foot %}
-{% raw %}
-<script id="accountTemplate" type="template">
 
-</script>
-{% endraw %}
-<script src="//api.emeraldcode.com/js/plugins/ejs.js"></script>
-<script src="/js/pages/account.js"></script>
+<script src="/js/templates.js"></script>
+<script src="/js/plugins/nunjucks-slim.min.js"></script>
+<script src="/js/nunjucks-filters.js"></script>
+<script src="/js/pages/my-account.js"></script>
 
 {% endblock %}

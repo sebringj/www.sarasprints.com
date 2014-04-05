@@ -24,7 +24,8 @@
 		for(var i = 0; i < filters.length; i++) {
 			env.addFilter(filters[i].name, filters[i].func, filters[i].async);
 		}
-		zipstory.nunjucks = env;
+		this.sarasprints = this.sarasprints || {};
+		sarasprints.nunjucks = env;
 	} else {
 		module.exports = filters;
 	}

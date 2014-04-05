@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+	<h1>Signing out...</h1>
+{% endblock %}
+
+{% block foot %}
+	<script>
+		hubsoft.ready(function(){
+			hubsoft.logout(function(data){
+				location = '/';
+			});
+		});
+	</script>
+{% endblock %}
