@@ -54,4 +54,9 @@ $('body').on('submit', '#changePasswordForm', function(ev) {
     });
 }).on('focus','#changePasswordForm input', function(){
 	$('#changePasswordForm .alert').slideUp('fast');
-});
+}).on('click', '#promotions a', function(ev){
+    ev.preventDefault();
+    hubsoft.cart.clearCookie();
+    hubsoft.setPromotion({promotion: $(this).data('promotion')});
+    window.location = './shop-pajamas';
+})

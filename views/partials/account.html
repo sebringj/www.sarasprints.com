@@ -11,7 +11,7 @@
             <div>There are no promotions assigned to your account.</div>
         {% else %}
 			{% for item in userInfo.availablePromotions %}
-               <a href="#" data-promotion="{{ item.promotionCode }}">{{ item.promotionName }}</a><br />
+               <a href="#" data-promotion="{{ item.promotionCode }}">{{ item.promotionName }}</a><br /><br />
        		{% endfor %}
 		{% endif %}
     </div>

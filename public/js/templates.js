@@ -21,7 +21,7 @@ output += "\n               <a href=\"#\" data-promotion=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"promotionCode", env.autoesc), env.autoesc);
 output += "\">";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"promotionName", env.autoesc), env.autoesc);
-output += "</a><br />\n       \t\t";
+output += "</a><br /><br />\n       \t\t";
 ;
 }
 }
