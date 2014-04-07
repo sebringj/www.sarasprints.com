@@ -109,7 +109,7 @@ module.exports.set = function(context) {
 				function(callback) {
 					cache.home.products = cache.home.products || {};
 					if (cache.home.products[productsCacheKey]) { return callback(); }
-					var path = '/api/v1/productColors?tags=new';
+					var path = '/api/v1/productColors?tags=new&instockonly=1';
 					if (req.cookies.coupon) {
 						path += '&coupon=' + req.cookies.coupon;
 					}
@@ -139,7 +139,7 @@ module.exports.set = function(context) {
 							}
 							var colors = [], j, color;
 							for(i = 0; i < data.length; i++) {
-								if (data[i].colors.length && data[i].colors[0].sizes.length) {
+								if (data[i].colors.length && data[i].colors[0].inStock && data[i].colors[0].sizes.length) {
 									color = data[i].colors[0];
 									color.discount = data[i].discount;
 									color.size = color.sizes[0];
@@ -298,7 +298,7 @@ module.exports.set = function(context) {
 			
 			async.parallel([
 				function(callback) {
-					var path = '/api/v1/products?productURL=' + req.path;
+					var path = '/api/v1/products?instockonly=1&productURL=' + req.path;
 					if (req.cookies.coupon) {
 						path += '&coupon=' + req.cookies.coupon;
 					}
@@ -417,7 +417,7 @@ module.exports.set = function(context) {
 						path += '&promotion=' + req.cookies.promotion;
 					}
 					getJSON({port:443, host:clientid + '.hubsoft.ws',path:path}, function(status, data) {
-						if (data && data.products) {
+						if (data && data.products && data.products.length) {
 							if (ageTags.length) {
 								(function(){
 									var ageProducts = [], arr;
@@ -644,6 +644,7 @@ module.exports.set = function(context) {
 	app.get('/500',function(req, res){
 		res.render('500.html', {})
 	});
+	
 	for(var i = 0; i < redirects.length; i++) {
 		(function(r){
 			app.get(r.path, function(req, res){
