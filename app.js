@@ -2,6 +2,7 @@ var express = require('express'),
 	config = require('config'),
 	app = express(),
 	server = app.listen(process.env.PORT || 4000),
+	middleware = require('./controllers/middleware.js'),
 	controllers = require('./controllers'),
 	http = require('http'),
 	path = require('path'),
@@ -21,10 +22,10 @@ nunjucks.set(app);
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
-
+middleware.set(context);
+app.use(app.router);
 controllers.set(context);
 console.log('running on port ' + (process.env.PORT || 4000));
 

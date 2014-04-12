@@ -12,15 +12,15 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 	};
 	
-	var styles2To14 = ['1010','2997','4901','4900','1489','1488','5575','1503'];
-	var styles2To16 = ['1010','2997','4901','4900','1489','1488','5575','1503','1556','1557'];
-	var styles12mTo14m = ['1600','1530'];
+	var styles2To14 = ['1010','2997','4901','4900','1489','1488','5575','1503','1530','1600'];
+	var styles2To16 = ['1010','2997','4901','4900','1489','1488','1530','5575','1503','1556','1557','1600'];
+	var styles12mTo14 = ['1530','1600'];
 	
 	var filterLookup = {
 		'3-month-olds' : [],
 		'6-month-olds' : [],
 		'9-month-olds' : [],
-		'12-month-olds' : styles12mTo14m,
+		'12-month-olds' : styles12mTo14,
 		'18-month-olds' : [],
 		'24-month-olds' : styles2To14,
 		'2-year-olds' : styles2To14,
@@ -409,7 +409,7 @@ module.exports.set = function(context) {
 			cache[cacheKey].products[productsCacheKey] = [];
 			async.parallel([
 				function(callback) {
-					var path = '/api/v1/products?tags=' + tags;
+					var path = '/api/v1/products?instockonly=1&tags=' + tags;
 					if (req.cookies.coupon) {
 						path += '&coupon=' + req.cookies.coupon;
 					}
