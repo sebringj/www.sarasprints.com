@@ -12,28 +12,24 @@ var getJSON = require('../lib/getJSON.js').getJSON,
 		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 	};
 	
-	var styles2To14 = ['1010','2997','4901','4900','1489','1488','5575','1503','1530','1600'];
-	var styles2To16 = ['1010','2997','4901','4900','1489','1488','1530','5575','1503','1556','1557','1600'];
-	var styles12mTo14 = ['1530','1600'];
-	
 	var filterLookup = {
-		'3-month-olds' : [],
-		'6-month-olds' : [],
-		'9-month-olds' : [],
-		'12-month-olds' : styles12mTo14,
-		'18-month-olds' : [],
-		'24-month-olds' : styles2To14,
-		'2-year-olds' : styles2To14,
-		'3-year-olds' : styles2To14,
-		'4-year-olds' : styles2To14,
-		'5-year-olds' : styles2To14,
-		'6-year-olds' : styles2To14,
-		'7-year-olds' : styles2To14,
-		'8-year-olds' : styles2To14,
-		'10-year-olds' : styles2To14,
-		'12-year-olds' : styles2To14,
-		'14-year-olds' : styles2To14,
-		'16-year-olds' : styles2To16
+		//'3-month-olds' : [],
+		//'6-month-olds' : [],
+		//'9-month-olds' : [],
+		'12-month-olds' : ['XX-012'],
+		'18-month-olds' : ['XX-018'],
+		'24-month-olds' : ['XX-024'],
+		'2-year-olds' : ['XX-2'],
+		'3-year-olds' : ['XX-3'],
+		'4-year-olds' : ['XX-4'],
+		'5-year-olds' : ['XX-5'],
+		'6-year-olds' : ['XX-6'],
+		'7-year-olds' : ['XX-7'],
+		'8-year-olds' : ['XX-8'],
+		'10-year-olds' : ['XX-10'],
+		'12-year-olds' : ['XX-12'],
+		'14-year-olds' : ['XX-14'],
+		'16-year-olds' : ['XX-16']
 	};
 
 module.exports.set = function(context) {
@@ -359,17 +355,15 @@ module.exports.set = function(context) {
 		
 		var tags = req.path.substr(1).split('/');
 		var tagList = '';
-		var ageTags = [];
+		var sizesMustBeInStock = [];
 		
 		if (tags.length) {
 			if (tags[0] === 'shop-pajamas') {
 				tags.splice(0,1);
 			}
 			for(var i = 0; i < tags.length; i++) {
-				if (filterLookup[tags[i]]) {
-					ageTags.push(tags[i]);
-					tags.splice(i,1);
-					i--;
+				if (filterLookup[ tags[i] ]) {
+					sizesMustBeInStock.push.apply(sizesMustBeInStock, filterLookup[ tags[i] ]);
 				}
 			}
 		}
@@ -418,19 +412,24 @@ module.exports.set = function(context) {
 					}
 					getJSON({port:443, host:clientid + '.hubsoft.ws',path:path}, function(status, data) {
 						if (data && data.products && data.products.length) {
-							if (ageTags.length) {
+							if (sizesMustBeInStock.length) {
 								(function(){
-									var ageProducts = [], arr;
-									for(var i = 0; i < ageTags.length; i++) {
-										arr = filterLookup[ageTags[i]];
-										for(var j = 0; j < arr.length; j++) {
-											for(var z = 0; z < data.products.length; z++) {
-												if (data.products[z].productNumber.indexOf(arr[j]) === 0) {
-													ageProducts.push(data.products[z]);
+									var ageProducts = [], i, j, z, product, sizeName, size;
+									for(i = 0; i < sizesMustBeInStock.length; i++) {
+										sizeName = sizesMustBeInStock[i];
+										for(j = 0; j < data.products.length; j++) {
+											product = data.products[j];
+											for(z = 0; z < product.sizes.length; z++) {
+												size = product.sizes[z];
+												if (size.sizeName === sizeName && size.quantity > 0) {
+													ageProducts.push(product);
+													break;
 												}
 											}
 										}
 									}
+									//console.log('ageProducts:');
+									//console.log(ageProducts.length);
 									data.products = ageProducts;
 								})();								
 							}

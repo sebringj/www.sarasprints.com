@@ -329,6 +329,7 @@ body {
 	right:100px;
 	bottom:27px;
 	background-image:url(/img/ccimages.png);
+	display:none;
 }
 .modal { display:none; }
 ul.sp-breadcrumb {
