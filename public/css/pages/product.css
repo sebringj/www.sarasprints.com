@@ -179,3 +179,12 @@
 	background-color:#fff;
 	overflow:hidden;
 }
+.size-chart-link {
+	margin-top:20px;
+}
+.view-size-chart {
+	font-size: 16px;
+	font-weight: 400;
+	color: #1898ce;
+	cursor:pointer;
+}

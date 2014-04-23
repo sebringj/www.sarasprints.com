@@ -192,3 +192,12 @@
 	overflow:hidden;
 	padding-bottom:40px;
 }
+.quick-view-modal .size-chart-link {
+	margin-top:20px;
+}
+.quick-view-modal .view-size-chart {
+	font-size: 16px;
+	font-weight: 400;
+	color: #1898ce;
+	cursor:pointer;
+}

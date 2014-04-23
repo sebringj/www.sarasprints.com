@@ -231,3 +231,10 @@ if (sessionStorage.hideSubscribe) {
 $('.top .cart').click(function(){
 	location = '/cart';
 });
+
+$('#sizechartPopup').click(function(){
+	$('#sizechartPopup').hide();
+});
+$('body').on('click','[data-size-chart]',function(){
+	$('#sizechartPopup').show();
+});
