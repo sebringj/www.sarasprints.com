@@ -3,6 +3,15 @@ hubsoft.thumbNailImageIndex = 0;
 hubsoft.global = { googleAnalytics : 'UA-43824235-1' };
 hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+(function(){
+	var securePaths = {'/cart':1,'/checkout':1};
+	if (location.hostname !== 'localhost' && securePaths[location.pathname] && location.protocol === 'http:') {
+		document.location = 'https://' + location.hostname + location.pathname;
+	} else if (location.protocol === 'https:' && !securePaths[location.pathname]) {
+		document.location = 'http://' + location.hostname + location.pathname;
+	}
+})();
+
 if (sessionStorage.subtotal && sessionStorage.label) {
 	$('.cart [data-quantity]').text(sessionStorage.label);
 	$('.cart [data-subtotal]').text(sessionStorage.subtotal);
