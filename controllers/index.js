@@ -279,7 +279,7 @@ module.exports.set = function(context) {
 		if (req.query.refresh || req.cookies.kitgui) {
 			delete cache[cacheKey];
 		}
-		if (cache[cacheKey] && cache[cacheKey].product && cache[cacheKey].product[productCacheKey]) {
+		if (cache[cacheKey] && cache[cacheKey].items && cache[cacheKey].product && cache[cacheKey].product[productCacheKey]) {
 			render();
 		} else {
 			cache[cacheKey] = cache[cacheKey] || {};
@@ -331,17 +331,19 @@ module.exports.set = function(context) {
 					});
 				}
 			], function() {
-				if (kg.items[cacheKey + 'Title'].content) {
-					cache[cacheKey].title = kg.items[cacheKey + 'Title'].content;
-				}
-				if (kg.items[cacheKey + 'Description'].content) {
-					cache[cacheKey].description = kg.items[cacheKey + 'Description'].content;
-				}
-				if (kg.seo.title) {
-					cache[cacheKey].seo.title = kg.seo.title;
-				}
-				if (kg.seo.description) {
-					cache[cacheKey].seo.description = kg.seo.description;
+				if (kg) {
+					if (kg.items[cacheKey + 'Title'] && kg.items[cacheKey + 'Title'].content) {
+						cache[cacheKey].title = kg.items[cacheKey + 'Title'].content;
+					}
+					if (kg.items[cacheKey + 'Description'] && kg.items[cacheKey + 'Description'].content) {
+						cache[cacheKey].description = kg.items[cacheKey + 'Description'].content;
+					}
+					if (kg.seo.title) {
+						cache[cacheKey].seo.title = kg.seo.title;
+					}
+					if (kg.seo.description) {
+						cache[cacheKey].seo.description = kg.seo.description;
+					}
 				}
 				render();
 			});
@@ -526,18 +528,24 @@ module.exports.set = function(context) {
 	});
 	app.get('/refresh', function(req, res){
 		getJSON({port:443, host:'sarasprints.hubsoft.ws',path:'/api/v1/refresh'}, function(status, data) {
-			if (cache) {
-				for(var i in cache) {
-					if (!cache.hasOwnProperty(i)) { continue; }
-					if (cache[i].products) {
-						delete cache[i].products;
-					}
-					if (cache[i].product) {
-						delete cache[i].product;
+			if (data && data.success) {
+				if (cache) {
+					for(var i in cache) {
+						if (!cache.hasOwnProperty(i)) { continue; }
+						if (cache[i].products) {
+							delete cache[i].products;
+						}
+						if (cache[i].product) {
+							delete cache[i].product;
+						}
 					}
 				}
+				res.json({ ok : true });
+			} else if(data) {
+				res.json(data);
+			} else {
+				res.json({ ok : false, err : 'could not connect to the Hubsoft Web API' });
 			}
-			res.json({ ok : true });
 		});
 	});
 	app.post('/join-saras-club', function(req, res){
