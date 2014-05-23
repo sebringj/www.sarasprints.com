@@ -26,7 +26,7 @@ $('.sign-in-form').submit(function(ev){
 			if (!data.success) {
 				$form.find('.alert-danger').text(data.message).slideDown('fast');
 			} else {
-				location = '/my-account';
+				hubsoft.scriptRedirect('/my-account');
 			}
 			console.log(data);
 		});

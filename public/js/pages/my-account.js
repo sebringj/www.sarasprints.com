@@ -1,10 +1,11 @@
 hubsoft.ready(function(){
 	if (!hubsoft.isLoggedIn()) {
-		return location = '/sign-in';
+		
+		return hubsoft.scriptRedirect('/sign-in');
 	}
 	hubsoft.getUserInfo(function(data){
 		if (!data.success) {
-			return location = '/sign-out';
+			return  hubsoft.scriptRedirect('/sign-out');
 		}
 		sessionStorage['username'] = data.userInfo.firstName;
 		$('#accountContent').html(sarasprints.nunjucks.render('partials/account.html', data));
@@ -58,5 +59,5 @@ $('body').on('submit', '#changePasswordForm', function(ev) {
     ev.preventDefault();
     hubsoft.cart.clearCookie();
     hubsoft.setPromotion({promotion: $(this).data('promotion')});
-    window.location = './shop-pajamas';
+    hubsoft.scriptRedirect('/shop-pajamas');
 })

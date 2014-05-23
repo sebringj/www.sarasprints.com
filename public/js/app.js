@@ -4,7 +4,7 @@ hubsoft.global = { googleAnalytics : 'UA-43824235-1' };
 hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 (function(){
-	var securePath = {'/cart':1,'/checkout':1};
+	var securePath = {'/cart':1,'/checkout':1,'/create-account':1,'/sign-in':1,'/forgot-password':1,'/my-account':1};
 	function checkPath(protocol, hostname, pathname) {
 		if (hostname !== 'localhost' && securePath[pathname] && protocol === 'http:') {
 			document.location = 'https://' + hostname + pathname;
@@ -22,7 +22,7 @@ hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"
 		} else if (location.protocol === 'https:' && !securePath[href]) {
 			return { interupt: true, href : 'http://' + location.hostname + href };
 		}
-		return { interupt : false };
+		return { interupt : false, href : href };
 	}
 	
 	hubsoft.scriptRedirect = function(href) {
