@@ -97,6 +97,7 @@ module.exports.set = function(context) {
 			delete cache.home;
 		}
 		
+		var errorState = false;
 		if (cache.home && cache.home.products && cache.home.products[productsCacheKey]) {
 			render();
 		} else {
@@ -144,7 +145,12 @@ module.exports.set = function(context) {
 								}
 							}
 							cache.home.products[productsCacheKey] = colors;
+						} else {
+							errorState = true;
 						}
+						callback();
+					}, function(err) {
+						errorState = true;
 						callback();
 					});
 				}, 
@@ -165,7 +171,7 @@ module.exports.set = function(context) {
 					});
 				}
 			],function(err) {
-				if (!err) {
+				if (!err && !errorState) {
 					render();
 				} else {
 					res.redirect('/500');
@@ -403,6 +409,7 @@ module.exports.set = function(context) {
 			
 			cache[cacheKey].products = cache[cacheKey].products || {};
 			cache[cacheKey].products[productsCacheKey] = [];
+			var errorState = false;
 			async.parallel([
 				function(callback) {
 					var path = '/api/v1/products?instockonly=1&tags=' + tags;
@@ -437,10 +444,13 @@ module.exports.set = function(context) {
 							}
 							
 							cache[cacheKey].products[productsCacheKey] = data.products;
+						} else {
+							errorState = true;
 						}
 						
 						callback();
 					}, function() {
+						errorState = true;
 						callback();
 					});
 				},
@@ -461,8 +471,12 @@ module.exports.set = function(context) {
 						callback();
 					});
 				}
-			], function() {
-				render();
+			], function(err) {
+				if (!err && !errorState) {
+					render();
+				} else {
+					res.redirect('/500');
+				}
 			});
 		}
 	});
@@ -547,6 +561,8 @@ module.exports.set = function(context) {
 				res.json({ ok : false, err : 'could not connect to the Hubsoft Web API' });
 			}
 		});
+	}, function(err) {
+		res.json({ err : err });
 	});
 	app.post('/join-saras-club', function(req, res){
 		var data = null;

@@ -13,9 +13,32 @@ hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"
 		}
 	}
 	checkPath(location.protocol, location.hostname, location.pathname);
-	$('a[href]').on('click', function(ev){
-		
-	});
+	
+	function handleHref(href) {
+		if (location.hostname === 'localhost') {
+			return { interupt : false, href : href };
+		} else if (location.protocol === 'http:' && securePath[href]) {
+			return { interupt : true, href : 'https://' + location.hostname + href };
+		} else if (location.protocol === 'https:' && !securePath[href]) {
+			return { interupt: true, href : 'http://' + location.hostname + href };
+		}
+		return { interupt : false };
+	}
+	
+	hubsoft.scriptRedirect = function(href) {
+		var obj = handleHref(href);
+		location = obj.href;
+	};
+	
+	if (location.hostname !== 'localhost') {
+		$('a[href]').on('click', function(ev){
+			var obj = handleHref($(this).attr('href'));
+			if ( obj.interupt ) {
+				ev.preventDefault();
+				location = obj.href;
+			}
+		});		
+	}
 })();
 
 if (sessionStorage.subtotal && sessionStorage.label) {
@@ -96,7 +119,7 @@ $('body').on('click','[data-add-to-cart]',function(ev){
 				$('[data-global-dialog]').modal('show');
 			}
 		} else {
-			location = '/cart';
+			hubsoft.scriptRedirect('/cart');
 		}
 	});
 }).on('click','[data-increment],[data-decrement]', function(ev){
@@ -244,7 +267,7 @@ if (sessionStorage.hideSubscribe) {
 }
 
 $('.top .cart').click(function(){
-	location = '/cart';
+	hubsoft.scriptRedirect('/cart');
 });
 
 $('#sizechartPopup').click(function(){

@@ -6,16 +6,21 @@
         hubsoft.getCartProducts(function (data) {
             var i, len, item;
             data.subtotal = 0;
-            if (data.items != null && data.items.length > 0) {
+            if (data.items && data.items.length > 0) {
                 for (i = 0, len = data.items.length; i < len; i++) {
                     item = data.items[i];
-					item.subtotal = (item.unitPrice * item.quantity);
-                    data.subtotal += item.subtotal;
+					if (item) {
+						item.subtotal = (item.unitPrice * item.quantity);
+	                    data.subtotal += item.subtotal;
+					} else {
+						hubsoft.cart.clearCookie();
+					}
                 }
                 $('#cartList').html(tpl(data));
             }
             if (!data.items || data.items == null || hubsoft.cart.items.length === 0) {
                 $('#cartList').html(tpl({ subtotal: 0, items: [] }));
+				hubsoft.cart.clearCookie();
                 $('#cart').fadeOut('fast', function () {
                     $('#no-items').fadeIn('fast');
                 });
