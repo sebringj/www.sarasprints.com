@@ -15,7 +15,7 @@ hubsoft.emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"
 	checkPath(location.protocol, location.hostname, location.pathname);
 	
 	function handleHref(href) {
-		if (location.hostname === 'localhost') {
+		if (href.indexOf('http') === 0 || location.hostname === 'localhost') {
 			return { interupt : false, href : href };
 		} else if (location.protocol === 'http:' && securePath[href]) {
 			return { interupt : true, href : 'https://' + location.hostname + href };
