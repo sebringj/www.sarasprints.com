@@ -16,7 +16,10 @@ var	https = require('https'),
 		app : app,
 		cache : cache,
 		mailchimp : (new mcapi.Mailchimp(config.mailchimp.apikey))
-	};
+	},
+	winston = require('winston'),
+	domain = require('domain'),
+	d = domain.create();
 	
 nunjucks.set(app);
 
@@ -29,21 +32,27 @@ middleware.set(context);
 app.use(app.router);
 controllers.set(context);
 
-http.createServer(app).listen(process.env.PORT || 4000);
-https.createServer({
-	key : fs.readFileSync('./www_sarasprints_com.key').toString(),
-	cert : fs.readFileSync('./SARASPRINTS.COM.crt').toString(),
-	ca : fs.readFileSync('./NetworkSolutions_CA.crt').toString(),
-	passphrase : 'Abc123!~!'
-},app).listen(process.env.SecurePORT || 4001);
+d.on('error', function(err){
+	winston.log('error',err);
+	winston.log('info','closing down server at ' + (new Date()).toString() + '\r\n\r\n');
+	process.exit(1);
+});
 
-console.log('HTTP on port ' + (process.env.PORT || 4000));
-console.log('HTTPS on port ' + (process.env.SecurePORT || 4001));
+d.run(function(){
+	
+	winston.add(winston.transports.File, { filename: 'winston.log' });
+	winston.remove(winston.transports.Console);
+	
+	winston.log('info','starting server at ' + (new Date()).toString() + '\r\n');
+	
+	http.createServer(app).listen(process.env.PORT || 4000);
+	https.createServer({
+		key : fs.readFileSync('./www_sarasprints_com.key').toString(),
+		cert : fs.readFileSync('./SARASPRINTS.COM.crt').toString(),
+		ca : fs.readFileSync('./NetworkSolutions_CA.crt').toString(),
+		passphrase : config.SSL.passphrase
+	},app).listen(process.env.SecurePORT || 4001);
 
-setInterval(function(){
-	try {
-		getJSON({port:443, host:'sarasprints.jit.su',path:'/refresh'}, function(status, data) {
-			
-		});
-	} catch(ex) { }
-}, (1000 * 60 * 60 * 4));
+	console.log('HTTP on port ' + (process.env.PORT || 4000));
+	console.log('HTTPS on port ' + (process.env.SecurePORT || 4001));	
+});
