@@ -543,18 +543,8 @@ module.exports.set = function(context) {
 	app.get('/refresh', function(req, res){
 		getJSON({port:443, host:'sarasprints.hubsoft.ws',path:'/api/v1/refresh'}, function(status, data) {
 			if (data && data.success) {
-				if (cache) {
-					for(var i in cache) {
-						if (!cache.hasOwnProperty(i)) { continue; }
-						if (cache[i].products) {
-							delete cache[i].products;
-						}
-						if (cache[i].product) {
-							delete cache[i].product;
-						}
-					}
-				}
 				res.json({ ok : true });
+				process.exit(0);
 			} else if(data) {
 				res.json(data);
 			} else {
